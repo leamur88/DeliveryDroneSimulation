@@ -9,7 +9,12 @@
 using std::vector;
 
 namespace csci3081 {
-
+/**
+ * @brief This is a helper class provided by the Instructional staff to create picojson objects
+ * 
+ * This is used to create objects in the composite factory's factories and within the testing class.
+ * 
+ */
 class JsonHelper {
 public:
 

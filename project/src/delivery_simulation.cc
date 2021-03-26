@@ -3,34 +3,51 @@
 #include "json_helper.h"
 #include "drone.h"
 
+
 namespace csci3081 {
 
-DeliverySimulation::DeliverySimulation() {}
+DeliverySimulation::DeliverySimulation() {
+	factories_  = new CompositeFactory();
+	AddFactory(new DroneFactory());
+	AddFactory(new CustomerFactory());
+	AddFactory(new PackageFactory());
 
-DeliverySimulation::~DeliverySimulation() {}
+}
+
+DeliverySimulation::~DeliverySimulation() {
+	for (int i = 0; i < factories_->GetFactories().size(); i++){
+		delete factories_->GetFactories()[i];
+	}
+	delete factories_;
+}
 
 IEntity* DeliverySimulation::CreateEntity(const picojson::object& val) {
-  //TODO for lab10: replace the ?????'s with the appropriate values,
-  //  then uncomment the section of code
-  /*
-  if (JsonHelper::GetString(val, "????") == "drone") {
-    std::vector<float> position = JsonHelper::GetStdFloatVector(val, "????????");
-    std::vector<float> direction = JsonHelper::GetStdFloatVector(val, "????????");
-    return new Drone(????, ????, ????);
-  }
-  */
-  return NULL;
+	IEntity* entity = factories_->CreateEntity(val);
+  	return entity;
 }
 
-void DeliverySimulation::AddFactory(IEntityFactory* factory) {}
+void DeliverySimulation::AddFactory(IEntityFactory* factory) {
+	factories_->AddFactory(factory);
+}
 
 void DeliverySimulation::AddEntity(IEntity* entity) { 
-  //TODO for lab10: One line of code
+  entities_.push_back(entity);
 }
 
-void DeliverySimulation::SetGraph(const IGraph* graph) {}
+void DeliverySimulation::SetGraph(const IGraph* graph) {g = graph;}
 
-void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {}
+void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
+	Drone* temp;
+	for (int i = 0; i < entities_.size(); i++){
+		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
+			temp = dynamic_cast<Drone*>(entities_[i]);
+			Package* p = dynamic_cast<Package*>(package);
+			Customer* c = dynamic_cast<Customer*>(dest);
+			p->SetCustomer(c);
+			temp->SetPackage(p);
+		}
+	}
+}
 
 void DeliverySimulation::AddObserver(IEntityObserver* observer) {}
 
@@ -38,7 +55,34 @@ void DeliverySimulation::RemoveObserver(IEntityObserver* observer) {}
 
 const std::vector<IEntity*>& DeliverySimulation::GetEntities() const { return entities_; }
 
-void DeliverySimulation::Update(float dt) {}
+void DeliverySimulation::Update(float dt) {
+
+	for (int i = 0; i < entities_.size(); i++){
+
+		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
+			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
+			drone->UpdatePosition(dt);
+
+			//Only need to update the the direction to the customers location once
+			if(!drone->IsPackagePickedUp() && drone->Pickup()){
+				drone->GoDropOff();
+			}
+
+			if(!drone->getPackage()->IsDelivered() && drone->DropOff()){
+				printf("All done for me! Another happy customer!\n");
+				
+			}
+		}
+
+		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "package"){
+			Package* package = dynamic_cast<Package*>(entities_[i]);
+			if (package->IsDelivered()){
+				std::vector<float> hide{1, 1, 1};
+				package->UpdatePosition(hide);
+			}
+		}
+	}
+}
 
 
 // DO NOT MODIFY THE FOLLOWING UNLESS YOU REALLY KNOW WHAT YOU ARE DOING
