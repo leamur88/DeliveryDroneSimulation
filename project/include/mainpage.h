@@ -12,7 +12,7 @@
  * 5. Rarely, the simulation is built incorrectly and only the drone and customer spawn in. If this occurs please go back to step 2. (You will know this occurs if the customer is in the packages position)
  * 6. Optionally, if you to run the test files type `make test` followed by `bash ./bin/test.sh`
  * 7. Last, if you want to regenerate this documentation, navigate to `project/docs` and run `doxygen Doxyfile`. The html will be updated and you can refresh your page
- * 
+ *
  * Within the program itself you can change the simulation speed with the provided slider and change the view of which entity you are following. In its current state,
 you should expect to see the drone fly over all of the buildings, following a beeline trajectory to the packages location. Once there, the drone will hover over the package for a second, pick
 up the package, and travel in unison to the customer. Once at the customer, the package will dissapear after a second (i.e. the customer will take the package), and the simulation is done. Remember to 
@@ -63,4 +63,19 @@ and is easy to follow. There are some downsides to implementing it like this. Fo
 it took me longer than I thought to find some segmentation faults. Another downside is that you cannot add much more functionality to these classes. This is both a pro and a con because once you have a factory working you never have to update it,
 but it also limits you to what you can do with it. If we were to want to add additional functionality, you would need to change the "component," or our IEntity Factory Interface, and implement it across all of the child factories. 
 Nevertheless, our composite factory pattern is perfect for what we want it to do, so the benefits clearly outweighed the negatives.
+*
+*
+*
+* ###Group Member Roles for Iteration 2
+*   Development Lead - David
+*   Scheduler - John
+*   Reporter - Jules
+*   Project Manager - Varun
+*
+*
+*
+*
+*
+*
+*
  */
