@@ -6,10 +6,8 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "entity_base.h"
-#include "battery.h"
-#include "vector3D.h"
-#include "package.h"
+#include "deliveryobjects.h"
+
 
 
 namespace csci3081 {
@@ -22,7 +20,7 @@ namespace csci3081 {
 	 * Calls to \ref Drone constructor to get a new drone.
 	 *  This class will also contain all of the necessary getters for the drones.
 	 */
-	class Drone : public csci3081::EntityBase {
+	class Drone : public csci3081::DeliveryObject {
 	// TODO: Add documentation to these functions
 		public:
 		/**
@@ -48,49 +46,17 @@ namespace csci3081 {
 		~Drone();
 
 		/**
-		 * @brief This is function simply returns the position vector for a given drone.
+		 * @brief This function will set a package for the object object
 		 * 
-		 * This function will return the float vector.
-		 *
-		 * @return Drone Position Vector
+		 * @param[in] package The package that the object will carry.
 		 */
-		const std::vector<float>& GetPosition() const{return position;}
 
-		/**
-		 * @brief This is function simply returns the direction vector for a given drone.
-		 * 
-		 * This function will return the float vector.
-		 *
-		 * 
-		 * @return Drone Direction Vector
-		 */
-		const std::vector<float>& GetDirection() const{return direction;}
-
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 * 
-		 *  The drone will access the current direction vector and update it.
-		 * 
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 * 
-		 */
-		void SetDestination(const std::vector<float>& dir);
-
-
-		/**
-		 *  @brief This will update the position of the drone.
-		 * 
-		 *  The drone will update it's position vector using 3D vector arithemetic.
-		 * 
-		 * @param[in] float the amount of time that will have passed between calls.
-		 */
-		void UpdatePosition(float dt);
+		void SetPackage(Package* package);
 
 		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
 		 * 
-		 *  The drone will call to see if it is within range of the package.
+		 *  The object will call to see if it is within range of the package.
 		 * 
 		 * @return Whether or not the package can be picked up.
 		 */
@@ -99,27 +65,20 @@ namespace csci3081 {
 		/**
 		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
 		 * 
-		 *  The drone will call this function to see if it is within range of the customer.
+		 *  The object will call this function to see if it is within range of the customer.
 		 * 
 		 * @return Whether or not the package can be dropped off.
 		 */
 		bool DropOff();
 
 		/**
-		 * @brief This function will set a package for the drone object
+		 *  @brief This will update the position of the object.
 		 * 
-		 * @param[in] package The package that the drone will carry.
-		 */
-
-		void SetPackage(Package* package);
-
-		/**
-		 * @brief returns the speed of a given drone
+		 *  The object will update it's position vector using 3D vector arithemetic.
 		 * 
-		 * @return The speed of the drone
+		 * @param[in] float the amount of time that will have passed between calls.
 		 */
-		const double GetSpeed() const;
-
+		void UpdatePosition(float dt);
 
 		/**
 		 * @brief This function sets the drone's new destination as the customers position
@@ -137,22 +96,8 @@ namespace csci3081 {
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
 
-		/**
-		 * @brief Returns the package the drone is currently going to or carrying
-		 * 
-		 * This is used within Delivery Simulation mainly
-		 * 
-		 * @return current package
-		 */
-		Package* getPackage(){return package;}
-
 		private:
-			std::vector<float> destination;
-			double speed;
-			bool moving;
 			bool pickedUpPackage;
-			Battery* battery;
-			Package* package;
 		};
 
 }

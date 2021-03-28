@@ -32,13 +32,6 @@ void Drone::SetPackage(Package* package){
 }
 
 
-void Drone::SetDestination(const std::vector<float>& dir){
-    destination.clear();
-    for (int i=0; i < dir.size();i++){
-        this->destination.push_back(dir[i]);
-    }
-}
-
 
 void Drone::UpdatePosition(float dt){
     if (battery->IsDead()){
@@ -94,9 +87,6 @@ bool Drone::DropOff(){
     return false;
 }
 
-const double Drone::GetSpeed() const{
-    return this->speed;
-}
 
 void Drone::GoDropOff(){
     printf("Time to go drop off the package!\n");

@@ -52,7 +52,7 @@ namespace csci3081 {
 		 * 
 		 * @param[in] float the amount of time that will have passed between calls.
 		 */
-		void UpdatePosition(float dt);
+		virtual void UpdatePosition(float dt) = 0;
 
         /**
 		 *  @brief This will set the direction vector within the Drone class.
@@ -62,7 +62,12 @@ namespace csci3081 {
 		 * @param[in] dir This is the new direction the drone will fly in.
 		 * 
 		 */
-		void SetDestination(const std::vector<float>& dir);
+		void SetDestination(const std::vector<float>& dir){
+            destination.clear();
+            for (int i=0; i < dir.size();i++){
+                this->destination.push_back(dir[i]);
+            }
+        }
 
 
 		/**
@@ -96,7 +101,7 @@ namespace csci3081 {
 		 * 
 		 * @return The speed of the object
 		 */
-		const double GetSpeed() const;
+		const double GetSpeed() const{return speed;}
 
 
 		/**
@@ -108,7 +113,7 @@ namespace csci3081 {
 		 */
 		Package* getPackage(){return package;}
 
-		private:
+		protected:
 			std::vector<float> destination;
 			double speed;
 			bool moving;
