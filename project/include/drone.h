@@ -107,6 +107,15 @@ namespace csci3081 {
 		bool Pickup();
 
 		/**
+		 * @brief This function will check if the drone is at the proper position to go up or down.
+		 * 
+		 *  The drone will call to see if it is within the radius of the package on the xz plane
+		 * 
+		 * @return Whether or not the drone is at the proper location above the package for ascent or descent.
+		 */
+		bool IsPickupMode();
+
+		/**
 		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
 		 * 
 		 *  The drone will call this function to see if it is within range of the customer.
@@ -114,6 +123,15 @@ namespace csci3081 {
 		 * @return Whether or not the package can be dropped off.
 		 */
 		bool DropOff();
+
+		/**
+		 * @brief This function will check if the drone is at the proper position to go up or down when it is above the customer with the package.
+		 * 
+		 *  The drone will call to see if it is within the radius of the customer on the xz plane
+		 * 
+		 * @return Whether or not the drone is at the proper location above the customoer for ascent or descent.
+		 */
+		bool IsDropOffMode();
 
 		/**
 		 * @brief This function will set a package for the drone object
@@ -146,6 +164,10 @@ namespace csci3081 {
 		 * @return Whether or not the package has been picked up
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
+
+		void Ascend(bool mode);
+
+		void Descend(bool mode);
 
 		/**
 		 * @brief Returns the package the drone is currently going to or carrying

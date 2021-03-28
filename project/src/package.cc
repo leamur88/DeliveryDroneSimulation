@@ -1,4 +1,5 @@
 #include "package.h"
+#include "json_helper.h"
 
 namespace csci3081{
 
@@ -14,6 +15,7 @@ Package::Package(std::vector<float> pos, std::vector<float> destination, float w
     this->Dynamic = true;
     this->weight = weight;
     this->type = "package";
+    this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
     details_ = details;
 }
 
@@ -56,6 +58,10 @@ void Package::SetCustomer(Customer* c){
     for (int i=0; i < c->GetPosition().size();i++){
         this->destination.push_back(c->GetPosition()[i]);
     }
+}
+
+float Package::GetRadius(){
+    return radius;
 }
     
 }

@@ -1,5 +1,6 @@
 #include "drone.h"
 #include<cstdlib>
+#include <iostream>
 
 namespace csci3081 {
 
@@ -62,6 +63,15 @@ void Drone::UpdatePosition(float dt){
     battery->DepleteBattery(dt);
 
     //Calculate updated position
+    /*Vector3D init(position);
+    Vector3D update(destination);
+    Vector3D change = update - init;
+    change.Normalize();
+    change.Scale(dt);
+    change.Scale(speed);
+    Vector3D newLoc = init + change;*/
+    std::cout<<IsPickupMode()<<"\n";
+    std::cout<<IsDropOffMode()<<"\n";
     Vector3D init(position);
     Vector3D update(destination);
     Vector3D change = update - init;
@@ -73,20 +83,48 @@ void Drone::UpdatePosition(float dt){
     for (int i=0; i < newLoc.GetVector().size();i++){
         this->position.push_back(newLoc.GetVector()[i]);
     }
-
-    //Sets the height to be taller than all of the buildings
     position[1] = 287.0;
 
+    /*}else if(IsPickupMode()&&(!Pickup())){
+        this->position.at(1) = this->position.at(1)-(1*speed*dt);
+        ascentFinish = false;
+        std::cout<<"here\n";
+    }else if(IsPickupMode()&&pickedUpPackage){
+        this->position.at(1) = this->position.at(1)+(1*speed*dt);
+        if(this->position.at(1)>=287.0){
+            ascentFinish = true;
+        }
+        std::cout<<"here2\n";
+    }else if(IsDropOffMode()&&!DropOff()){
+        this->position.at(1) = this->position.at(1)-(1*speed*dt);
+        std::cout<<"here3\n";
+    }*/
+
+   
+    //Sets the height to be taller than all of the buildings
+
     if (pickedUpPackage){
-        this->package->UpdatePosition(newLoc.GetVector());
+        this->package->UpdatePosition(position);
     }
     
 }
 
+//change #1: should be drone radius + package radius, need getRaius inside package
 bool Drone::Pickup(){
     if(abs( (int) (position[0] - package->GetPosition()[0])) <= radius){
+        if(abs( (int) (position[1] - package->GetPosition()[1])) <= radius){
+            if(abs( (int) (position[2] - package->GetPosition()[2])) <= radius){
+                pickedUpPackage = true;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Drone::IsPickupMode(){
+    if(abs( (int) (position[0] - package->GetPosition()[0])) <= radius){
         if(abs( (int) (position[2] - package->GetPosition()[2])) <= radius){
-            pickedUpPackage = true;
             return true;
         }
     }
@@ -95,12 +133,31 @@ bool Drone::Pickup(){
 
 bool Drone::DropOff(){
     if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius){
+        if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius){
+            if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius){
+                package->Deliver();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Drone::IsDropOffMode(){
+    if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius){
         if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius){
-            package->Deliver();
             return true;
         }
     }
     return false;
+}
+
+void Ascend(bool mode){
+    this->position.at(1) = this->position.at(1)+(1*speed*dt);
+}
+
+void Descend(bool mode){
+    this->position.at(1) = this->position.at(1)-(1*speed*dt);
 }
 
 const double Drone::GetSpeed() const{

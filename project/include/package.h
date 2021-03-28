@@ -124,11 +124,23 @@ namespace csci3081 {
 			 */
 			bool IsDelivered(){return delivered;}
 
+			/**
+			 * @brief This function is called to see if the drone is in the correct position for package pickup
+			 * 
+			 * It is used to know if the delivery state of simluation should change
+			 * 
+			 * @return a float value representing the pickup radius of the package
+			 */
+			float GetRadius();
+
+
+
 		private:
 			std::vector<float> destination;
 			float weight;
 			Customer* customer;
 			bool delivered = false;
+			float radius;
 
 	};
 }
