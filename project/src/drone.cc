@@ -26,20 +26,11 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 Drone::~Drone(){delete battery;}
 
 
-const std::vector<float>& Drone::GetPosition() const { return position; }
-
-const std::vector<float>& Drone::GetDirection() const { return direction; }
-
 void Drone::SetPackage(Package* package){
     this->package = package;
     SetDestination(package->GetPosition());
 }
 
-void Drone::SetDirection(const std::vector<float>& dir){
-    for (int i=0; i < dir.size();i++){
-        this->direction[i] = dir[i];
-    }
-}
 
 void Drone::SetDestination(const std::vector<float>& dir){
     destination.clear();

@@ -54,7 +54,7 @@ namespace csci3081 {
 		 *
 		 * @return Drone Position Vector
 		 */
-		const std::vector<float>& GetPosition() const;
+		const std::vector<float>& GetPosition() const{return position;}
 
 		/**
 		 * @brief This is function simply returns the direction vector for a given drone.
@@ -64,18 +64,8 @@ namespace csci3081 {
 		 * 
 		 * @return Drone Direction Vector
 		 */
-		const std::vector<float>& GetDirection() const;
+		const std::vector<float>& GetDirection() const{return direction;}
 
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 * 
-		 *  The drone will access the current direction vector and update it.
-		 * 
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 * 
-		 */
-		void SetDirection(const std::vector<float>& dir);
 
 		/**
 		 *  @brief This will set the direction vector within the Drone class.
