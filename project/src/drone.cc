@@ -27,27 +27,11 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 Drone::~Drone(){delete battery;}
 
 
-const std::vector<float>& Drone::GetPosition() const { return position; }
-
-const std::vector<float>& Drone::GetDirection() const { return direction; }
-
 void Drone::SetPackage(Package* package){
     this->package = package;
     SetDestination(package->GetPosition());
 }
 
-void Drone::SetDirection(const std::vector<float>& dir){
-    for (int i=0; i < dir.size();i++){
-        this->direction[i] = dir[i];
-    }
-}
-
-void Drone::SetDestination(const std::vector<float>& dir){
-    destination.clear();
-    for (int i=0; i < dir.size();i++){
-        this->destination.push_back(dir[i]);
-    }
-}
 
 
 void Drone::UpdatePosition(float dt){
@@ -62,14 +46,6 @@ void Drone::UpdatePosition(float dt){
 
     battery->DepleteBattery(dt);
 
-    //Calculate updated position
-    /*Vector3D init(position);
-    Vector3D update(destination);
-    Vector3D change = update - init;
-    change.Normalize();
-    change.Scale(dt);
-    change.Scale(speed);
-    Vector3D newLoc = init + change;*/
     bool isPickUp = IsPickupMode();
     bool isDropOff = IsDropOffMode();
     if(!isPickUp&&!isDropOff){
@@ -104,22 +80,6 @@ void Drone::UpdatePosition(float dt){
     }else if (isDropOff){
         Descend(dt);
     }
-
-    /*}else if(IsPickupMode()&&(!Pickup())){
-        this->position.at(1) = this->position.at(1)-(1*speed*dt);
-        ascentFinish = false;
-        std::cout<<"here\n";
-    }else if(IsPickupMode()&&pickedUpPackage){
-        this->position.at(1) = this->position.at(1)+(1*speed*dt);
-        if(this->position.at(1)>=287.0){
-            ascentFinish = true;
-        }
-        std::cout<<"here2\n";
-    }else if(IsDropOffMode()&&!DropOff()){
-        this->position.at(1) = this->position.at(1)-(1*speed*dt);
-        std::cout<<"here3\n";
-    }*/
-
    
     //Sets the height to be taller than all of the buildings
 
@@ -194,6 +154,7 @@ int Drone::Descend(float dt){
 const double Drone::GetSpeed() const{
     return this->speed;
 }
+
 
 void Drone::GoDropOff(){
     printf("Time to go drop off the package!\n");
