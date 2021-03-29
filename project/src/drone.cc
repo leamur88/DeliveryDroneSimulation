@@ -33,7 +33,6 @@ void Drone::SetPackage(Package* package){
 }
 
 
-
 void Drone::UpdatePosition(float dt){
     if (battery->IsDead()){
         return;
@@ -184,7 +183,7 @@ void Drone::UpdateSmartPath(float dt){
 
     if(pickedUpPackage && this->package->IsDelivered() == false) {
       float temp2 = vec.magnitude(this->position, customerRoute.at(customerRouteStep - 1));
-      if(temp2 <= .2) {
+      if(temp2 <= .5) {
         customerRouteStep +=1;
       }
       Vector3D init(position);
@@ -201,7 +200,7 @@ void Drone::UpdateSmartPath(float dt){
       this->package->UpdatePosition(this->position);
     }else if (pickedUpPackage == false && this->package->IsDelivered() == false) {
       float temp1 = vec.magnitude(this->position, packageRoute.at(packageRouteStep - 1));
-      if( temp1 <= .2) {
+      if( temp1 <= .5) {
         packageRouteStep +=1;
       }
       Vector3D init(position);

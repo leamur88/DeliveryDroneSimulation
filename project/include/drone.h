@@ -53,7 +53,7 @@ namespace csci3081 {
 		 *
 		 * @return Drone Position Vector
 		 */
-		const std::vector<float>& GetPosition() const;
+		//const std::vector<float>& GetPosition() const;
 
 		/**
 		 * @brief This is function simply returns the direction vector for a given drone.
@@ -63,7 +63,7 @@ namespace csci3081 {
 		 *
 		 * @return Drone Direction Vector
 		 */
-		const std::vector<float>& GetDirection() const;
+		//const std::vector<float>& GetDirection() const;
 
 
 		/**
@@ -84,7 +84,7 @@ namespace csci3081 {
 		 * @param[in] dir This is the new direction the drone will fly in.
 		 *
 		 */
-		void SetDestination(const std::vector<float>& dir);
+		//void SetDestination(const std::vector<float>& dir);
 
 		void SetPackage(Package* package);
 
@@ -96,6 +96,11 @@ namespace csci3081 {
 		 * @return Whether or not the package can be picked up.
 		 */
 		bool Pickup();
+
+		const double GetSpeed() const;
+		
+		const std::vector<float>& GetDirection() const{return direction;}
+		const std::vector<float>& GetPosition() const{return position;}
 
 		/**
 
