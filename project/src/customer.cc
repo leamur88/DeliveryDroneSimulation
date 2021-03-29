@@ -1,4 +1,5 @@
 #include "customer.h"
+#include "json_helper.h"
 
 
 namespace csci3081{
@@ -10,6 +11,7 @@ Customer::Customer(std::vector<float> location, const picojson::object& details)
 
     details_ = details;
     type = "customer";
+    this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
 }
 
 Customer::Customer(){}
@@ -21,6 +23,10 @@ const std::vector<float>& Customer::GetDirection() const{
 }
 const std::vector<float>& Customer::GetPosition() const{
     return position;
+}
+
+float Customer::GetRadius(){
+    return radius;
 }
     
 }

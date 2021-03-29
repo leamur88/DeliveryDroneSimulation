@@ -67,10 +67,8 @@ void DeliverySimulation::Update(float dt) {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
 			drone->UpdatePosition(dt);
 
-			Only need to update the the direction to the customers location once
-			if(!drone->IsPackagePickedUp() && drone->Pickup()){
-				drone->GoDropOff();
-			}
+
+			//Only need to update the the direction to the customers location once
 
 			if(!drone->getPackage()->IsDelivered() && drone->DropOff()){
 				printf("All done for me! Another happy customer!\n");
