@@ -63,6 +63,15 @@ namespace csci3081 {
 		bool Pickup();
 
 		/**
+		 * @brief This function will check if the drone is at the proper position to go up or down.
+		 * 
+		 *  The drone will call to see if it is within the radius of the package on the xz plane
+		 * 
+		 * @return Whether or not the drone is at the proper location above the package for ascent or descent.
+		 */
+		bool IsPickupMode();
+
+		/**
 		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
 		 * 
 		 *  The object will call this function to see if it is within range of the customer.
@@ -72,7 +81,17 @@ namespace csci3081 {
 		bool DropOff();
 
 		/**
-		 *  @brief This will update the position of the object.
+		 * @brief This function will check if the drone is at the proper position to go up or down when it is above the customer with the package.
+		 * 
+		 *  The drone will call to see if it is within the radius of the customer on the xz plane
+		 * 
+		 * @return Whether or not the drone is at the proper location above the customoer for ascent or descent.
+		 */
+		bool IsDropOffMode();
+
+		/**
+		 * @brief This function will set a package for the drone object
+
 		 * 
 		 *  The object will update it's position vector using 3D vector arithemetic.
 		 * 
@@ -95,6 +114,32 @@ namespace csci3081 {
 		 * @return Whether or not the package has been picked up
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
+
+		/**
+		 * @brief updates the drones position whenever it is ascending with the package
+		 * 
+		 * This not only updates the drones position but stops it if it exceeds the height limit
+		 * 
+		 * @return an int representing if the ascension was successful or the hieght limit was hit
+		 */
+		int Ascend(float dt);
+		/**
+		 * @brief updates the drones position whenever it needs to descend
+		 * 
+		 * This not only updates the drones position but stops to descension if the drone has hit its destination
+		 * 
+		 * @return an int representting if the ascension was successful or the destination was hit.
+		 */
+		int Descend(float dt);
+
+		/**
+		 * @brief Returns the package the drone is currently going to or carrying
+		 * 
+		 * This is used within Delivery Simulation mainly
+		 * 
+		 * @return current package
+		 */
+		Package* getPackage(){return package;}
 
 		private:
 			bool pickedUpPackage;
