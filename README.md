@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# repo-iter2-10-14
-=======
 ## Pre-requisites
   * [Git](https://git-scm.com/)
 
