@@ -5,14 +5,14 @@ namespace csci3081 {
 
 
 Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
-    
+
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
-        
+
     }
 
     for (int i=0; i < direction.size();i++){
-        this->direction.push_back(direction[i]);  
+        this->direction.push_back(direction[i]);
     }
     this->radius = radius;
     this->speed = speed;
@@ -80,7 +80,7 @@ void Drone::UpdatePosition(float dt){
     if (pickedUpPackage){
         this->package->UpdatePosition(newLoc.GetVector());
     }
-    
+
 }
 
 bool Drone::Pickup(){
@@ -110,6 +110,73 @@ const double Drone::GetSpeed() const{
 void Drone::GoDropOff(){
     printf("Time to go drop off the package!\n");
     SetDestination(package->GetDestination());
+}
+
+void Drone::SetPackageRoute(std::vector< std::vector<float>> packageRoute) {
+  this->packageRoute = packageRoute;
+}
+
+void Drone::SetCustomerRoute(std::vector< std::vector<float>> customerRoute) {
+  this->customerRoute = customerRoute;
+}
+
+void Drone::UpdateSmartPath(float dt){
+  Vector3D vec;
+  if(this->package->IsDelivered() == false){
+    if (battery->IsDead()){
+        return;
+    }
+    battery->DepleteBattery(dt);
+    if (pickedUpPackage == false ) {
+      float distance = vec.magnitude(this->position, this->package->GetPosition());
+      if (distance < this->package->GetRadius()){
+        pickedUpPackage = true;
+      }
+    }else{
+      float distance = vec.magnitude(this->position, this->package->GetDestination());
+      if(distance < this->package->GetRadius()){
+        // std::vector<float> newPos (3,10000.0);
+        // this->package->UpdatePosition(newPos);
+        this->package->Deliver();
+      }
+    }
+
+    if(pickedUpPackage && this->package->IsDelivered() == false) {
+      float temp2 = vec.magnitude(this->position, customerRoute.at(customerRouteStep - 1));
+      if(temp2 <= .2) {
+        customerRouteStep +=1;
+      }
+      Vector3D init(position);
+      Vector3D update(customerRoute.at(customerRouteStep - 1));
+      Vector3D change = update - init;
+      change.Normalize();
+      change.Scale(dt);
+      change.Scale(speed);
+      Vector3D newLoc = init + change;
+      position.clear();
+      for (int i=0; i < newLoc.GetVector().size();i++){
+          this->position.push_back(newLoc.GetVector()[i]);
+      }
+      this->package->UpdatePosition(this->position);
+    }else if (pickedUpPackage == false && this->package->IsDelivered() == false) {
+      float temp1 = vec.magnitude(this->position, packageRoute.at(packageRouteStep - 1));
+      if( temp1 <= .2) {
+        packageRouteStep +=1;
+      }
+      Vector3D init(position);
+      Vector3D update(packageRoute.at(packageRouteStep - 1));
+      Vector3D change = update - init;
+      change.Normalize();
+      change.Scale(dt);
+      change.Scale(speed);
+      Vector3D newLoc = init + change;
+      position.clear();
+      for (int i=0; i < newLoc.GetVector().size();i++){
+          this->position.push_back(newLoc.GetVector()[i]);
+      }
+    }
+  }
+
 }
 
 

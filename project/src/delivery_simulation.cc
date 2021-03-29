@@ -30,7 +30,7 @@ void DeliverySimulation::AddFactory(IEntityFactory* factory) {
 	factories_->AddFactory(factory);
 }
 
-void DeliverySimulation::AddEntity(IEntity* entity) { 
+void DeliverySimulation::AddEntity(IEntity* entity) {
   entities_.push_back(entity);
 }
 
@@ -45,6 +45,10 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 			Customer* c = dynamic_cast<Customer*>(dest);
 			p->SetCustomer(c);
 			temp->SetPackage(p);
+
+			temp->SetPackageRoute(g->GetPath(temp->GetPosition(), p->GetPosition() ) );
+			temp->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
+
 		}
 	}
 }
@@ -63,14 +67,14 @@ void DeliverySimulation::Update(float dt) {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
 			drone->UpdatePosition(dt);
 
-			//Only need to update the the direction to the customers location once
+			Only need to update the the direction to the customers location once
 			if(!drone->IsPackagePickedUp() && drone->Pickup()){
 				drone->GoDropOff();
 			}
 
 			if(!drone->getPackage()->IsDelivered() && drone->DropOff()){
 				printf("All done for me! Another happy customer!\n");
-				
+
 			}
 		}
 
