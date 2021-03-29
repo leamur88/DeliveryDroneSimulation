@@ -1,5 +1,5 @@
 #include "drone.h"
-#include<cstdlib>
+#include <cstdlib>
 #include <iostream>
 
 namespace csci3081 {
@@ -70,20 +70,40 @@ void Drone::UpdatePosition(float dt){
     change.Scale(dt);
     change.Scale(speed);
     Vector3D newLoc = init + change;*/
-    std::cout<<IsPickupMode()<<"\n";
-    std::cout<<IsDropOffMode()<<"\n";
-    Vector3D init(position);
-    Vector3D update(destination);
-    Vector3D change = update - init;
-    change.Normalize();
-    change.Scale(dt);
-    change.Scale(speed);
-    Vector3D newLoc = init + change;
-    position.clear();
-    for (int i=0; i < newLoc.GetVector().size();i++){
-        this->position.push_back(newLoc.GetVector()[i]);
+    bool isPickUp = IsPickupMode();
+    bool isDropOff = IsDropOffMode();
+    if(!isPickUp&&!isDropOff){
+        Vector3D init(position);
+        Vector3D update(destination);
+        Vector3D change = update - init;
+        change.Normalize();
+        change.Scale(dt);
+        change.Scale(speed);
+        Vector3D newLoc = init + change;
+        position.clear();
+        for (int i=0; i < newLoc.GetVector().size();i++){
+            this->position.push_back(newLoc.GetVector()[i]);
+        }
+        position[1] = 287.0;
+    }else if(isPickUp&&pickedUpPackage&&!isDropOff){
+        if(Ascend(dt)==1){
+            Vector3D init(position);
+            Vector3D update(destination);
+            Vector3D change = update - init;
+            change.Normalize();
+            change.Scale(dt);
+            change.Scale(speed);
+            Vector3D newLoc = init + change;
+            position.clear();
+            for (int i=0; i < newLoc.GetVector().size();i++){
+                this->position.push_back(newLoc.GetVector()[i]);
+            }
+        }
+    }else if(isPickUp&&!isDropOff){
+        Descend(dt);
+    }else if (isDropOff){
+        Descend(dt);
     }
-    position[1] = 287.0;
 
     /*}else if(IsPickupMode()&&(!Pickup())){
         this->position.at(1) = this->position.at(1)-(1*speed*dt);
@@ -111,9 +131,9 @@ void Drone::UpdatePosition(float dt){
 
 //change #1: should be drone radius + package radius, need getRaius inside package
 bool Drone::Pickup(){
-    if(abs( (int) (position[0] - package->GetPosition()[0])) <= radius){
-        if(abs( (int) (position[1] - package->GetPosition()[1])) <= radius){
-            if(abs( (int) (position[2] - package->GetPosition()[2])) <= radius){
+    if(abs( (int) (position[0] - package->GetStartPosition()[0])) <= radius+ (package->GetRadius())){
+        if(abs( (int) (position[1] - package->GetStartPosition()[1])) <= radius+ (package->GetRadius())){
+            if(abs( (int) (position[2] - package->GetStartPosition()[2])) <= radius+ (package->GetRadius())){
                 pickedUpPackage = true;
                 return true;
             }
@@ -123,8 +143,8 @@ bool Drone::Pickup(){
 }
 
 bool Drone::IsPickupMode(){
-    if(abs( (int) (position[0] - package->GetPosition()[0])) <= radius){
-        if(abs( (int) (position[2] - package->GetPosition()[2])) <= radius){
+    if(abs( (int) (position[0] - package->GetStartPosition()[0])) <= radius + (package->GetRadius())){
+        if(abs( (int) (position[2] - package->GetStartPosition()[2])) <= radius+ (package->GetRadius())){
             return true;
         }
     }
@@ -132,9 +152,9 @@ bool Drone::IsPickupMode(){
 }
 
 bool Drone::DropOff(){
-    if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius){
-        if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius){
-            if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius){
+    if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius+(package->GetCustRadius())){
+        if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius+(package->GetCustRadius())){
+            if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
                 package->Deliver();
                 return true;
             }
@@ -144,20 +164,31 @@ bool Drone::DropOff(){
 }
 
 bool Drone::IsDropOffMode(){
-    if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius){
-        if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius){
+    if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius+(package->GetCustRadius())){
+        if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
             return true;
         }
     }
     return false;
 }
 
-void Ascend(bool mode){
+int Drone::Ascend(float dt){
+    if(this->position.at(1)>=287.0){
+        return 1;
+    }
     this->position.at(1) = this->position.at(1)+(1*speed*dt);
+    return 2;
 }
 
-void Descend(bool mode){
-    this->position.at(1) = this->position.at(1)-(1*speed*dt);
+int Drone::Descend(float dt){
+    if(Pickup()){
+        GoDropOff();
+        return 0;
+    }else if(DropOff()){
+        return 1;
+    }
+    this->position.at(1) = this->position.at(1)-(1*this->speed*dt);
+    return 2;
 }
 
 const double Drone::GetSpeed() const{

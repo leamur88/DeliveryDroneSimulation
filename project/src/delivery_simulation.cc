@@ -64,9 +64,7 @@ void DeliverySimulation::Update(float dt) {
 			drone->UpdatePosition(dt);
 
 			//Only need to update the the direction to the customers location once
-			if(!drone->IsPackagePickedUp() && drone->Pickup()){
-				drone->GoDropOff();
-			}
+			
 
 			if(!drone->getPackage()->IsDelivered() && drone->DropOff()){
 				printf("All done for me! Another happy customer!\n");

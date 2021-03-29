@@ -13,6 +13,7 @@ Package::Package(std::vector<float> pos, std::vector<float> destination, float w
         this->direction.push_back(destination[i]);
     }
     this->Dynamic = true;
+    this->stpos = position;
     this->weight = weight;
     this->type = "package";
     this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
@@ -25,6 +26,10 @@ Package::~Package(){}
 
 const std::vector<float>& Package::GetPosition() const{
     return position;
+}
+
+const std::vector<float>& Package::GetStartPosition() const{
+    return stpos;
 }
 
 const std::vector<float>& Package::GetDirection() const{
@@ -62,6 +67,10 @@ void Package::SetCustomer(Customer* c){
 
 float Package::GetRadius(){
     return radius;
+}
+
+float Package::GetCustRadius(){
+    return customer->GetRadius();
 }
     
 }

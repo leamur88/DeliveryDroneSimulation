@@ -165,9 +165,22 @@ namespace csci3081 {
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
 
-		void Ascend(bool mode);
-
-		void Descend(bool mode);
+		/**
+		 * @brief updates the drones position whenever it is ascending with the package
+		 * 
+		 * This not only updates the drones position but stops it if it exceeds the height limit
+		 * 
+		 * @return an int representing if the ascension was successful or the hieght limit was hit
+		 */
+		int Ascend(float dt);
+		/**
+		 * @brief updates the drones position whenever it needs to descend
+		 * 
+		 * This not only updates the drones position but stops to descension if the drone has hit its destination
+		 * 
+		 * @return an int representting if the ascension was successful or the destination was hit.
+		 */
+		int Descend(float dt);
 
 		/**
 		 * @brief Returns the package the drone is currently going to or carrying

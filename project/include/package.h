@@ -61,6 +61,15 @@ namespace csci3081 {
 			const std::vector<float>& GetPosition() const;
 
 			/**
+			 * @brief This is function simply returns the position vector that represents the objects starting location before it moved.
+			 * 
+			 * This function takes in no inputs and will return the package's position vector.
+			 *
+			 * @return Package Position Vector
+			 */
+			const std::vector<float>& GetStartPosition() const;
+
+			/**
 			 * @brief This is function simply returns the destination vector for a given Package.
 			 * 
 			 * This function takes in no inputs and will return the package's destination vector (i.e. the customers position).
@@ -132,11 +141,20 @@ namespace csci3081 {
 			 * @return a float value representing the pickup radius of the package
 			 */
 			float GetRadius();
+			/**
+			 * @brief This function is called to see if the drone is in the correct position for package dropoff
+			 * 
+			 * It is used to know if the delivery state of simluation should change
+			 * 
+			 * @return a float value representing the pickup radius of the customer
+			 */
+			float GetCustRadius();
 
 
 
 		private:
 			std::vector<float> destination;
+			std::vector<float> stpos;
 			float weight;
 			Customer* customer;
 			bool delivered = false;
