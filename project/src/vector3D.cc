@@ -89,7 +89,7 @@ void Vector3D::Scale(float s){
     }
 }
 
-float Vector3D::magnitude(std::vector<float> vector1, std::vector<float> vector2){
+float Vector3D::Distance(std::vector<float> vector1, std::vector<float> vector2){
   return sqrt ( pow((vector1[0] - vector2[0]), 2) + pow((vector1[1] - vector2[1]), 2) + pow((vector1[2] - vector2[2]), 2));
 }
 

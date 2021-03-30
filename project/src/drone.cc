@@ -181,12 +181,12 @@ void Drone::UpdateSmartPath(float dt){
     }
     battery->DepleteBattery(dt);
     if (pickedUpPackage == false ) {
-      float distance = vec.magnitude(this->position, this->package->GetPosition());
+      float distance = vec.Distance(this->position, this->package->GetPosition());
       if (distance < this->package->GetRadius()){
         pickedUpPackage = true;
       }
     }else{
-      float distance = vec.magnitude(this->position, this->package->GetDestination());
+      float distance = vec.Distance(this->position, this->package->GetDestination());
       if(distance < this->package->GetRadius()){
         // std::vector<float> newPos (3,10000.0);
         // this->package->UpdatePosition(newPos);
@@ -195,7 +195,7 @@ void Drone::UpdateSmartPath(float dt){
     }
 
     if(pickedUpPackage && this->package->IsDelivered() == false) {
-      float temp2 = vec.magnitude(this->position, customerRoute.at(customerRouteStep - 1));
+      float temp2 = vec.Distance(this->position, customerRoute.at(customerRouteStep - 1));
       if(temp2 <= .5) {
         customerRouteStep +=1;
       }
@@ -212,7 +212,7 @@ void Drone::UpdateSmartPath(float dt){
       }
       this->package->UpdatePosition(this->position);
     }else if (pickedUpPackage == false && this->package->IsDelivered() == false) {
-      float temp1 = vec.magnitude(this->position, packageRoute.at(packageRouteStep - 1));
+      float temp1 = vec.Distance(this->position, packageRoute.at(packageRouteStep - 1));
       if( temp1 <= .5) {
         packageRouteStep +=1;
       }
