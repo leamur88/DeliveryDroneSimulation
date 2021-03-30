@@ -59,14 +59,20 @@ namespace csci3081 {
 		void SetDirection(const std::vector<float>& dir);
 
 		/**
-		 *  @brief This will set the direction vector within the Drone class.
+		 *  @brief This will set the destination vector within the Drone class.
 		 *
-		 *  The drone will access the current direction vector and update it.
+		 *  The drone will access the current destination vector and update it.
 		 *
-		 * @param[in] dir This is the new direction the drone will fly in.
+		 * @param[in] dir This is the new destination the drone will fly to.
 		 *
 		 */
-		//void SetDestination(const std::vector<float>& dir);
+		void SetDestination(const std::vector<float>& dir);
+
+		/**
+		 * @brief This function will set a package for the object object
+		 * 
+		 * @param[in] package The package that the object will carry.
+		 */
 
 		void SetPackage(Package* package);
 
@@ -78,11 +84,6 @@ namespace csci3081 {
 		 * @return Whether or not the package can be picked up.
 		 */
 		bool Pickup();
-
-		const double GetSpeed() const;
-		
-		const std::vector<float>& GetDirection() const{return direction;}
-		const std::vector<float>& GetPosition() const{return position;}
 
 		/**
 
@@ -143,6 +144,7 @@ namespace csci3081 {
 		 * @return an int representing if the ascension was successful or the hieght limit was hit
 		 */
 		int Ascend(float dt);
+		
 		/**
 		 * @brief updates the drones position whenever it needs to descend
 		 * 
@@ -152,14 +154,8 @@ namespace csci3081 {
 		 */
 		int Descend(float dt);
 
-		/**
-		 * @brief Returns the package the drone is currently going to or carrying
-		 *
-		 * This is used within Delivery Simulation mainly
-		 *
-		 * @return current package
-		 */
-		Package* getPackage(){return package;}
+
+		
 		/**
 		 *  @brief This will update the position of the drone using smart path.
 		 *
@@ -169,17 +165,11 @@ namespace csci3081 {
 		 */
 		void UpdateSmartPath(float dt);
 
-		void SetPackageRoute(std::vector< std::vector<float>> packageRoute);
-		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute);
-
 		private:
 			bool pickedUpPackage;
 			Battery* battery;
 			Package* package;
-			std::vector< std::vector<float>> packageRoute;
-			std::vector< std::vector<float>> customerRoute;
-			int packageRouteStep = 1;
-			int customerRouteStep = 1;
+			std::vector<float> destination;
 			std::string path;
 		};
 

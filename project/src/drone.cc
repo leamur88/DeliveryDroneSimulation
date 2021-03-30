@@ -33,6 +33,13 @@ void Drone::SetPackage(Package* package){
     SetDestination(package->GetPosition());
 }
 
+void Drone::SetDestination(const std::vector<float>& dir){
+    destination.clear();
+    for (int i=0; i < dir.size();i++){
+        this->destination.push_back(dir[i]);
+    }
+}
+
 void Drone::UpdateBeeline(float dt){
     if (battery->IsDead()){
         return;
@@ -47,7 +54,7 @@ void Drone::UpdateBeeline(float dt){
 
     bool isPickUp = IsPickupMode();
     bool isDropOff = IsDropOffMode();
-
+    
     if(!isPickUp&&!isDropOff){
         Vector3D init(position);
         Vector3D update(destination);
@@ -62,8 +69,8 @@ void Drone::UpdateBeeline(float dt){
         }
         position[1] = 287.0;
     }
-    
     else if(isPickUp&&pickedUpPackage&&!isDropOff){
+        
         if(Ascend(dt)==1){
             Vector3D init(position);
             Vector3D update(destination);
@@ -78,8 +85,8 @@ void Drone::UpdateBeeline(float dt){
             }
         }
     }
-    
     else if(isPickUp&&!isDropOff){
+        printf("here\n");
         Descend(dt);
     }
     
@@ -88,7 +95,6 @@ void Drone::UpdateBeeline(float dt){
     }
    
     //Sets the height to be taller than all of the buildings
-
     if (pickedUpPackage){
         this->package->UpdatePosition(position);
     }
@@ -96,11 +102,9 @@ void Drone::UpdateBeeline(float dt){
 
 void Drone::UpdatePosition(float dt){
     if (path == "beeline"){
-        printf("beeline\n");
         UpdateBeeline(dt);
     }
     else if (path == "smart"){
-        printf("smart\n");
         UpdateSmartPath(dt);
     }
     
@@ -174,9 +178,6 @@ int Drone::Descend(float dt){
     return 2;
 }
 
-const double Drone::GetSpeed() const{
-    return this->speed;
-}
 
 
 void Drone::GoDropOff(){
@@ -242,7 +243,7 @@ void Drone::UpdateSmartPath(float dt){
   }
 
 }
-
+/*
 void Drone::SetPackageRoute(std::vector< std::vector<float>> packageRoute) {
   this->packageRoute = packageRoute;
 }
@@ -250,7 +251,7 @@ void Drone::SetPackageRoute(std::vector< std::vector<float>> packageRoute) {
 void Drone::SetCustomerRoute(std::vector< std::vector<float>> customerRoute) {
   this->customerRoute = customerRoute;
 }
-
+*/
 
 
 }
