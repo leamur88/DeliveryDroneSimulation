@@ -11,6 +11,7 @@ DeliverySimulation::DeliverySimulation() {
 	AddFactory(new DroneFactory());
 	AddFactory(new CustomerFactory());
 	AddFactory(new PackageFactory());
+	AddFactory(new RobotFactory());
 
 }
 
