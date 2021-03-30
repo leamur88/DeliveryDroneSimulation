@@ -27,18 +27,22 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 
 Drone::~Drone(){delete battery;}
 
-
-void Drone::SetPackage(Package* package){
-    this->package = package;
-    SetDestination(package->GetPosition());
-}
-
-void Drone::SetDestination(const std::vector<float>& dir){
-    destination.clear();
-    for (int i=0; i < dir.size();i++){
-        this->destination.push_back(dir[i]);
+void Drone::UpdatePosition(float dt){
+    if (path == "beeline"){
+        UpdateBeeline(dt);
     }
+    else if (path == "smart"){
+        UpdateSmartPath(dt);
+    }
+    
+    //As a failsafe for now
+    else{
+        printf("Path not specified, will go with beeline\n");
+        UpdateBeeline(dt);
+    }
+    
 }
+
 
 void Drone::UpdateBeeline(float dt){
     if (battery->IsDead()){
@@ -100,23 +104,7 @@ void Drone::UpdateBeeline(float dt){
     }
 }
 
-void Drone::UpdatePosition(float dt){
-    if (path == "beeline"){
-        UpdateBeeline(dt);
-    }
-    else if (path == "smart"){
-        UpdateSmartPath(dt);
-    }
-    
-    //As a failsafe for now
-    else{
-        printf("Path not specified, will go with beeline\n");
-        UpdateBeeline(dt);
-    }
-    
-}
 
-//change #1: should be drone radius + package radius, need getRaius inside package
 bool Drone::Pickup(){
     if(abs( (int) (position[0] - package->GetStartPosition()[0])) <= radius+ (package->GetRadius())){
         if(abs( (int) (position[1] - package->GetStartPosition()[1])) <= radius+ (package->GetRadius())){
@@ -171,19 +159,19 @@ int Drone::Descend(float dt){
     if(Pickup()){
         GoDropOff();
         return 0;
-    }else if(DropOff()){
+    }
+    else if(DropOff()){
         return 1;
     }
     this->position.at(1) = this->position.at(1)-(1*this->speed*dt);
     return 2;
 }
 
-
-
 void Drone::GoDropOff(){
     printf("Time to go drop off the package!\n");
     SetDestination(package->GetDestination());
 }
+
 
 void Drone::UpdateSmartPath(float dt){
   Vector3D vec;
@@ -241,17 +229,19 @@ void Drone::UpdateSmartPath(float dt){
       }
     }
   }
-
-}
-/*
-void Drone::SetPackageRoute(std::vector< std::vector<float>> packageRoute) {
-  this->packageRoute = packageRoute;
 }
 
-void Drone::SetCustomerRoute(std::vector< std::vector<float>> customerRoute) {
-  this->customerRoute = customerRoute;
+void Drone::SetPackage(Package* package){
+    this->package = package;
+    SetDestination(package->GetPosition());
 }
-*/
+
+void Drone::SetDestination(const std::vector<float>& dir){
+    destination.clear();
+    for (int i=0; i < dir.size();i++){
+        this->destination.push_back(dir[i]);
+    }
+}
 
 
 }

@@ -46,35 +46,24 @@ namespace csci3081 {
 		 */
 		~Drone();
 
-		void UpdateBeeline(float dt);
-
 		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 *
-		 *  The drone will access the current direction vector and update it.
-		 *
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 *
-		 */
-		void SetDirection(const std::vector<float>& dir);
-
-		/**
-		 *  @brief This will set the destination vector within the Drone class.
-		 *
-		 *  The drone will access the current destination vector and update it.
-		 *
-		 * @param[in] dir This is the new destination the drone will fly to.
-		 *
-		 */
-		void SetDestination(const std::vector<float>& dir);
-
-		/**
-		 * @brief This function will set a package for the object object
+		 * @brief This function is used to determine which update function the drone should use
 		 * 
-		 * @param[in] package The package that the object will carry.
+		 * Depending on the path variable, set at construction, the Drone will update its position in 
+		 * three different ways: beeline, smartpath, or parabolic.
+		 *
+		 * @param[in] dt the amount of time passed between each update call
 		 */
+		void UpdatePosition(float dt);
 
-		void SetPackage(Package* package);
+		/**
+		 *  @brief This will update the position of the drone using the beeline path.
+		 *
+		 *  The drone will update it's position vector using beeline path.
+		 *
+		 * @param[in] float the amount of time that will have passed between calls.
+		 */
+		void UpdateBeeline(float dt);
 
 		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
@@ -85,8 +74,7 @@ namespace csci3081 {
 		 */
 		bool Pickup();
 
-		/**
-
+		/** //TODO: @varun?
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
 		 *
 		 *  The drone will call to see if it is within range of the package.
@@ -105,20 +93,9 @@ namespace csci3081 {
 		bool DropOff();
 
 		/**
-		 * @brief This function will set a package for the drone object
-		 *
-		 * @param[in] package The package that the drone will carry.
+		 * //TODO: @varun?
 		 */
 		bool IsDropOffMode();
-
-		/**
-		 * @brief This function will set a package for the drone object
-		 * 
-		 *  The object will update it's position vector using 3D vector arithemetic.
-		 * 
-		 * @param[in] float the amount of time that will have passed between calls.
-		 */
-		void UpdatePosition(float dt);
 
 		/**
 		 * @brief This function sets the drone's new destination as the customers position
@@ -126,15 +103,6 @@ namespace csci3081 {
 		 * This is only called the first time when the drone is within radius of the package
 		 */
 		void GoDropOff();
-
-		/**
-		 * @brief returns whether or not the package has been picked up yet
-		 *
-		 * This is used to determine whether or not the packages position needs to be updated alongside the drones
-		 *
-		 * @return Whether or not the package has been picked up
-		 */
-		bool IsPackagePickedUp(){return pickedUpPackage;}
 
 		/**
 		 * @brief updates the drones position whenever it is ascending with the package
@@ -153,8 +121,6 @@ namespace csci3081 {
 		 * @return an int representting if the ascension was successful or the destination was hit.
 		 */
 		int Descend(float dt);
-
-
 		
 		/**
 		 *  @brief This will update the position of the drone using smart path.
@@ -164,6 +130,24 @@ namespace csci3081 {
 		 * @param[in] float the amount of time that will have passed between calls.
 		 */
 		void UpdateSmartPath(float dt);
+
+		/**
+		 *  @brief This will set the destination vector within the Drone class.
+		 *
+		 *  The drone will access the current destination vector and update it.
+		 *
+		 * @param[in] dir This is the new destination the drone will fly to.
+		 *
+		 */
+		void SetDestination(const std::vector<float>& dir);
+
+		/**
+		 * @brief This function will set a package for the object object
+		 * 
+		 * @param[in] package The package that the object will carry.
+		 */
+
+		void SetPackage(Package* package);
 
 		private:
 			bool pickedUpPackage;
