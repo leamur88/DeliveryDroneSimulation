@@ -81,10 +81,43 @@ namespace csci3081 {
 			 */
 			void SetVector(std::vector<float> other);
 
+			/**
+		   	* @brief Function to calculate the magnitde of two vectors.
+		   	*
+		   	* @param[in] vector1 The first vector that will be used.
+		   	* @param[in] vector2 The second vector that will be used.
+		   	*
+		   	* @return The magnitude of the difference of the two vectors.
+		   	*/
+		  	float Distance(std::vector<float> vector1, std::vector<float> vector2);
+
+			/**
+			 * @brief This will scale the vector by a factor of s;
+			 *
+			 * @param[in] s This is the factor by which the vector will be scaled by.
+			 *
+			 */
+			void Scale(float s);
+
+			/**
+			 * @brief This will normalize a Vector
+			 *
+			 *  This will normalize the vector object it is called on. This means that this vectors new magnitude will be equal to 1
+			 *  and it will shrink proportionally so the vector still has the same direction.
+			 */
+			void Normalize();
+
+			/**
+			 * @brief This will return the magnitude of a Vector
+			 *
+			 * This will return the magnitude of a vector as a float
+			 *
+			 * @return The magnitude of a vector
+			 */
+			float Magnitude();
+
 		private:
 			std::vector<float> vec;
-
-		
 	};
 
 }

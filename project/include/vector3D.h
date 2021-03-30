@@ -117,12 +117,12 @@ namespace csci3081 {
 			/**
 		   * @brief Function to calculate the magnitde of two vectors.
 		   *
-		   * @param[in] The first vector that will be used.
-		   * @param[in] The second vector that will be used.
+		   * @param[in] vector1 The first vector that will be used.
+		   * @param[in] vector2 The second vector that will be used.
 		   *
-		   * @return The magnitude of the two vectors.
+		   * @return The magnitude of the difference of the two vectors.
 		   */
-		  float magnitude(std::vector<float> vector1, std::vector<float> vector2);
+		  float Distance(std::vector<float> vector1, std::vector<float> vector2);
 
 		private:
 			std::vector<float> vec;
