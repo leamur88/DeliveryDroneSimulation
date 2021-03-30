@@ -66,8 +66,8 @@ void DeliverySimulation::Update(float dt) {
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
-			drone->UpdateSmartPath(dt);
-
+			//drone->UpdateSmartPath(dt);
+			drone->UpdatePosition(dt);
 
 			//Only need to update the the direction to the customers location once
 

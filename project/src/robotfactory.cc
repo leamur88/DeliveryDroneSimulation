@@ -14,7 +14,7 @@ namespace csci3081 {
             double radius = JsonHelper::GetDouble(entity, "radius");
             double speed = JsonHelper::GetDouble(entity, "speed");
 
-            return new Robot(position, direction, speed, radius, entity);
+            //return new Robot(position, direction, speed, radius, entity);
         }
         printf("unable to create entity\n");
         return NULL;

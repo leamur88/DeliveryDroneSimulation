@@ -14,6 +14,7 @@
 #include "dronefactory.h"
 #include "customerfactory.h"
 #include "packagefactory.h"
+#include "robotfactory.h"
 
 
 

@@ -22,14 +22,14 @@ namespace csci3081 {
      *
      * It creates robot objects through the create entity function
      */
-    class robotFactory : public IEntityFactory{
+    class RobotFactory : public IEntityFactory{
         public:
             /**
              * @brief This is the default constructor for the robot factory
              * 
              * It takes in no parameters, and it does not need to initialize anything
              */
-            robotFactory();
+            RobotFactory();
 
             /**
              * @brief This returns a robot if the entity is meant to be a robot
