@@ -81,6 +81,10 @@ namespace csci3081 {
 			this->customerRoute = customerRoute;
 		}
 
+		void SetBatteryCapacity(float capacity){
+    		battery->SetMaxCharge(capacity);
+		}
+
 		protected:
 			std::vector< std::vector<float>> packageRoute;
 			std::vector< std::vector<float>> customerRoute;

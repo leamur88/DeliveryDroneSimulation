@@ -13,9 +13,17 @@ namespace csci3081 {
             std::vector<float> direction = JsonHelper::GetStdFloatVector(entity, "direction");
             double radius = JsonHelper::GetDouble(entity, "radius");
             double speed = JsonHelper::GetDouble(entity, "speed");
-            std::string path = JsonHelper::GetString(entity, "path");
 
-            return new Drone(position, direction, speed, radius, path, entity);
+            Drone* d = new Drone(position, direction, speed, radius, entity);
+            if (JsonHelper::ContainsKey(entity, "path")){
+                d->SetPath(JsonHelper::GetString(entity, "path"));
+            }
+
+            if (JsonHelper::ContainsKey(entity, "battery_capacity")){
+                d->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
+            }
+            
+            return d;
         }
         printf("unable to create entity\n");
         return NULL;
