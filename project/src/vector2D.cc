@@ -2,6 +2,8 @@
 #include<cmath>
 namespace csci3081 {
 
+Vector2D::Vector2D(){}
+
 Vector2D::Vector2D(std::vector<float> temp){
     for (int i=0; i < temp.size();i++){
         vec.push_back(temp[i]);

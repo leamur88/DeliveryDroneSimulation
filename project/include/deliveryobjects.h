@@ -9,6 +9,7 @@
 #include "entity_base.h"
 #include "battery.h"
 #include "vector3D.h"
+#include "vector2D.h"
 #include "package.h"
 
 

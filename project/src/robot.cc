@@ -8,7 +8,12 @@ namespace csci3081 {
 Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
 	
 	for (int i=0; i < pos.size();i++){
-		this->position.push_back(pos[i]);
+		if (i==1){
+			this->position.push_back(pos[i]+12);
+		}
+		else{
+			this->position.push_back(pos[i]);
+		}
 		
 	}
 
@@ -27,7 +32,7 @@ Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed,
 Robot::~Robot(){delete battery;}
 
 void Robot::UpdatePosition(float dt){
-	Vector3D vec;
+	Vector2D vec;
   if(this->package->IsDelivered() == false){
 	if (battery->IsDead()){
 		return;
@@ -51,13 +56,13 @@ void Robot::UpdatePosition(float dt){
 	  if(temp2 <= .5) {
 		customerRouteStep +=1;
 	  }
-	  Vector3D init(position);
-	  Vector3D update(customerRoute.at(customerRouteStep - 1));
-	  Vector3D change = update - init;
+	  Vector2D init(position);
+	  Vector2D update(customerRoute.at(customerRouteStep - 1));
+	  Vector2D change = update - init;
 	  change.Normalize();
 	  change.Scale(dt);
 	  change.Scale(speed);
-	  Vector3D newLoc = init + change;
+	  Vector2D newLoc = init + change;
 	  position.clear();
 	  for (int i=0; i < newLoc.GetVector().size();i++){
 		  this->position.push_back(newLoc.GetVector()[i]);
@@ -66,18 +71,18 @@ void Robot::UpdatePosition(float dt){
 	}
 	
 	else if (!pickedUpPackage && !this->package->IsDelivered()) {
-	  //Vector3D temp1 = 
+	  //Vector2D temp1 = 
 	  float temp1 = vec.Distance(this->position, packageRoute.at(packageRouteStep - 1));
 	  if( temp1 <= .5) {
 		packageRouteStep +=1;
 	  }
-	  Vector3D init(position);
-	  Vector3D update(packageRoute.at(packageRouteStep - 1));
-	  Vector3D change = update - init;
+	  Vector2D init(position);
+	  Vector2D update(packageRoute.at(packageRouteStep - 1));
+	  Vector2D change = update - init;
 	  change.Normalize();
 	  change.Scale(dt);
 	  change.Scale(speed);
-	  Vector3D newLoc = init + change;
+	  Vector2D newLoc = init + change;
 	  position.clear();
 	  for (int i=0; i < newLoc.GetVector().size();i++){
 		  this->position.push_back(newLoc.GetVector()[i]);

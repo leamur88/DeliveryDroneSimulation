@@ -33,12 +33,12 @@ namespace csci3081 {
 			* @param[in] vec Float Vector
 			*/
 			Vector3D(std::vector<float> vec);
+
 			/**
 			* @brief This is the constructor for the Vector3D class.
 			*
 			* This is the general constructor for the Vector3D. This will allow significantly smoother vector opeations
 			* for the relationships between the drone, customer, and package classes.
-			*
 			*
 			*/
 			Vector3D();
