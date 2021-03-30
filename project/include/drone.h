@@ -28,43 +28,25 @@ namespace csci3081 {
 		 *
 		 * This is the general constructor for the Drones. It initializes all of the drones attributes using the
 		 * input parameters. The first parameter is the drones position vector, the second is the drones direction
-		 * vector, the following two are additional attributes, and the last is the drone picojson object itself.
+		 * vector, the following three are additional attributes, and the last is the drone picojson object itself.
 		 *
 		 *
 		 * @param[in] pos Position vector for the drone.
 		 * @param[in] direction Direction vector for the drone.
 		 * @param[in] speed speed of the drone.
 		 * @param[in] radius radius of the drone.
+		 * @param[in] path The type of path the drone will take
 		 * @param[in] picojson The drone's picojson object.
 		 *
 		 */
-		Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& obj);
+		Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, std::string path, const picojson::object& obj);
 
 		/**
 		 * @brief This is the Destructor for a Drone object
 		 */
 		~Drone();
 
-		/**
-
-		 * @brief This is function simply returns the position vector for a given drone.
-		 *
-		 * This function will return the float vector.
-		 *
-		 * @return Drone Position Vector
-		 */
-		//const std::vector<float>& GetPosition() const;
-
-		/**
-		 * @brief This is function simply returns the direction vector for a given drone.
-		 *
-		 * This function will return the float vector.
-		 *
-		 *
-		 * @return Drone Direction Vector
-		 */
-		//const std::vector<float>& GetDirection() const;
-
+		void UpdateBeeline(float dt);
 
 		/**
 		 *  @brief This will set the direction vector within the Drone class.
@@ -198,6 +180,7 @@ namespace csci3081 {
 			std::vector< std::vector<float>> customerRoute;
 			int packageRouteStep = 1;
 			int customerRouteStep = 1;
+			std::string path;
 		};
 
 }

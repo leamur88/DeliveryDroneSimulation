@@ -5,7 +5,7 @@
 namespace csci3081 {
 
 
-Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
+Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, std::string path, const picojson::object& details){
     
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
@@ -21,6 +21,7 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
     this->pickedUpPackage = false;
     this->Dynamic = true;
     this->battery = new Battery();
+    this->path = path;
     details_ = details;
 }
 
@@ -32,8 +33,7 @@ void Drone::SetPackage(Package* package){
     SetDestination(package->GetPosition());
 }
 
-
-void Drone::UpdatePosition(float dt){
+void Drone::UpdateBeeline(float dt){
     if (battery->IsDead()){
         return;
     }
@@ -47,6 +47,7 @@ void Drone::UpdatePosition(float dt){
 
     bool isPickUp = IsPickupMode();
     bool isDropOff = IsDropOffMode();
+
     if(!isPickUp&&!isDropOff){
         Vector3D init(position);
         Vector3D update(destination);
@@ -60,7 +61,9 @@ void Drone::UpdatePosition(float dt){
             this->position.push_back(newLoc.GetVector()[i]);
         }
         position[1] = 287.0;
-    }else if(isPickUp&&pickedUpPackage&&!isDropOff){
+    }
+    
+    else if(isPickUp&&pickedUpPackage&&!isDropOff){
         if(Ascend(dt)==1){
             Vector3D init(position);
             Vector3D update(destination);
@@ -74,9 +77,13 @@ void Drone::UpdatePosition(float dt){
                 this->position.push_back(newLoc.GetVector()[i]);
             }
         }
-    }else if(isPickUp&&!isDropOff){
+    }
+    
+    else if(isPickUp&&!isDropOff){
         Descend(dt);
-    }else if (isDropOff){
+    }
+    
+    else if (isDropOff){
         Descend(dt);
     }
    
@@ -84,6 +91,23 @@ void Drone::UpdatePosition(float dt){
 
     if (pickedUpPackage){
         this->package->UpdatePosition(position);
+    }
+}
+
+void Drone::UpdatePosition(float dt){
+    if (path == "beeline"){
+        printf("beeline\n");
+        UpdateBeeline(dt);
+    }
+    else if (path == "smart"){
+        printf("smart\n");
+        UpdateSmartPath(dt);
+    }
+    
+    //As a failsafe for now
+    else{
+        printf("Path not specified, will go with beeline\n");
+        UpdateBeeline(dt);
     }
     
 }
