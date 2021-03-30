@@ -54,47 +54,6 @@ namespace csci3081 {
 		 */
 		virtual void UpdatePosition(float dt) = 0;
 
-        /**
-		 *  @brief This will set the direction vector within the Drone class.
-		 * 
-		 *  The drone will access the current direction vector and update it.
-		 * 
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 * 
-		 */
-		void SetDestination(const std::vector<float>& dir){
-            destination.clear();
-            for (int i=0; i < dir.size();i++){
-                this->destination.push_back(dir[i]);
-            }
-        }
-
-
-		/**
-		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
-		 * 
-		 *  The object will call to see if it is within range of the package.
-		 * 
-		 * @return Whether or not the package can be picked up.
-		 */
-		bool Pickup();
-
-		/**
-		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
-		 * 
-		 *  The object will call this function to see if it is within range of the customer.
-		 * 
-		 * @return Whether or not the package can be dropped off.
-		 */
-		bool DropOff();
-
-		/**
-		 * @brief This function will set a package for the object object
-		 * 
-		 * @param[in] package The package that the object will carry.
-		 */
-
-		void SetPackage(Package* package);
 
 		/**
 		 * @brief returns the speed of a given object
@@ -113,8 +72,19 @@ namespace csci3081 {
 		 */
 		Package* getPackage(){return package;}
 
+		void SetPackageRoute(std::vector< std::vector<float>> packageRoute){
+			this->packageRoute = packageRoute;
+		}
+
+		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute){
+			this->customerRoute = customerRoute;
+		}
+
 		protected:
-			std::vector<float> destination;
+			std::vector< std::vector<float>> packageRoute;
+			std::vector< std::vector<float>> customerRoute;
+			int packageRouteStep = 1;
+			int customerRouteStep = 1;
 			double speed;
 			bool moving;
 			Battery* battery;

@@ -46,29 +46,24 @@ namespace csci3081 {
 		 */
 		~Drone();
 
+		/**
+		 * @brief This function is used to determine which update function the drone should use
+		 * 
+		 * Depending on the path variable, set at construction, the Drone will update its position in 
+		 * three different ways: beeline, smartpath, or parabolic.
+		 *
+		 * @param[in] dt the amount of time passed between each update call
+		 */
+		void UpdatePosition(float dt);
+
+		/**
+		 *  @brief This will update the position of the drone using the beeline path.
+		 *
+		 *  The drone will update it's position vector using beeline path.
+		 *
+		 * @param[in] float the amount of time that will have passed between calls.
+		 */
 		void UpdateBeeline(float dt);
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 *
-		 *  The drone will access the current direction vector and update it.
-		 *
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 *
-		 */
-		void SetDirection(const std::vector<float>& dir);
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 *
-		 *  The drone will access the current direction vector and update it.
-		 *
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 *
-		 */
-		//void SetDestination(const std::vector<float>& dir);
-
-		void SetPackage(Package* package);
 
 		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
@@ -79,13 +74,7 @@ namespace csci3081 {
 		 */
 		bool Pickup();
 
-		const double GetSpeed() const;
-		
-		const std::vector<float>& GetDirection() const{return direction;}
-		const std::vector<float>& GetPosition() const{return position;}
-
-		/**
-
+		/** //TODO: @varun?
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
 		 *
 		 *  The drone will call to see if it is within range of the package.
@@ -104,20 +93,9 @@ namespace csci3081 {
 		bool DropOff();
 
 		/**
-		 * @brief This function will set a package for the drone object
-		 *
-		 * @param[in] package The package that the drone will carry.
+		 * //TODO: @varun?
 		 */
 		bool IsDropOffMode();
-
-		/**
-		 * @brief This function will set a package for the drone object
-		 * 
-		 *  The object will update it's position vector using 3D vector arithemetic.
-		 * 
-		 * @param[in] float the amount of time that will have passed between calls.
-		 */
-		void UpdatePosition(float dt);
 
 		/**
 		 * @brief This function sets the drone's new destination as the customers position
@@ -127,15 +105,6 @@ namespace csci3081 {
 		void GoDropOff();
 
 		/**
-		 * @brief returns whether or not the package has been picked up yet
-		 *
-		 * This is used to determine whether or not the packages position needs to be updated alongside the drones
-		 *
-		 * @return Whether or not the package has been picked up
-		 */
-		bool IsPackagePickedUp(){return pickedUpPackage;}
-
-		/**
 		 * @brief updates the drones position whenever it is ascending with the package
 		 * 
 		 * This not only updates the drones position but stops it if it exceeds the height limit
@@ -143,6 +112,7 @@ namespace csci3081 {
 		 * @return an int representing if the ascension was successful or the hieght limit was hit
 		 */
 		int Ascend(float dt);
+		
 		/**
 		 * @brief updates the drones position whenever it needs to descend
 		 * 
@@ -151,15 +121,7 @@ namespace csci3081 {
 		 * @return an int representting if the ascension was successful or the destination was hit.
 		 */
 		int Descend(float dt);
-
-		/**
-		 * @brief Returns the package the drone is currently going to or carrying
-		 *
-		 * This is used within Delivery Simulation mainly
-		 *
-		 * @return current package
-		 */
-		Package* getPackage(){return package;}
+		
 		/**
 		 *  @brief This will update the position of the drone using smart path.
 		 *
@@ -169,17 +131,29 @@ namespace csci3081 {
 		 */
 		void UpdateSmartPath(float dt);
 
-		void SetPackageRoute(std::vector< std::vector<float>> packageRoute);
-		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute);
+		/**
+		 *  @brief This will set the destination vector within the Drone class.
+		 *
+		 *  The drone will access the current destination vector and update it.
+		 *
+		 * @param[in] dir This is the new destination the drone will fly to.
+		 *
+		 */
+		void SetDestination(const std::vector<float>& dir);
+
+		/**
+		 * @brief This function will set a package for the object object
+		 * 
+		 * @param[in] package The package that the object will carry.
+		 */
+
+		void SetPackage(Package* package);
 
 		private:
 			bool pickedUpPackage;
 			Battery* battery;
 			Package* package;
-			std::vector< std::vector<float>> packageRoute;
-			std::vector< std::vector<float>> customerRoute;
-			int packageRouteStep = 1;
-			int customerRouteStep = 1;
+			std::vector<float> destination;
 			std::string path;
 		};
 
