@@ -52,21 +52,13 @@ TEST_F(DroneTest, DroneConstructor) {
   ASSERT_FLOAT_EQ(d.GetVersion(), 1);
   ASSERT_FLOAT_EQ(d.GetId(), 55);
   EXPECT_TRUE(d.GetType().compare("drone") == 0);
-  std::vector<float> new_direction_to_add;
-  new_direction_to_add.push_back(0);
-  new_direction_to_add.push_back(1);
-  new_direction_to_add.push_back(1);
-  d.SetDirection(new_direction_to_add);
-  ASSERT_FLOAT_EQ(d.GetDirection()[0], new_direction_to_add[0]);
-  ASSERT_FLOAT_EQ(d.GetDirection()[1], new_direction_to_add[1]);
-  ASSERT_FLOAT_EQ(d.GetDirection()[2], new_direction_to_add[2]);
 }
 
 TEST_F(DroneTest, DronePackageCustomerRelationship) {
   picojson::object obj = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add;
   position_to_add.push_back(500);
-  position_to_add.push_back(250);
+  position_to_add.push_back(200);
   position_to_add.push_back(-10);
   std::vector<float> direction_to_add;
   direction_to_add.push_back(1);
@@ -102,7 +94,7 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   picojson::object obj3 = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add3;
   position_to_add3.push_back(500.5);
-  position_to_add3.push_back(0);
+  position_to_add3.push_back(200);
   position_to_add3.push_back(-9.5);
   Customer c1(position_to_add3, obj3);
 

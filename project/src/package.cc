@@ -16,7 +16,9 @@ Package::Package(std::vector<float> pos, std::vector<float> destination, float w
     this->stpos = position;
     this->weight = weight;
     this->type = "package";
-    this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
+    if (JsonHelper::ContainsKey(details, "radius")){
+        this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
+    }
     details_ = details;
 }
 
