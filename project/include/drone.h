@@ -35,11 +35,10 @@ namespace csci3081 {
 		 * @param[in] direction Direction vector for the drone.
 		 * @param[in] speed speed of the drone.
 		 * @param[in] radius radius of the drone.
-		 * @param[in] path The type of path the drone will take
 		 * @param[in] picojson The drone's picojson object.
 		 *
 		 */
-		Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, std::string path, const picojson::object& obj);
+		Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& obj);
 
 		/**
 		 * @brief This is the Destructor for a Drone object
@@ -149,12 +148,12 @@ namespace csci3081 {
 
 		void SetPackage(Package* package);
 
+		void SetPath(std::string path);
+
 		private:
 			bool pickedUpPackage;
-			Battery* battery;
-			Package* package;
 			std::vector<float> destination;
-			std::string path;
+			std::string path = "default";
 		};
 
 }

@@ -5,7 +5,7 @@
 namespace csci3081 {
 
 
-Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, std::string path, const picojson::object& details){
+Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
     
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
@@ -21,7 +21,6 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
     this->pickedUpPackage = false;
     this->Dynamic = true;
     this->battery = new Battery();
-    this->path = path;
     details_ = details;
 }
 
@@ -181,12 +180,12 @@ void Drone::UpdateSmartPath(float dt){
     }
     battery->DepleteBattery(dt);
     if (pickedUpPackage == false ) {
-      float distance = vec.magnitude(this->position, this->package->GetPosition());
+      float distance = vec.Distance(this->position, this->package->GetPosition());
       if (distance < this->package->GetRadius()){
         pickedUpPackage = true;
       }
     }else{
-      float distance = vec.magnitude(this->position, this->package->GetDestination());
+      float distance = vec.Distance(this->position, this->package->GetDestination());
       if(distance < this->package->GetRadius()){
         // std::vector<float> newPos (3,10000.0);
         // this->package->UpdatePosition(newPos);
@@ -195,7 +194,7 @@ void Drone::UpdateSmartPath(float dt){
     }
 
     if(pickedUpPackage && this->package->IsDelivered() == false) {
-      float temp2 = vec.magnitude(this->position, customerRoute.at(customerRouteStep - 1));
+      float temp2 = vec.Distance(this->position, customerRoute.at(customerRouteStep - 1));
       if(temp2 <= .5) {
         customerRouteStep +=1;
       }
@@ -212,7 +211,7 @@ void Drone::UpdateSmartPath(float dt){
       }
       this->package->UpdatePosition(this->position);
     }else if (pickedUpPackage == false && this->package->IsDelivered() == false) {
-      float temp1 = vec.magnitude(this->position, packageRoute.at(packageRouteStep - 1));
+      float temp1 = vec.Distance(this->position, packageRoute.at(packageRouteStep - 1));
       if( temp1 <= .5) {
         packageRouteStep +=1;
       }
@@ -241,6 +240,10 @@ void Drone::SetDestination(const std::vector<float>& dir){
     for (int i=0; i < dir.size();i++){
         this->destination.push_back(dir[i]);
     }
+}
+
+void Drone::SetPath(std::string path){
+    this->path = path;
 }
 
 

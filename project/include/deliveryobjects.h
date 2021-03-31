@@ -9,6 +9,7 @@
 #include "entity_base.h"
 #include "battery.h"
 #include "vector3D.h"
+#include "vector2D.h"
 #include "package.h"
 
 
@@ -78,6 +79,10 @@ namespace csci3081 {
 
 		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute){
 			this->customerRoute = customerRoute;
+		}
+
+		void SetBatteryCapacity(float capacity){
+    		battery->SetMaxCharge(capacity);
 		}
 
 		protected:
