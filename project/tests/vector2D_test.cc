@@ -60,7 +60,7 @@ TEST_F(Vector2DTest, VectorOperations) {
   vec1.push_back(-44.56);
   std::vector<float> vec2;
   vec2.push_back(10);
-  vec2.push_back(0);
+  vec2.push_back(3);
   vec2.push_back(12);
   Vector2D v1(vec1);
   Vector2D v2(vec2);
@@ -70,12 +70,35 @@ TEST_F(Vector2DTest, VectorOperations) {
 
 
   ASSERT_FLOAT_EQ(v3.GetVector()[0], vec2[0]+vec1[0]);
-  ASSERT_FLOAT_EQ(v3.GetVector()[1], vec2[1]+vec1[1]);
+  ASSERT_FLOAT_EQ(v3.GetVector()[1], vec2[1]);
   ASSERT_FLOAT_EQ(v3.GetVector()[2], vec2[2]+vec1[2]);
 
   ASSERT_FLOAT_EQ(v4.GetVector()[0], vec2[0]-vec1[0]);
-  ASSERT_FLOAT_EQ(v4.GetVector()[1], vec2[1]-vec1[1]);
+  ASSERT_FLOAT_EQ(v4.GetVector()[1], vec2[1]);
   ASSERT_FLOAT_EQ(v4.GetVector()[2], vec2[2]-vec1[2]);
 
+  v2.Scale(2);
+  ASSERT_FLOAT_EQ(v2.GetVector()[0], vec2[0]*2);
+  ASSERT_FLOAT_EQ(v2.GetVector()[1], vec2[1]);
+  ASSERT_FLOAT_EQ(v2.GetVector()[2], vec2[2]*2);
+
+  ASSERT_FLOAT_EQ(v2.Magnitude(), sqrt(976));
+
+  std::vector<float> vec3;
+  vec3.push_back(10);
+  vec3.push_back(0);
+  vec3.push_back(10);
+
+  Vector2D v5(vec3);
+  float mag = v5.Magnitude();
+  v5.Normalize();
+  ASSERT_FLOAT_EQ(v5.GetVector()[0], vec3[0]/mag);
+  ASSERT_FLOAT_EQ(v5.GetVector()[1], vec3[1]);
+  ASSERT_FLOAT_EQ(v5.GetVector()[2], vec3[2]/mag);
+  ASSERT_FLOAT_EQ(v5.Magnitude(), 1);
+
+  Vector2D v6(vec3);
+  float dist = v6.Distance(vec2, vec3);
+  ASSERT_FLOAT_EQ(dist, 2.0);
 }
 }  // namespace csci3081

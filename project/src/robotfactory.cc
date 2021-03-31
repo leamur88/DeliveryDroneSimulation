@@ -5,7 +5,7 @@ namespace csci3081 {
     RobotFactory::RobotFactory(){
     }
 
-
+    //coomment
     IEntity* RobotFactory::CreateEntity(const picojson::object& entity){
         if (JsonHelper::GetString(entity, "type") == "robot") {
 

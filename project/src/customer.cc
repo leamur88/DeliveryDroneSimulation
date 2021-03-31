@@ -11,7 +11,9 @@ Customer::Customer(std::vector<float> location, const picojson::object& details)
 
     details_ = details;
     type = "customer";
-    this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
+    if (JsonHelper::ContainsKey(details, "radius")){
+        this->radius = (float) (JsonHelper::GetDouble(details, "radius"));
+    }
 }
 
 Customer::Customer(){}
