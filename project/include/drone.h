@@ -47,8 +47,8 @@ namespace csci3081 {
 
 		/**
 		 * @brief This function is used to determine which update function the drone should use
-		 * 
-		 * Depending on the path variable, set at construction, the Drone will update its position in 
+		 *
+		 * Depending on the path variable, set at construction, the Drone will update its position in
 		 * three different ways: beeline, smartpath, or parabolic.
 		 *
 		 * @param[in] dt the amount of time passed between each update call
@@ -66,9 +66,9 @@ namespace csci3081 {
 
 		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
-		 * 
+		 *
 		 *  The object will call to see if it is within range of the package.
-		 * 
+		 *
 		 * @return Whether or not the package can be picked up.
 		 */
 		bool Pickup();
@@ -105,22 +105,22 @@ namespace csci3081 {
 
 		/**
 		 * @brief updates the drones position whenever it is ascending with the package
-		 * 
+		 *
 		 * This not only updates the drones position but stops it if it exceeds the height limit
-		 * 
+		 *
 		 * @return an int representing if the ascension was successful or the hieght limit was hit
 		 */
 		int Ascend(float dt);
-		
+
 		/**
 		 * @brief updates the drones position whenever it needs to descend
-		 * 
+		 *
 		 * This not only updates the drones position but stops to descension if the drone has hit its destination
-		 * 
+		 *
 		 * @return an int representting if the ascension was successful or the destination was hit.
 		 */
 		int Descend(float dt);
-		
+
 		/**
 		 *  @brief This will update the position of the drone using smart path.
 		 *
@@ -142,16 +142,22 @@ namespace csci3081 {
 
 		/**
 		 * @brief This function will set a package for the object object
-		 * 
+		 *
 		 * @param[in] package The package that the object will carry.
 		 */
 
-		void SetPackage(Package* package);
+		void SetPackage();
 
 		void SetPath(std::string path);
 
+		std::vector<Package*> GetPackages();
+
+		void AddPackage(Package* newPackage);
+
+
 		private:
 			bool pickedUpPackage;
+			std::vector<Package*> packages;
 			std::vector<float> destination;
 			std::string path = "default";
 		};

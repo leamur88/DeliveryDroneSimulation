@@ -40,27 +40,43 @@ void DeliverySimulation::SetGraph(const IGraph* graph) {g = graph;}
 void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 	Drone* temp_D;
 	Robot* temp_R;
+	int smallestSize = 0;
+	int index;
+	printf("before for loop\n");
 	for (int i = 0; i < entities_.size(); i++){
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			temp_D = dynamic_cast<Drone*>(entities_[i]);
-			Package* p = dynamic_cast<Package*>(package);
-			Customer* c = dynamic_cast<Customer*>(dest);
-			p->SetCustomer(c);
-			temp_D->SetPackage(p);
-			temp_D->SetPackageRoute(g->GetPath(temp_D->GetPosition(), p->GetPosition() ) );
-			temp_D->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
-
+			if (temp_D->GetPackages().size() <= smallestSize) {
+				index = i;
+			}
 		}
-		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
-			temp_R = dynamic_cast<Robot*>(entities_[i]);
-			Package* p = dynamic_cast<Package*>(package);
-			Customer* c = dynamic_cast<Customer*>(dest);
-			p->SetCustomer(c);
-			temp_R->SetPackage(p);
-			temp_R->SetPackageRoute(g->GetPath(temp_R->GetPosition(), p->GetPosition() ) );
-			temp_R->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
-		}
+		// if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
+		// 	temp_R = dynamic_cast<Robot*>(entities_[i]);
+		// 	if (temp_R->GetPackages().size() < smallestSize) {
+		// 		index = i;
+		// 	}
+		// }
+	}//end for loop
+	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "drone") {
+		temp_D = dynamic_cast<Drone*>(entities_[index]);
+		Package* p = dynamic_cast<Package*>(package);
+		Customer* c = dynamic_cast<Customer*>(dest);
+		p->SetCustomer(c);
+		printf("before add package\n");
+		temp_D->AddPackage(p);
+		temp_D->SetPackage();
+		temp_D->SetPackageRoute(g->GetPath(temp_D->GetPosition(), p->GetPosition() ) );
+		temp_D->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
 	}
+	// if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "robot") {
+	// 	temp_R = dynamic_cast<Robot*>(entities_[index]);
+	// 	Package* p = dynamic_cast<Package*>(package);
+	// 	Customer* c = dynamic_cast<Customer*>(dest);
+	// 	p->SetCustomer(c);
+	// 	temp_R->SetPackage(p);
+	// 	temp_R->SetPackageRoute(g->GetPath(temp_R->GetPosition(), p->GetPosition() ) );
+	// 	temp_R->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
+	// }
 }
 
 void DeliverySimulation::AddObserver(IEntityObserver* observer) {}
