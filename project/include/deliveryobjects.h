@@ -85,6 +85,14 @@ namespace csci3081 {
     		battery->SetMaxCharge(capacity);
 		}
 
+		std::vector<Package*> GetPackages() {
+			return this->packages;
+		}
+
+		void AddPackage(Package* newPackage){
+			this->packages.push_back(newPackage);
+		}
+
 		protected:
 			std::vector< std::vector<float>> packageRoute;
 			std::vector< std::vector<float>> customerRoute;
@@ -94,6 +102,7 @@ namespace csci3081 {
 			bool moving;
 			Battery* battery;
 			Package* package;
+			std::vector<Package*> packages;
 		};
 
 }

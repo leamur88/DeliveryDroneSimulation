@@ -154,14 +154,9 @@ namespace csci3081 {
 
 		void SetPath(std::string path);
 
-		std::vector<Package*> GetPackages();
-
-		void AddPackage(Package* newPackage);
-
 
 		private:
 			bool pickedUpPackage;
-			std::vector<Package*> packages;
 			std::vector<float> destination;
 			std::string path = "default";
 		};

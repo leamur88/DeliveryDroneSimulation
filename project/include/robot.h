@@ -76,7 +76,7 @@ namespace csci3081 {
 		 * @param[in] package The package that the robot will carry.
 		 */
 
-		void SetPackage(Package* package);
+		void SetPackage();
 
 
 		/**

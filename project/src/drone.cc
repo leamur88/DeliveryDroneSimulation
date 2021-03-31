@@ -100,7 +100,6 @@ void Drone::UpdateBeeline(float dt){
         Descend(dt);
     }
 
-    //Sets the height to be taller than all of the buildings
     if (pickedUpPackage){
         this->package->UpdatePosition(position);
     }
@@ -193,8 +192,6 @@ void Drone::UpdateSmartPath(float dt){
     }else{
       float distance = vec.Distance(this->position, this->package->GetDestination());
       if(distance < this->package->GetRadius()){
-        // std::vector<float> newPos (3,10000.0);
-        // this->package->UpdatePosition(newPos);
         this->package->Deliver();
         this->packages.erase(this->packages.begin());
         SetPackage();
@@ -256,13 +253,7 @@ void Drone::SetPath(std::string path){
     this->path = path;
 }
 
-std::vector<Package*> Drone::GetPackages() {
-  return this->packages;
-}
 
-void Drone::AddPackage(Package* newPackage){
-  this->packages.push_back(newPackage);
-}
 
 
 }
