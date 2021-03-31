@@ -93,7 +93,10 @@ namespace csci3081 {
 			this->packages.push_back(newPackage);
 		}
 
+		void SetGraph(const IGraph* graph) {g = graph;}
+
 		protected:
+			const IGraph* g;
 			std::vector< std::vector<float>> packageRoute;
 			std::vector< std::vector<float>> customerRoute;
 			int packageRouteStep = 1;

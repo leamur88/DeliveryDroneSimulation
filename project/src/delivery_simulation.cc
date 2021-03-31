@@ -67,10 +67,9 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		Customer* c = dynamic_cast<Customer*>(dest);
 		p->SetCustomer(c);
 		printf("before add package drone\n");
+		temp_D->SetGraph(g);
 		temp_D->AddPackage(p);
 		temp_D->SetPackage();
-		temp_D->SetPackageRoute(g->GetPath(temp_D->GetPosition(), p->GetPosition() ) );
-		temp_D->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
 	}
 
 	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "robot") {
@@ -80,10 +79,9 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		Customer* c = dynamic_cast<Customer*>(dest);
 		p->SetCustomer(c);
 		printf("before add package robot\n");
+		temp_R->SetGraph(g);
 		temp_R->AddPackage(p);
 		temp_R->SetPackage();
-		temp_R->SetPackageRoute(g->GetPath(temp_R->GetPosition(), p->GetPosition() ) );
-		temp_R->SetCustomerRoute(g->GetPath(p->GetPosition(), c->GetPosition() ) );
 	}
 }
 
