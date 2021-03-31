@@ -3,6 +3,7 @@
 #include "../include/delivery_simulation.h"
 #include <EntityProject/entity.h>
 #include "json_helper.h"
+#include "compositefactory.h"
 
 
 #include <iostream>
@@ -26,6 +27,7 @@ class FactoryTest : public ::testing::Test {
  ******************************************************************************/
 
 TEST_F(FactoryTest, DroneFactory) {
+  DroneFactory* dronefactory = new DroneFactory();
   picojson::object obj = JsonHelper::CreateJsonObject();
   JsonHelper::AddStringToJsonObject(obj, "type", "drone");
   std::vector<float> position_to_add;
@@ -42,7 +44,8 @@ TEST_F(FactoryTest, DroneFactory) {
   JsonHelper::AddFloatToJsonObject(obj,"radius",radius);
   double speed = 30;
   JsonHelper::AddFloatToJsonObject(obj,"speed",speed);
-  IEntity* entity = system->CreateEntity(obj);
+  
+  IEntity* entity = dronefactory->CreateEntity(obj);
 
   // Checks that the returned entity is not NULL
   ASSERT_NE(entity, nullptr) << "The entity created";
@@ -58,9 +61,11 @@ TEST_F(FactoryTest, DroneFactory) {
   // Checks that when GetDetails() is called, the entity returns 
   //  the picojson object that was used to initialize it
   ASSERT_EQ(picojson::value(system->GetEntities()[0]->GetDetails()).serialize(), picojson::value(obj).serialize());
+  delete dronefactory;
 }
 
 TEST_F(FactoryTest, PackageFactory) {
+  PackageFactory* packagefactory = new PackageFactory();
   picojson::object obj = JsonHelper::CreateJsonObject();
   JsonHelper::AddStringToJsonObject(obj, "type", "package");
   std::vector<float> position_to_add;
@@ -73,7 +78,7 @@ TEST_F(FactoryTest, PackageFactory) {
   direction_to_add.push_back(0);
   direction_to_add.push_back(7);
   JsonHelper::AddStdFloatVectorToJsonObject(obj, "direction", direction_to_add);
-  IEntity* entity = system->CreateEntity(obj);
+  IEntity* entity = packagefactory->CreateEntity(obj);
 
   // Checks that the returned entity is not NULL
   ASSERT_NE(entity, nullptr) << "The entity created";
@@ -89,10 +94,11 @@ TEST_F(FactoryTest, PackageFactory) {
   // Checks that when GetDetails() is called, the entity returns 
   //  the picojson object that was used to initialize it
   ASSERT_EQ(picojson::value(system->GetEntities()[0]->GetDetails()).serialize(), picojson::value(obj).serialize());
-
+  delete packagefactory;
 }
 
 TEST_F(FactoryTest, CustomerFactory) {
+  CustomerFactory* customerfactory = new CustomerFactory();
   picojson::object obj = JsonHelper::CreateJsonObject();
   JsonHelper::AddStringToJsonObject(obj, "type", "customer");
   std::vector<float> position_to_add;
@@ -100,7 +106,7 @@ TEST_F(FactoryTest, CustomerFactory) {
   position_to_add.push_back(5000.232);
   position_to_add.push_back(-2210.623);
   JsonHelper::AddStdFloatVectorToJsonObject(obj, "position", position_to_add);
-  IEntity* entity = system->CreateEntity(obj);
+  IEntity* entity = customerfactory->CreateEntity(obj);
 
   // Checks that the returned entity is not NULL
   ASSERT_NE(entity, nullptr) << "The entity created";
@@ -113,11 +119,14 @@ TEST_F(FactoryTest, CustomerFactory) {
   // Checks that when GetDetails() is called, the entity returns 
   //  the picojson object that was used to initialize it
   ASSERT_EQ(picojson::value(system->GetEntities()[0]->GetDetails()).serialize(), picojson::value(obj).serialize());
-
+  delete customerfactory;
 }
 
 TEST_F(FactoryTest, CompositeFactory) {
-
+  CompositeFactory* compositefactory = new CompositeFactory();
+  compositefactory->AddFactory(new DroneFactory());
+	compositefactory->AddFactory(new CustomerFactory());
+	compositefactory->AddFactory(new PackageFactory());
   std::vector<float> position_to_add;
   position_to_add.push_back(498.292);
   position_to_add.push_back(253.883);
@@ -135,7 +144,7 @@ TEST_F(FactoryTest, CompositeFactory) {
   JsonHelper::AddStdFloatVectorToJsonObject(obj, "direction", direction_to_add);
   JsonHelper::AddFloatToJsonObject(obj,"radius",radius);
   JsonHelper::AddFloatToJsonObject(obj,"speed",speed);
-  IEntity* drone = system->CreateEntity(obj);
+  IEntity* drone = compositefactory->CreateEntity(obj);
   // Checks that the returned entity is not NULL
   ASSERT_NE(drone, nullptr) << "The entity created";
   system->AddEntity(drone);
@@ -156,7 +165,7 @@ TEST_F(FactoryTest, CompositeFactory) {
   JsonHelper::AddStringToJsonObject(obj1, "type", "package");
   JsonHelper::AddStdFloatVectorToJsonObject(obj1, "position", position_to_add);
   JsonHelper::AddStdFloatVectorToJsonObject(obj1, "direction", direction_to_add);
-  IEntity* package = system->CreateEntity(obj1);
+  IEntity* package = compositefactory->CreateEntity(obj1);
 
   // Checks that the returned entity is not NULL
   ASSERT_NE(package, nullptr) << "The entity created";
@@ -179,7 +188,7 @@ TEST_F(FactoryTest, CompositeFactory) {
   picojson::object obj2 = JsonHelper::CreateJsonObject();
   JsonHelper::AddStringToJsonObject(obj2, "type", "customer");
   JsonHelper::AddStdFloatVectorToJsonObject(obj2, "position", position_to_add);
-  IEntity* customer = system->CreateEntity(obj2);
+  IEntity* customer = compositefactory->CreateEntity(obj2);
 
   // Checks that the returned entity is not NULL
   ASSERT_NE(customer, nullptr) << "The entity created";

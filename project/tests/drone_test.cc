@@ -130,9 +130,6 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
 
   d.SetPackage(&p1);
   EXPECT_TRUE(d.Pickup());
-  d.GoDropOff();
-  printf("%f %f %f\n",p1.GetDestination()[0], p1.GetDestination()[1],p1.GetDestination()[2]);
-  EXPECT_FALSE(d.DropOff());
 
   d.SetPackage(&p2);
   EXPECT_FALSE(d.Pickup());
