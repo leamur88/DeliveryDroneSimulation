@@ -73,12 +73,12 @@ namespace csci3081 {
 		 */
 		bool Pickup();
 
-		/** //TODO: @varun?
-		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
+		/**
+		 * @brief This function will check if the drone is range to start going ascending or descending over the package.
 		 *
-		 *  The drone will call to see if it is within range of the package.
+		 *  The drone's update beeline function calls this function to make sure it is in range to descned towards the package.
 		 *
-		 * @return Whether or not the package can be picked up.
+		 * @return if the drone is in range to descending towards the package.
 		 */
 		bool IsPickupMode();
 
@@ -92,7 +92,11 @@ namespace csci3081 {
 		bool DropOff();
 
 		/**
-		 * //TODO: @varun?
+		 * @brief This function will check if the drone is range to start going ascending or descending over the customer.
+		 *
+		 *  The drone's update beeline function calls this function to make sure it is in range to ascend or descend towards the customer.
+		 *
+		 * @return if the drone is in range to descending towards the customer.
 		 */
 		bool IsDropOffMode();
 
