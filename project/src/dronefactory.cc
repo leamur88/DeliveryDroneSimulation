@@ -22,7 +22,8 @@ namespace csci3081 {
             if (JsonHelper::ContainsKey(entity, "battery_capacity")){
                 d->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
             }
-            
+
+
             return d;
         }
         printf("unable to create entity\n");

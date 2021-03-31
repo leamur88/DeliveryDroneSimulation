@@ -6,14 +6,14 @@ namespace csci3081 {
 
 
 Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
-    
+
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
-        
+
     }
 
     for (int i=0; i < direction.size();i++){
-        this->direction.push_back(direction[i]);  
+        this->direction.push_back(direction[i]);
     }
     this->radius = radius;
     this->speed = speed;
@@ -27,19 +27,22 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 Drone::~Drone(){delete battery;}
 
 void Drone::UpdatePosition(float dt){
+    if (this->packages.size() <= 0){
+      return;
+    }
     if (path == "beeline"){
         UpdateBeeline(dt);
     }
     else if (path == "smart"){
         UpdateSmartPath(dt);
     }
-    
+
     //As a failsafe for now
     else{
         printf("Path not specified, will go with beeline\n");
         UpdateBeeline(dt);
     }
-    
+
 }
 
 
@@ -49,15 +52,15 @@ void Drone::UpdateBeeline(float dt){
     }
 
     if (!package->IsDelivered()){
-        printf("Drone's position: %.2f %.2f %.2f\n" , position[0],position[1],position[2]);
-        printf("Packages's position: %.2f %.2f %.2f\n" , this->package->GetPosition()[0],this->package->GetPosition()[1],this->package->GetPosition()[2]);
+        // printf("Drone's position: %.2f %.2f %.2f\n" , position[0],position[1],position[2]);
+        // printf("Packages's position: %.2f %.2f %.2f\n" , this->package->GetPosition()[0],this->package->GetPosition()[1],this->package->GetPosition()[2]);
     }
 
     battery->DepleteBattery(dt);
 
     bool isPickUp = IsPickupMode();
     bool isDropOff = IsDropOffMode();
-    
+
     if(!isPickUp&&!isDropOff){
         Vector3D init(position);
         Vector3D update(destination);
@@ -73,7 +76,7 @@ void Drone::UpdateBeeline(float dt){
         position[1] = 287.0;
     }
     else if(isPickUp&&pickedUpPackage&&!isDropOff){
-        
+
         if(Ascend(dt)==1){
             Vector3D init(position);
             Vector3D update(destination);
@@ -92,11 +95,11 @@ void Drone::UpdateBeeline(float dt){
         printf("here\n");
         Descend(dt);
     }
-    
+
     else if (isDropOff){
         Descend(dt);
     }
-   
+
     //Sets the height to be taller than all of the buildings
     if (pickedUpPackage){
         this->package->UpdatePosition(position);
@@ -130,6 +133,8 @@ bool Drone::DropOff(){
         if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius+(package->GetCustRadius())){
             if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
                 package->Deliver();
+                this->packages.erase(this->packages.begin());
+                SetPackage();
                 return true;
             }
         }
@@ -173,6 +178,7 @@ void Drone::GoDropOff(){
 
 
 void Drone::UpdateSmartPath(float dt){
+  printf("in update smart path\n");
   Vector3D vec;
   if(this->package->IsDelivered() == false){
     if (battery->IsDead()){
@@ -190,6 +196,8 @@ void Drone::UpdateSmartPath(float dt){
         // std::vector<float> newPos (3,10000.0);
         // this->package->UpdatePosition(newPos);
         this->package->Deliver();
+        this->packages.erase(this->packages.begin());
+        SetPackage();
       }
     }
 
@@ -230,9 +238,11 @@ void Drone::UpdateSmartPath(float dt){
   }
 }
 
-void Drone::SetPackage(Package* package){
-    this->package = package;
-    SetDestination(package->GetPosition());
+void Drone::SetPackage(){
+    if(this->packages.size() >= 1) {
+      this->package = packages.at(0);
+      SetDestination(package->GetPosition());
+    }
 }
 
 void Drone::SetDestination(const std::vector<float>& dir){
@@ -245,5 +255,14 @@ void Drone::SetDestination(const std::vector<float>& dir){
 void Drone::SetPath(std::string path){
     this->path = path;
 }
+
+std::vector<Package*> Drone::GetPackages() {
+  return this->packages;
+}
+
+void Drone::AddPackage(Package* newPackage){
+  this->packages.push_back(newPackage);
+}
+
 
 }
