@@ -5,7 +5,7 @@
 namespace csci3081 {
 
 
-Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, std::string path, const picojson::object& details){
+Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
     
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
@@ -21,7 +21,6 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
     this->pickedUpPackage = false;
     this->Dynamic = true;
     this->battery = new Battery();
-    this->path = path;
     details_ = details;
 }
 
@@ -241,6 +240,10 @@ void Drone::SetDestination(const std::vector<float>& dir){
     for (int i=0; i < dir.size();i++){
         this->destination.push_back(dir[i]);
     }
+}
+
+void Drone::SetPath(std::string path){
+    this->path = path;
 }
 
 
