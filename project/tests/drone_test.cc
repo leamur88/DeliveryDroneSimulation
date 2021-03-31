@@ -100,21 +100,60 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
 
   picojson::object obj4 = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add4;
-  position_to_add4.push_back(400);
   position_to_add4.push_back(0);
-  position_to_add4.push_back(-40);
+  position_to_add4.push_back(0);
+  position_to_add4.push_back(0);
   Customer c2(position_to_add4, obj4);
+
+  picojson::object obj5= JsonHelper::CreateJsonObject();
+  std::vector<float> position_to_add5;
+  position_to_add5.push_back(500.5);
+  position_to_add5.push_back(0);
+  position_to_add5.push_back(-9.5);
+  Customer c3(position_to_add5, obj5);
+
+  picojson::object obj6 = JsonHelper::CreateJsonObject();
+  std::vector<float> position_to_add6;
+  position_to_add6.push_back(500);
+  position_to_add6.push_back(20);
+  position_to_add6.push_back(-10);
+  std::vector<float> direction_to_add6;
+  direction_to_add6.push_back(1);
+  direction_to_add6.push_back(0);
+  direction_to_add6.push_back(0);
+  Package p3(position_to_add6, direction_to_add6, w, obj6);
+
 
   p1.SetCustomer(&c2);
   p2.SetCustomer(&c1);
+  p3.SetCustomer(&c3);
 
   d.SetPackage(&p1);
   EXPECT_TRUE(d.Pickup());
   d.GoDropOff();
+  printf("%f %f %f\n",p1.GetDestination()[0], p1.GetDestination()[1],p1.GetDestination()[2]);
   EXPECT_FALSE(d.DropOff());
+
   d.SetPackage(&p2);
   EXPECT_FALSE(d.Pickup());
   d.GoDropOff();
   EXPECT_TRUE(d.DropOff());
+
+  d.SetPackage(&p3);
+  EXPECT_TRUE(d.IsDropOffMode());
+  EXPECT_FALSE(d.DropOff());
+  d.GoDropOff();
+  d.SetPackage(&p3);
+  EXPECT_TRUE(d.IsPickupMode());
+  EXPECT_FALSE(d.Pickup());
+
+  float position = d.GetPosition()[1];
+  d.Ascend(.5);
+  ASSERT_FLOAT_EQ(d.GetPosition()[1], position + .5*30);
+  d.Descend(.5); 
+  ASSERT_FLOAT_EQ(d.GetPosition()[1], position);
+  d.Descend(.5); 
+  ASSERT_FLOAT_EQ(d.GetPosition()[1], position - .5*30);
+
 }
 }  // namespace csci3081

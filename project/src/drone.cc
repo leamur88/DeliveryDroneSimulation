@@ -246,5 +246,4 @@ void Drone::SetPath(std::string path){
     this->path = path;
 }
 
-
 }
