@@ -1,4 +1,5 @@
 #include "drone.h"
+#include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -126,6 +127,11 @@ bool Drone::Pickup(){
         if(abs( (int) (position[1] - package->GetStartPosition()[1])) <= radius+ (package->GetRadius())){
             if(abs( (int) (position[2] - package->GetStartPosition()[2])) <= radius+ (package->GetRadius())){
                 pickedUpPackage = true;
+                picojson::object obj = JsonHelper::CreateJsonNotification();
+                JsonHelper::AddStringToJsonObject(obj, "value", "en route"); 
+                for (int i = 0; i < observers.size(); i++){
+                  observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+                }
                 return true;
             }
         }
@@ -147,9 +153,15 @@ bool Drone::DropOff(){
         if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius+(package->GetCustRadius())){
             if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
                 package->Deliver();
+                picojson::object obj = JsonHelper::CreateJsonNotification();
+                JsonHelper::AddStringToJsonObject(obj, "value", "delivered"); 
+                for (int i = 0; i < observers.size(); i++){
+                  observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+                }
                 this->packages.erase(this->packages.begin());
                 pickedUpPackage = false;
                 SetPackage();
+                
                 return true;
             }
         }
@@ -204,16 +216,27 @@ void Drone::UpdateSmartPath(float dt){
       float distance = vec.Distance(this->position, this->package->GetPosition());
       if (distance < this->package->GetRadius()){
         pickedUpPackage = true;
+        picojson::object obj = JsonHelper::CreateJsonNotification();
+        JsonHelper::AddStringToJsonObject(obj, "value", "en route"); 
+        for (int i = 0; i < observers.size(); i++){
+          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+        }
       }
     }else{
       float distance = vec.Distance(this->position, this->package->GetDestination());
       if(distance < this->package->GetRadius()){
         this->package->Deliver();
+        picojson::object obj = JsonHelper::CreateJsonNotification();
+        JsonHelper::AddStringToJsonObject(obj, "value", "delivered"); 
+        for (int i = 0; i < observers.size(); i++){
+          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+        }
         this->packages.erase(this->packages.begin());
         pickedUpPackage = false;
         customerRouteStep = 1;
         packageRouteStep = 1;
         SetPackage();
+        
       }
     }
 

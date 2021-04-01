@@ -132,6 +132,7 @@ namespace csci3081 {
 			const IGraph* g;
 			CompositeFactory* factories_;
 			int countId = 0;
+			std::vector<IEntityObserver*> observers;
 	};
 
 }  // namespace csci3081

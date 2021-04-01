@@ -31,89 +31,28 @@ void DeliverySimulation::AddFactory(IEntityFactory* factory) {
 	factories_->AddFactory(factory);
 }
 
-void DeliverySimulation::AddEntity(IEntity* entity) {
-	std::cout << this->countId << "\n";
-	EntityBase* temp = dynamic_cast<EntityBase*> (entity);
-	temp->SetId(countId);
-	this->countId++;
-  	entities_.push_back(entity);
+void DeliverySimulation::AddEntity(IEntity* entity) { 
+  entities_.push_back(entity);
 }
 
 void DeliverySimulation::SetGraph(const IGraph* graph) {g = graph;}
 
 void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
-	Drone* temp_D;
-	Robot* temp_R;
-	int smallestSize = 900;
-	int index;
-	printf("before for loop\n");
+	Drone* temp;
 	for (int i = 0; i < entities_.size(); i++){
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
-			temp_D = dynamic_cast<Drone*>(entities_[i]);
-			if (temp_D->GetPackages().size() <= smallestSize) {
-				index = i;
-				smallestSize = temp_D->GetPackages().size();
-			}
-		}
-		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
-			temp_R = dynamic_cast<Robot*>(entities_[i]);
-			if (temp_R->GetPackages().size() <= smallestSize) {
-				index = i;
-				smallestSize = temp_R->GetPackages().size();
-			}
-		}
-	}
-	printf("after for loop\n");
-	printf("%d\n", index);//end for loop
-	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "drone") {
-		temp_D = dynamic_cast<Drone*>(entities_[index]);
-		temp_D->ClearObservers();
-		for (int i = 0; i < observers.size(); i++){
-			temp_D->SetObserver(observers[i]);
-		}
-		Package* p = dynamic_cast<Package*>(package);
-		Customer* c = dynamic_cast<Customer*>(dest);
-		p->SetCustomer(c);
-		printf("before add package drone\n");
-		temp_D->SetGraph(g);
-		temp_D->AddPackage(p);
-		temp_D->SetPackage();
-	}
-
-	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "robot") {
-		printf("in robot\n");
-		temp_R = dynamic_cast<Robot*>(entities_[index]);
-		temp_R->ClearObservers();
-		for (int i = 0; i < observers.size(); i++){
-			temp_R->SetObserver(observers[i]);
-		}
-		Package* p = dynamic_cast<Package*>(package);
-		Customer* c = dynamic_cast<Customer*>(dest);
-		p->SetCustomer(c);
-		printf("before add package robot\n");
-		temp_R->SetGraph(g);
-		temp_R->AddPackage(p);
-		temp_R->SetPackage();
-	}
-	picojson::object obj = JsonHelper::CreateJsonNotification();
-	JsonHelper::AddStringToJsonObject(obj, "value", "scheduled"); 
-	for (int i = 0; i < observers.size(); i++){
-		observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
-	}
-}
-
-void DeliverySimulation::AddObserver(IEntityObserver* observer) {
-	observers.push_back(observer);
-}
-
-void DeliverySimulation::RemoveObserver(IEntityObserver* observer) {
-	for (int i = 0; i < observers.size(); i++){
-		if (observers[i] == observer){
-			observers.erase(observers.begin() + i);
-			break;
+			temp = dynamic_cast<Drone*>(entities_[i]);
+			Package* p = dynamic_cast<Package*>(package);
+			Customer* c = dynamic_cast<Customer*>(dest);
+			p->SetCustomer(c);
+			temp->SetPackage(p);
 		}
 	}
 }
+
+void DeliverySimulation::AddObserver(IEntityObserver* observer) {}
+
+void DeliverySimulation::RemoveObserver(IEntityObserver* observer) {}
 
 const std::vector<IEntity*>& DeliverySimulation::GetEntities() const { return entities_; }
 
@@ -124,11 +63,16 @@ void DeliverySimulation::Update(float dt) {
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
 			drone->UpdatePosition(dt);
-		}
 
-		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
-			Robot* robot = dynamic_cast<Robot*>(entities_[i]);
-			robot->UpdatePosition(dt);
+			//Only need to update the the direction to the customers location once
+			if(!drone->IsPackagePickedUp() && drone->Pickup()){
+				drone->GoDropOff();
+			}
+
+			if(!drone->getPackage()->IsDelivered() && drone->DropOff()){
+				printf("All done for me! Another happy customer!\n");
+				
+			}
 		}
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "package"){
