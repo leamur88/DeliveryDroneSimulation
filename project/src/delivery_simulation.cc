@@ -32,7 +32,11 @@ void DeliverySimulation::AddFactory(IEntityFactory* factory) {
 }
 
 void DeliverySimulation::AddEntity(IEntity* entity) {
-  entities_.push_back(entity);
+	std::cout << this->countId << "\n";
+	EntityBase* temp = dynamic_cast<EntityBase*> (entity);
+	temp->SetId(countId);
+	this->countId++;
+  	entities_.push_back(entity);
 }
 
 void DeliverySimulation::SetGraph(const IGraph* graph) {g = graph;}
