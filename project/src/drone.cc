@@ -91,6 +91,21 @@ void Drone::UpdateBeeline(float dt){
             }
         }
     }
+    else if(!pickedUpPackage && isDropOff){
+        if(Ascend(dt)==1){
+            Vector3D init(position);
+            Vector3D update(destination);
+            Vector3D change = update - init;
+            change.Normalize();
+            change.Scale(dt);
+            change.Scale(speed);
+            Vector3D newLoc = init + change;
+            position.clear();
+            for (int i=0; i < newLoc.GetVector().size();i++){
+                this->position.push_back(newLoc.GetVector()[i]);
+            }
+        }
+    }
     else if(isPickUp&&!isDropOff){
         printf("here\n");
         Descend(dt);
@@ -100,7 +115,6 @@ void Drone::UpdateBeeline(float dt){
         Descend(dt);
     }
 
-    //Sets the height to be taller than all of the buildings
     if (pickedUpPackage){
         this->package->UpdatePosition(position);
     }
@@ -134,6 +148,7 @@ bool Drone::DropOff(){
             if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
                 package->Deliver();
                 this->packages.erase(this->packages.begin());
+                pickedUpPackage = false;
                 SetPackage();
                 return true;
             }
@@ -193,10 +208,11 @@ void Drone::UpdateSmartPath(float dt){
     }else{
       float distance = vec.Distance(this->position, this->package->GetDestination());
       if(distance < this->package->GetRadius()){
-        // std::vector<float> newPos (3,10000.0);
-        // this->package->UpdatePosition(newPos);
         this->package->Deliver();
         this->packages.erase(this->packages.begin());
+        pickedUpPackage = false;
+        customerRouteStep = 1;
+        packageRouteStep = 1;
         SetPackage();
       }
     }
@@ -242,6 +258,8 @@ void Drone::SetPackage(){
     if(this->packages.size() >= 1) {
       this->package = packages.at(0);
       SetDestination(package->GetPosition());
+      this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
+	  this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
     }
 }
 
@@ -256,13 +274,7 @@ void Drone::SetPath(std::string path){
     this->path = path;
 }
 
-std::vector<Package*> Drone::GetPackages() {
-  return this->packages;
-}
 
-void Drone::AddPackage(Package* newPackage){
-  this->packages.push_back(newPackage);
-}
 
 
 }
