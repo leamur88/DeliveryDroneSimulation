@@ -91,6 +91,21 @@ void Drone::UpdateBeeline(float dt){
             }
         }
     }
+    else if(!pickedUpPackage && isDropOff){
+        if(Ascend(dt)==1){
+            Vector3D init(position);
+            Vector3D update(destination);
+            Vector3D change = update - init;
+            change.Normalize();
+            change.Scale(dt);
+            change.Scale(speed);
+            Vector3D newLoc = init + change;
+            position.clear();
+            for (int i=0; i < newLoc.GetVector().size();i++){
+                this->position.push_back(newLoc.GetVector()[i]);
+            }
+        }
+    }
     else if(isPickUp&&!isDropOff){
         printf("here\n");
         Descend(dt);
@@ -133,6 +148,7 @@ bool Drone::DropOff(){
             if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
                 package->Deliver();
                 this->packages.erase(this->packages.begin());
+                pickedUpPackage = false;
                 SetPackage();
                 return true;
             }
@@ -194,6 +210,9 @@ void Drone::UpdateSmartPath(float dt){
       if(distance < this->package->GetRadius()){
         this->package->Deliver();
         this->packages.erase(this->packages.begin());
+        pickedUpPackage = false;
+        customerRouteStep = 0;
+        packageRouteStep = 0;
         SetPackage();
       }
     }

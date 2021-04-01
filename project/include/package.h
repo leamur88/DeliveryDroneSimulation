@@ -122,7 +122,7 @@ namespace csci3081 {
 			 * @brief This function is called when the package has been delivered to the customer
 			 * 
 			 */
-			void Deliver(){delivered = true;}
+			void Deliver();
 
 			/**
 			 * @brief This function is called to see if the package has been delivered to the customer

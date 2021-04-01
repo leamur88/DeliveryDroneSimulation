@@ -58,6 +58,9 @@ void Package::SetWeight(float w){
 float Package::GetWeight(){
     return weight;
 }
+void Package::Deliver(){
+    delivered = true;
+}
 
 void Package::SetCustomer(Customer* c){
     customer = c;
