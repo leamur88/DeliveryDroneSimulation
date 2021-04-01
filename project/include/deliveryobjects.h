@@ -95,6 +95,14 @@ namespace csci3081 {
 
 		void SetGraph(const IGraph* graph) {g = graph;}
 
+		void SetObserver(IEntityObserver* observer){
+			this->observers.push_back(observer);
+		}
+
+		void ClearObservers(){
+			observers.clear();
+		}
+
 		protected:
 			const IGraph* g;
 			std::vector< std::vector<float>> packageRoute;
@@ -106,6 +114,7 @@ namespace csci3081 {
 			Battery* battery;
 			Package* package;
 			std::vector<Package*> packages;
+			std::vector<IEntityObserver*> observers;
 		};
 
 }

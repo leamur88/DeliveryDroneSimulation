@@ -1,4 +1,5 @@
 #include "robot.h"
+#include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -45,12 +46,22 @@ void Robot::UpdatePosition(float dt){
 			float distance = vec.Distance(this->position, this->package->GetPosition());
 			if (distance < this->package->GetRadius()){
 				pickedUpPackage = true;
+				picojson::object obj = JsonHelper::CreateJsonNotification();
+		        JsonHelper::AddStringToJsonObject(obj, "value", "en route"); 
+		        for (int i = 0; i < observers.size(); i++){
+		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+		        }
 			}
 		}
 		else{
 			float distance = vec.Distance(this->position, this->package->GetDestination());
 			if(distance < this->package->GetRadius()){
 				this->package->Deliver();
+				picojson::object obj = JsonHelper::CreateJsonNotification();
+		        JsonHelper::AddStringToJsonObject(obj, "value", "delivered"); 
+		        for (int i = 0; i < observers.size(); i++){
+		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+		        }
 				this->packages.erase(this->packages.begin());
 				pickedUpPackage = false;
 				customerRouteStep = 1;
