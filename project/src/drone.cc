@@ -211,8 +211,8 @@ void Drone::UpdateSmartPath(float dt){
         this->package->Deliver();
         this->packages.erase(this->packages.begin());
         pickedUpPackage = false;
-        customerRouteStep = 0;
-        packageRouteStep = 0;
+        customerRouteStep = 1;
+        packageRouteStep = 1;
         SetPackage();
       }
     }

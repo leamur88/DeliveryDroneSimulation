@@ -6,7 +6,7 @@ namespace csci3081 {
 
 
 Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
-	
+
 	for (int i=0; i < pos.size();i++){
 		if (i==1){
 			this->position.push_back(pos[i]+12);
@@ -14,11 +14,11 @@ Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed,
 		else{
 			this->position.push_back(pos[i]);
 		}
-		
+
 	}
 
 	for (int i=0; i < direction.size();i++){
-	  this->direction.push_back(direction[i]);  
+	  this->direction.push_back(direction[i]);
 	}
 	this->radius = radius;
 	this->speed = speed;
@@ -52,6 +52,9 @@ void Robot::UpdatePosition(float dt){
 			if(distance < this->package->GetRadius()){
 				this->package->Deliver();
 				this->packages.erase(this->packages.begin());
+				pickedUpPackage = false;
+				customerRouteStep = 1;
+				packageRouteStep = 1;
 				SetPackage();
 			}
 		}
@@ -74,7 +77,7 @@ void Robot::UpdatePosition(float dt){
 			}
 			this->package->UpdatePosition(this->position);
 		}
-		
+
 		else if (!pickedUpPackage && !this->package->IsDelivered()) {
 			float temp1 = vec.Distance(this->position, packageRoute.at(packageRouteStep - 1));
 			if( temp1 <= .5) {
