@@ -2,5 +2,6 @@
 .dependencies
 .vscode
 .idea
+.nfs*
 /docs/html/*
 /docs/latex/*
