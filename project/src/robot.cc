@@ -66,6 +66,7 @@ void Robot::UpdatePosition(float dt){
 				pickedUpPackage = false;
 				customerRouteStep = 1;
 				packageRouteStep = 1;
+				
 				SetPackage();
 			}
 		}
@@ -112,7 +113,21 @@ void Robot::UpdatePosition(float dt){
 
 void Robot::SetPackage(){
 	if (this->packages.size() <= 0){
+		picojson::object obj1 = JsonHelper::CreateJsonNotification();
+        JsonHelper::AddStringToJsonObject(obj1, "value", "idle"); 
+        for (int i = 0; i < observers.size(); i++){
+          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+        }
       return;
+    }
+    picojson::object obj = JsonHelper::CreateJsonNotification();
+    JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
+    std::vector<std::vector<float>> combined;
+    combined.insert(combined.end(), packageRoute.begin(), packageRoute.end());
+    combined.insert(combined.end(), customerRoute.begin(), customerRoute.end());
+    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", combined); 
+    for (int i = 0; i < observers.size(); i++){
+      observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
     }
   	this->package = packages.at(0);
 	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
