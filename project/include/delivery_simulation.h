@@ -131,6 +131,7 @@ namespace csci3081 {
 			std::vector<IEntity*> entities_;
 			const IGraph* g;
 			CompositeFactory* factories_;
+			int countId = 0;
 	};
 
 }  // namespace csci3081
