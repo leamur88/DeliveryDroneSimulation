@@ -132,6 +132,12 @@ bool Drone::Pickup(){
 				for (int i = 0; i < observers.size(); i++){
 				  observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 				}
+				picojson::object obj1 = JsonHelper::CreateJsonNotification();
+				JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
+				JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
+				for (int i = 0; i < observers.size(); i++){
+					observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+				}
 				return true;
 			}
 		}
@@ -221,12 +227,13 @@ void Drone::UpdateSmartPath(float dt){
 		for (int i = 0; i < observers.size(); i++){
 		  observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		}
+		/*
 		picojson::object obj1 = JsonHelper::CreateJsonNotification();
 		JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
 		JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
 		for (int i = 0; i < observers.size(); i++){
 			observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
-		}
+		}*/
 	  }
 	}else{
 	  float distance = vec.Distance(this->position, this->package->GetDestination());

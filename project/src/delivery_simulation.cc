@@ -77,7 +77,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		//printf("before add package drone\n");
 		temp_D->SetGraph(g);
 		temp_D->AddPackage(p);
-		temp_D->SetPackage();
+		//temp_D->SetPackage();
 	}
 
 	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "robot") {
