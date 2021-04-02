@@ -154,6 +154,8 @@ namespace csci3081 {
 
 		void SetPath(std::string path);
 
+		void AddPackage(Package* newPackage);
+
 
 		private:
 			bool pickedUpPackage;

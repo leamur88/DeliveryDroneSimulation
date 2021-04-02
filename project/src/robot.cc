@@ -51,6 +51,12 @@ void Robot::UpdatePosition(float dt){
 		        for (int i = 0; i < observers.size(); i++){
 		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		        }
+				picojson::object obj1 = JsonHelper::CreateJsonNotification();
+				JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
+				JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
+				for (int i = 0; i < observers.size(); i++){
+					observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+				}
 			}
 		}
 		else{
@@ -66,6 +72,7 @@ void Robot::UpdatePosition(float dt){
 				pickedUpPackage = false;
 				customerRouteStep = 1;
 				packageRouteStep = 1;
+				
 				SetPackage();
 			}
 		}
@@ -112,11 +119,31 @@ void Robot::UpdatePosition(float dt){
 
 void Robot::SetPackage(){
 	if (this->packages.size() <= 0){
+		picojson::object obj1 = JsonHelper::CreateJsonNotification();
+        JsonHelper::AddStringToJsonObject(obj1, "value", "idle"); 
+        for (int i = 0; i < observers.size(); i++){
+          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+        }
       return;
     }
+    
   	this->package = packages.at(0);
 	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
 	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
+	picojson::object obj = JsonHelper::CreateJsonNotification();
+    JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
+    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute); 
+    for (int i = 0; i < observers.size(); i++){
+      observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
+    }
 }
+
+void Robot::AddPackage(Package* newPackage){
+	this->packages.push_back(newPackage);
+    if (packages.size() ==1){
+        SetPackage();
+    }
+}
+
 
 }

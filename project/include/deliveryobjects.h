@@ -89,9 +89,6 @@ namespace csci3081 {
 			return this->packages;
 		}
 
-		void AddPackage(Package* newPackage){
-			this->packages.push_back(newPackage);
-		}
 
 		void SetGraph(const IGraph* graph) {g = graph;}
 
