@@ -74,7 +74,7 @@ void Drone::UpdateBeeline(float dt){
 		for (int i=0; i < newLoc.GetVector().size();i++){
 			this->position.push_back(newLoc.GetVector()[i]);
 		}
-		position[1] = 287.0;
+		position[1] = 315.0;
 	}
 	else if(isPickUp&&pickedUpPackage&&!isDropOff){
 
@@ -227,13 +227,12 @@ void Drone::UpdateSmartPath(float dt){
 		for (int i = 0; i < observers.size(); i++){
 		  observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		}
-		/*
 		picojson::object obj1 = JsonHelper::CreateJsonNotification();
 		JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
 		JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
 		for (int i = 0; i < observers.size(); i++){
 			observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
-		}*/
+		}
 	  }
 	}else{
 	  float distance = vec.Distance(this->position, this->package->GetDestination());
@@ -293,16 +292,48 @@ void Drone::UpdateSmartPath(float dt){
 void Drone::SetPackage(){
 	if(this->packages.size() >= 1) {
 		this->package = packages.at(0);
-		SetDestination(package->GetPosition());
-		this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
-		this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination()));
+		
 		if (path == "smart"){
+			this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
+			this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination()));
 			printf("Calling SetPackage\n");
 			picojson::object obj = JsonHelper::CreateJsonNotification();
 			JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
 			JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute); 
 			for (int i = 0; i < observers.size(); i++){
 				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
+			}
+		}
+		else{
+			SetDestination(package->GetPosition());
+			std::vector<std::vector<float>> packageRoutetemp;
+			std::vector<float> current_pos = this->GetPosition();
+			packageRoutetemp.push_back(current_pos);
+			std::vector<float> current_pos_high = this->GetPosition();
+			current_pos_high[1] = 315.0;
+			packageRoutetemp.push_back(current_pos_high);
+			std::vector<float> destination_pos = package->GetPosition();
+			destination_pos[1] = 315.0;
+			packageRoutetemp.push_back(destination_pos);
+			std::vector<float> destination_pos_low = package->GetPosition();
+			packageRoutetemp.push_back(destination_pos_low);
+			this->SetPackageRoute(packageRoutetemp);
+
+			std::vector<std::vector<float>> customerRoutetemp;
+			customerRoutetemp.push_back(destination_pos_low);
+			customerRoutetemp.push_back(destination_pos);
+			std::vector<float> destination_pos1 = package->GetDestination();
+			destination_pos1[1] = 315.0;
+			customerRoutetemp.push_back(destination_pos1);
+			std::vector<float> destination_pos_low1 = package->GetDestination();
+			customerRoutetemp.push_back(destination_pos_low1);
+			this->SetCustomerRoute(customerRoutetemp);
+
+			picojson::object obj1 = JsonHelper::CreateJsonNotification();
+			JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
+			JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", packageRoute); 
+			for (int i = 0; i < observers.size(); i++){
+				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
 			}
 		}
 	}
