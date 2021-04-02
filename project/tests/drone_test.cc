@@ -128,17 +128,21 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   p2.SetCustomer(&c1);
   p3.SetCustomer(&c3);
 
-  d.SetPackage(&p1);
+  d.AddPackage(&p1);
+  d.SetPackage();
   EXPECT_TRUE(d.Pickup());
-  d.SetPackage(&p2);
+  d.AddPackage(&p2);
+  d.SetPackage();
   EXPECT_FALSE(d.Pickup());
   d.GoDropOff();
   EXPECT_TRUE(d.DropOff());
-  d.SetPackage(&p3);
+  d.AddPackage(&p3);
+  d.SetPackage();
   EXPECT_TRUE(d.IsDropOffMode());
   EXPECT_FALSE(d.DropOff());
   d.GoDropOff();
-  d.SetPackage(&p3);
+  d.AddPackage(&p3);
+  d.SetPackage();
   EXPECT_TRUE(d.IsPickupMode());
   EXPECT_FALSE(d.Pickup());
 

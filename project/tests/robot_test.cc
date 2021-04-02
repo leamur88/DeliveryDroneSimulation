@@ -90,15 +90,10 @@ TEST_F(RobotTest, RobotPackageCustomerRelationship) {
   direction_to_add2.push_back(0);
   direction_to_add2.push_back(0);
   Package p2(position_to_add2, direction_to_add2, w, obj2);
-
-  d.SetPackage(&p1);
+  d.AddPackage(&p1);
   ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(0), 499.5);
   ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(1), 200);
   ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(2), -10.5);
-  d.SetPackage(&p2);
-  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(0), 505);
-  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(1), 200);
-  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(2), -20);
-
+  d.RemovePackage();
 }
 }  // namespace csci3081
