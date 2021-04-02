@@ -126,7 +126,6 @@ void Robot::SetPackage(){
         }
       return;
     }
-    
   	this->package = packages.at(0);
 	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
 	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
