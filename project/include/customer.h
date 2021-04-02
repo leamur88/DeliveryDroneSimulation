@@ -66,9 +66,18 @@ namespace csci3081 {
 		 * @return Customer Position Vector
 		 */
 		const std::vector<float>& GetPosition() const;
+		/**
+		* @brief This function is called to see if the drone is in the correct position foor drop off
+		* 
+		* It is used to know if the delivery state of simluation should change
+		* 
+		* @return a float value representing the dropooff radius of the customer
+		*/
+		float GetRadius();
 
         private:
         std::vector<float> position;
+		float radius;
     };
 
 }

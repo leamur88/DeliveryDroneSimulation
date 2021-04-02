@@ -75,6 +75,8 @@ namespace csci3081 {
 		 */
 		void DepleteBattery(float amount);
 
+		void SetMaxCharge(float capacity);
+
 		private:
 		float MaxCharge;
 		float BatteryLife;

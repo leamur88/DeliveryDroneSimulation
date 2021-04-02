@@ -2,6 +2,7 @@
 #include<cmath>
 namespace csci3081 {
 
+Vector3D::Vector3D(){}
 Vector3D::Vector3D(std::vector<float> temp){
     for (int i=0; i < temp.size();i++){
         vec.push_back(temp[i]);
@@ -84,6 +85,10 @@ void Vector3D::Scale(float s){
     for (int i=0; i < vec.size();i++){
         vec[i] *= s;
     }
+}
+
+float Vector3D::Distance(std::vector<float> vector1, std::vector<float> vector2){
+  return sqrt ( pow((vector1[0] - vector2[0]), 2) + pow((vector1[1] - vector2[1]), 2) + pow((vector1[2] - vector2[2]), 2));
 }
 
 

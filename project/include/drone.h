@@ -6,10 +6,8 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "entity_base.h"
-#include "battery.h"
-#include "vector3D.h"
-#include "package.h"
+#include "deliveryobjects.h"
+
 
 
 namespace csci3081 {
@@ -22,23 +20,23 @@ namespace csci3081 {
 	 * Calls to \ref Drone constructor to get a new drone.
 	 *  This class will also contain all of the necessary getters for the drones.
 	 */
-	class Drone : public csci3081::EntityBase {
+	class Drone : public csci3081::DeliveryObject {
 	// TODO: Add documentation to these functions
 		public:
 		/**
 		 * @brief This is the constructor for the drone class. It takes in 2 float vectors, a predefined speed, a predefined radius, and a picojson object
-		 * 
-		 * This is the general constructor for the Drones. It initializes all of the drones attributes using the
-		 * input parameters. The first parameter is the drones position vector, the second is the drones direction 
-		 * vector, the following two are additional attributes, and the last is the drone picojson object itself.
 		 *
-		 * 
-		 * @param[in] pos Position vector for the drone. 
-		 * @param[in] direction Direction vector for the drone. 
-		 * @param[in] speed speed of the drone. 
-		 * @param[in] radius radius of the drone. 
-		 * @param[in] picojson The drone's picojson object. 
-		 * 
+		 * This is the general constructor for the Drones. It initializes all of the drones attributes using the
+		 * input parameters. The first parameter is the drones position vector, the second is the drones direction
+		 * vector, the following three are additional attributes, and the last is the drone picojson object itself.
+		 *
+		 *
+		 * @param[in] pos Position vector for the drone.
+		 * @param[in] direction Direction vector for the drone.
+		 * @param[in] speed speed of the drone.
+		 * @param[in] radius radius of the drone.
+		 * @param[in] picojson The drone's picojson object.
+		 *
 		 */
 		Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& obj);
 
@@ -48,121 +46,121 @@ namespace csci3081 {
 		~Drone();
 
 		/**
-		 * @brief This is function simply returns the position vector for a given drone.
-		 * 
-		 * This function will return the float vector.
+		 * @brief This function is used to determine which update function the drone should use
 		 *
-		 * @return Drone Position Vector
-		 */
-		const std::vector<float>& GetPosition() const;
-
-		/**
-		 * @brief This is function simply returns the direction vector for a given drone.
-		 * 
-		 * This function will return the float vector.
+		 * Depending on the path variable, set at construction, the Drone will update its position in
+		 * three different ways: beeline, smartpath, or parabolic.
 		 *
-		 * 
-		 * @return Drone Direction Vector
-		 */
-		const std::vector<float>& GetDirection() const;
-
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 * 
-		 *  The drone will access the current direction vector and update it.
-		 * 
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 * 
-		 */
-		void SetDirection(const std::vector<float>& dir);
-
-		/**
-		 *  @brief This will set the direction vector within the Drone class.
-		 * 
-		 *  The drone will access the current direction vector and update it.
-		 * 
-		 * @param[in] dir This is the new direction the drone will fly in.
-		 * 
-		 */
-		void SetDestination(const std::vector<float>& dir);
-
-
-		/**
-		 *  @brief This will update the position of the drone.
-		 * 
-		 *  The drone will update it's position vector using 3D vector arithemetic.
-		 * 
-		 * @param[in] float the amount of time that will have passed between calls.
+		 * @param[in] dt the amount of time passed between each update call
 		 */
 		void UpdatePosition(float dt);
 
 		/**
+		 *  @brief This will update the position of the drone using the beeline path.
+		 *
+		 *  The drone will update it's position vector using beeline path.
+		 *
+		 * @param[in] float the amount of time that will have passed between calls.
+		 */
+		void UpdateBeeline(float dt);
+
+		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
-		 * 
-		 *  The drone will call to see if it is within range of the package.
-		 * 
+		 *
+		 *  The object will call to see if it is within range of the package.
+		 *
 		 * @return Whether or not the package can be picked up.
 		 */
 		bool Pickup();
 
 		/**
+		 * @brief This function will check if the drone is range to start going ascending or descending over the package.
+		 *
+		 *  The drone's update beeline function calls this function to make sure it is in range to descned towards the package.
+		 *
+		 * @return if the drone is in range to descending towards the package.
+		 */
+		bool IsPickupMode();
+
+		/**
 		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
-		 * 
+		 *
 		 *  The drone will call this function to see if it is within range of the customer.
-		 * 
+		 *
 		 * @return Whether or not the package can be dropped off.
 		 */
 		bool DropOff();
 
 		/**
-		 * @brief This function will set a package for the drone object
-		 * 
-		 * @param[in] package The package that the drone will carry.
+		 * @brief This function will check if the drone is range to start going ascending or descending over the customer.
+		 *
+		 *  The drone's update beeline function calls this function to make sure it is in range to ascend or descend towards the customer.
+		 *
+		 * @return if the drone is in range to descending towards the customer.
 		 */
-
-		void SetPackage(Package* package);
-
-		/**
-		 * @brief returns the speed of a given drone
-		 * 
-		 * @return The speed of the drone
-		 */
-		const double GetSpeed() const;
-
+		bool IsDropOffMode();
 
 		/**
 		 * @brief This function sets the drone's new destination as the customers position
-		 * 
+		 *
 		 * This is only called the first time when the drone is within radius of the package
 		 */
 		void GoDropOff();
 
 		/**
-		 * @brief returns whether or not the package has been picked up yet
-		 * 
-		 * This is used to determine whether or not the packages position needs to be updated alongside the drones
-		 * 
-		 * @return Whether or not the package has been picked up
+		 * @brief updates the drones position whenever it is ascending with the package
+		 *
+		 * This not only updates the drones position but stops it if it exceeds the height limit
+		 *
+		 * @return an int representing if the ascension was successful or the hieght limit was hit
 		 */
-		bool IsPackagePickedUp(){return pickedUpPackage;}
+		int Ascend(float dt);
 
 		/**
-		 * @brief Returns the package the drone is currently going to or carrying
-		 * 
-		 * This is used within Delivery Simulation mainly
-		 * 
-		 * @return current package
+		 * @brief updates the drones position whenever it needs to descend
+		 *
+		 * This not only updates the drones position but stops to descension if the drone has hit its destination
+		 *
+		 * @return an int representting if the ascension was successful or the destination was hit.
 		 */
-		Package* getPackage(){return package;}
+		int Descend(float dt);
+
+		/**
+		 *  @brief This will update the position of the drone using smart path.
+		 *
+		 *  The drone will update it's position vector using smart path.
+		 *
+		 * @param[in] float the amount of time that will have passed between calls.
+		 */
+		void UpdateSmartPath(float dt);
+
+		/**
+		 *  @brief This will set the destination vector within the Drone class.
+		 *
+		 *  The drone will access the current destination vector and update it.
+		 *
+		 * @param[in] dir This is the new destination the drone will fly to.
+		 *
+		 */
+		void SetDestination(const std::vector<float>& dir);
+
+		/**
+		 * @brief This function will set a package for the object object
+		 *
+		 * @param[in] package The package that the object will carry.
+		 */
+
+		void SetPackage();
+
+		void SetPath(std::string path);
+
+		void AddPackage(Package* newPackage);
+
 
 		private:
-			std::vector<float> destination;
-			double speed;
-			bool moving;
 			bool pickedUpPackage;
-			Battery* battery;
-			Package* package;
+			std::vector<float> destination;
+			std::string path = "default";
 		};
 
 }

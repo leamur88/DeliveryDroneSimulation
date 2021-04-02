@@ -3,7 +3,7 @@
 #include "../include/delivery_simulation.h"
 #include <EntityProject/entity.h>
 #include "json_helper.h"
-#include "drone.h"
+#include "robot.h"
 
 
 #include <iostream>
@@ -12,7 +12,7 @@ namespace csci3081 {
 
 using entity_project::IEntity;
 
-class DroneTest : public ::testing::Test {
+class RobotTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     system = dynamic_cast<IDeliverySystem*>(GetEntitySystem("default"));
@@ -26,7 +26,7 @@ class DroneTest : public ::testing::Test {
  * Test Cases
  ******************************************************************************/
 
-TEST_F(DroneTest, DroneConstructor) {
+TEST_F(RobotTest, RobotConstructor) {
   picojson::object obj = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add;
   position_to_add.push_back(498.292);
@@ -38,11 +38,11 @@ TEST_F(DroneTest, DroneConstructor) {
   direction_to_add.push_back(0);
   double radius = 1.0;
   double speed = 30;
-  Drone d(position_to_add, direction_to_add, speed, radius, obj);
+  Robot d(position_to_add, direction_to_add, speed, radius, obj);
   d.SetId(55);
 
   ASSERT_FLOAT_EQ(d.GetPosition()[0], position_to_add[0]);
-  ASSERT_FLOAT_EQ(d.GetPosition()[1], position_to_add[1]);
+  ASSERT_FLOAT_EQ(d.GetPosition()[1], position_to_add[1]+12.0);
   ASSERT_FLOAT_EQ(d.GetPosition()[2], position_to_add[2]);
   ASSERT_FLOAT_EQ(d.GetDirection()[0], direction_to_add[0]);
   ASSERT_FLOAT_EQ(d.GetDirection()[1], direction_to_add[1]);
@@ -51,10 +51,10 @@ TEST_F(DroneTest, DroneConstructor) {
   ASSERT_FLOAT_EQ(d.GetRadius(), radius);
   ASSERT_FLOAT_EQ(d.GetVersion(), 1);
   ASSERT_FLOAT_EQ(d.GetId(), 55);
-  EXPECT_TRUE(d.GetType().compare("drone") == 0);
+  EXPECT_TRUE(d.GetType().compare("Robot") == 0);
 }
 
-TEST_F(DroneTest, DronePackageCustomerRelationship) {
+TEST_F(RobotTest, RobotPackageCustomerRelationship) {
   picojson::object obj = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add;
   position_to_add.push_back(500);
@@ -66,7 +66,7 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   direction_to_add.push_back(0);
   double radius = 1.0;
   double speed = 30;
-  Drone d(position_to_add, direction_to_add, speed, radius, obj);
+  Robot d(position_to_add, direction_to_add, speed, radius, obj);
 
   picojson::object obj1 = JsonHelper::CreateJsonObject();
   std::vector<float> position_to_add1;
@@ -91,63 +91,14 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   direction_to_add2.push_back(0);
   Package p2(position_to_add2, direction_to_add2, w, obj2);
 
-  picojson::object obj3 = JsonHelper::CreateJsonObject();
-  std::vector<float> position_to_add3;
-  position_to_add3.push_back(500.5);
-  position_to_add3.push_back(200);
-  position_to_add3.push_back(-9.5);
-  Customer c1(position_to_add3, obj3);
-
-  picojson::object obj4 = JsonHelper::CreateJsonObject();
-  std::vector<float> position_to_add4;
-  position_to_add4.push_back(0);
-  position_to_add4.push_back(0);
-  position_to_add4.push_back(0);
-  Customer c2(position_to_add4, obj4);
-
-  picojson::object obj5= JsonHelper::CreateJsonObject();
-  std::vector<float> position_to_add5;
-  position_to_add5.push_back(500.5);
-  position_to_add5.push_back(0);
-  position_to_add5.push_back(-9.5);
-  Customer c3(position_to_add5, obj5);
-
-  picojson::object obj6 = JsonHelper::CreateJsonObject();
-  std::vector<float> position_to_add6;
-  position_to_add6.push_back(500);
-  position_to_add6.push_back(20);
-  position_to_add6.push_back(-10);
-  std::vector<float> direction_to_add6;
-  direction_to_add6.push_back(1);
-  direction_to_add6.push_back(0);
-  direction_to_add6.push_back(0);
-  Package p3(position_to_add6, direction_to_add6, w, obj6);
-
-
-  p1.SetCustomer(&c2);
-  p2.SetCustomer(&c1);
-  p3.SetCustomer(&c3);
-
   d.SetPackage(&p1);
-  EXPECT_TRUE(d.Pickup());
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(0), 499.5);
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(1), 200);
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(2), -10.5);
   d.SetPackage(&p2);
-  EXPECT_FALSE(d.Pickup());
-  d.GoDropOff();
-  EXPECT_TRUE(d.DropOff());
-  d.SetPackage(&p3);
-  EXPECT_TRUE(d.IsDropOffMode());
-  EXPECT_FALSE(d.DropOff());
-  d.GoDropOff();
-  d.SetPackage(&p3);
-  EXPECT_TRUE(d.IsPickupMode());
-  EXPECT_FALSE(d.Pickup());
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(0), 505);
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(1), 200);
+  ASSERT_FLOAT_EQ(d.getPackage()->GetPosition().at(2), -20);
 
-  float position = d.GetPosition()[1];
-  d.Ascend(.5);
-  ASSERT_FLOAT_EQ(d.GetPosition()[1], position + .5*30);
-  d.Descend(.5); 
-  ASSERT_FLOAT_EQ(d.GetPosition()[1], position);
-  d.Descend(.5); 
-  ASSERT_FLOAT_EQ(d.GetPosition()[1], position - .5*30);
 }
 }  // namespace csci3081

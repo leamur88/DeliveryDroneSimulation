@@ -14,6 +14,7 @@
 #include "dronefactory.h"
 #include "customerfactory.h"
 #include "packagefactory.h"
+#include "robotfactory.h"
 
 
 
@@ -130,6 +131,8 @@ namespace csci3081 {
 			std::vector<IEntity*> entities_;
 			const IGraph* g;
 			CompositeFactory* factories_;
+			int countId = 0;
+			std::vector<IEntityObserver*> observers;
 	};
 
 }  // namespace csci3081

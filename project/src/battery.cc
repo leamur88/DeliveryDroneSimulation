@@ -35,4 +35,8 @@ void Battery::DepleteBattery(float amount){
     }
 }
 
+void Battery::SetMaxCharge(float capacity){
+    MaxCharge = capacity;
+}
+
 }
