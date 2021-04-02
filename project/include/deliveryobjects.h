@@ -100,6 +100,10 @@ namespace csci3081 {
 			observers.clear();
 		}
 
+		void RemovePackage(){
+			packages.erase(this->packages.begin());
+		}
+
 		protected:
 			const IGraph* g;
 			std::vector< std::vector<float>> packageRoute;
