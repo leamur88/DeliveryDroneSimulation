@@ -6,6 +6,7 @@
       	    "type": "drone",
             "name": "drone",
       	    "mesh": "models/s9drone.glb",
+            "path": "smart",
       	    "position": [498.292, 253.883, -228.623],
       	    "scale": [0.1, 0.1, 0.1],
       	    "rotation": [0, 0, 0, 0],

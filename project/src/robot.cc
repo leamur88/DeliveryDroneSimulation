@@ -51,6 +51,12 @@ void Robot::UpdatePosition(float dt){
 		        for (int i = 0; i < observers.size(); i++){
 		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		        }
+				picojson::object obj1 = JsonHelper::CreateJsonNotification();
+				JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
+				JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
+				for (int i = 0; i < observers.size(); i++){
+					observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+				}
 			}
 		}
 		else{
@@ -126,13 +132,18 @@ void Robot::SetPackage(){
 	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
 	picojson::object obj = JsonHelper::CreateJsonNotification();
     JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
-    std::vector<std::vector<float>> combined;
-    combined.insert(combined.end(), packageRoute.begin(), packageRoute.end());
-    combined.insert(combined.end(), customerRoute.begin(), customerRoute.end());
-    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", combined); 
+    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute); 
     for (int i = 0; i < observers.size(); i++){
       observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
     }
 }
+
+void Robot::AddPackage(Package* newPackage){
+	this->packages.push_back(newPackage);
+    if (packages.size() ==1){
+        SetPackage();
+    }
+}
+
 
 }

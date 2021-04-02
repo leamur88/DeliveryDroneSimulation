@@ -88,6 +88,7 @@ namespace csci3081 {
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
 
+		void AddPackage(Package* newPackage);
 
 		private:
 			bool pickedUpPackage;

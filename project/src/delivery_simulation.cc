@@ -93,7 +93,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		//printf("before add package robot\n");
 		temp_R->SetGraph(g);
 		temp_R->AddPackage(p);
-		temp_R->SetPackage();
+		//temp_R->SetPackage();
 	}
 	picojson::object obj = JsonHelper::CreateJsonNotification();
 	JsonHelper::AddStringToJsonObject(obj, "value", "scheduled"); 
