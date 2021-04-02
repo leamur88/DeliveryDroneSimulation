@@ -3,8 +3,6 @@
 namespace csci3081 {
 
 Vector3D::Vector3D(){}
-
-
 Vector3D::Vector3D(std::vector<float> temp){
     for (int i=0; i < temp.size();i++){
         vec.push_back(temp[i]);

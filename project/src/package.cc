@@ -33,7 +33,6 @@ const std::vector<float>& Package::GetPosition() const{
 const std::vector<float>& Package::GetStartPosition() const{
     return stpos;
 }
-
 const std::vector<float>& Package::GetDirection() const{
     return direction;
 }
@@ -58,6 +57,7 @@ void Package::SetWeight(float w){
 float Package::GetWeight(){
     return weight;
 }
+  
 void Package::Deliver(){
     delivered = true;
 }

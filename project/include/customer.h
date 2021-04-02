@@ -66,7 +66,6 @@ namespace csci3081 {
 		 * @return Customer Position Vector
 		 */
 		const std::vector<float>& GetPosition() const;
-
 		/**
 		* @brief This function is called to see if the drone is in the correct position foor drop off
 		* 

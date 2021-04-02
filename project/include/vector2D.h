@@ -33,9 +33,7 @@ namespace csci3081 {
 			* 
 			*/
 			Vector2D(std::vector<float> vec);
-
 			Vector2D();
-
 			/**
 			 * @brief This is overloading the + operation between two Vector2D objects
 			 * 

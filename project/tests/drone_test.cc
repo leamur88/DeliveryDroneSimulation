@@ -130,12 +130,10 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
 
   d.SetPackage(&p1);
   EXPECT_TRUE(d.Pickup());
-
   d.SetPackage(&p2);
   EXPECT_FALSE(d.Pickup());
   d.GoDropOff();
   EXPECT_TRUE(d.DropOff());
-
   d.SetPackage(&p3);
   EXPECT_TRUE(d.IsDropOffMode());
   EXPECT_FALSE(d.DropOff());
@@ -151,6 +149,5 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   ASSERT_FLOAT_EQ(d.GetPosition()[1], position);
   d.Descend(.5); 
   ASSERT_FLOAT_EQ(d.GetPosition()[1], position - .5*30);
-
 }
 }  // namespace csci3081

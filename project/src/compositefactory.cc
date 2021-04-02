@@ -12,7 +12,6 @@ namespace csci3081 {
     IEntity* CompositeFactory::CreateEntity(const picojson::object& entity){
         for (int i =0; i<factories.size(); i++){
             IEntity* temp = factories[i]->CreateEntity(entity);
-
             if (temp != NULL){
                 return temp;
             }

@@ -203,6 +203,4 @@ TEST_F(FactoryTest, CompositeFactory) {
   ASSERT_EQ(picojson::value(system->GetEntities()[2]->GetDetails()).serialize(), picojson::value(obj2).serialize());
 
 }
-
-
 }  // namespace csci3081
