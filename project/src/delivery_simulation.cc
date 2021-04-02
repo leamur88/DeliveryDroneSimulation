@@ -46,7 +46,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 	Robot* temp_R;
 	int smallestSize = 900;
 	int index;
-	printf("before for loop\n");
+	//printf("before for loop\n");
 	for (int i = 0; i < entities_.size(); i++){
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			temp_D = dynamic_cast<Drone*>(entities_[i]);
@@ -63,8 +63,8 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 			}
 		}
 	}
-	printf("after for loop\n");
-	printf("%d\n", index);//end for loop
+	//printf("after for loop\n");
+	//printf("%d\n", index);//end for loop
 	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "drone") {
 		temp_D = dynamic_cast<Drone*>(entities_[index]);
 		temp_D->ClearObservers();
@@ -74,14 +74,14 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		Package* p = dynamic_cast<Package*>(package);
 		Customer* c = dynamic_cast<Customer*>(dest);
 		p->SetCustomer(c);
-		printf("before add package drone\n");
+		//printf("before add package drone\n");
 		temp_D->SetGraph(g);
 		temp_D->AddPackage(p);
 		temp_D->SetPackage();
 	}
 
 	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "robot") {
-		printf("in robot\n");
+		//printf("in robot\n");
 		temp_R = dynamic_cast<Robot*>(entities_[index]);
 		temp_R->ClearObservers();
 		for (int i = 0; i < observers.size(); i++){
@@ -90,7 +90,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		Package* p = dynamic_cast<Package*>(package);
 		Customer* c = dynamic_cast<Customer*>(dest);
 		p->SetCustomer(c);
-		printf("before add package robot\n");
+		//printf("before add package robot\n");
 		temp_R->SetGraph(g);
 		temp_R->AddPackage(p);
 		temp_R->SetPackage();

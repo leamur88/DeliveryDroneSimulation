@@ -40,7 +40,7 @@ void Drone::UpdatePosition(float dt){
 
     //As a failsafe for now
     else{
-        printf("Path not specified, will go with beeline\n");
+        //printf("Path not specified, will go with beeline\n");
         UpdateBeeline(dt);
     }
 
@@ -108,7 +108,7 @@ void Drone::UpdateBeeline(float dt){
         }
     }
     else if(isPickUp&&!isDropOff){
-        printf("here\n");
+        //printf("here\n");
         Descend(dt);
     }
 
@@ -199,13 +199,13 @@ int Drone::Descend(float dt){
 }
 
 void Drone::GoDropOff(){
-    printf("Time to go drop off the package!\n");
+    //printf("Time to go drop off the package!\n");
     SetDestination(package->GetDestination());
 }
 
 
 void Drone::UpdateSmartPath(float dt){
-  printf("in update smart path\n");
+  //printf("in update smart path\n");
   Vector3D vec;
   if(this->package->IsDelivered() == false){
     if (battery->IsDead()){

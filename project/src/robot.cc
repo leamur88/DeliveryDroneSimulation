@@ -120,7 +120,11 @@ void Robot::SetPackage(){
         }
       return;
     }
-    picojson::object obj = JsonHelper::CreateJsonNotification();
+    
+  	this->package = packages.at(0);
+	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
+	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
+	picojson::object obj = JsonHelper::CreateJsonNotification();
     JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
     std::vector<std::vector<float>> combined;
     combined.insert(combined.end(), packageRoute.begin(), packageRoute.end());
@@ -129,9 +133,6 @@ void Robot::SetPackage(){
     for (int i = 0; i < observers.size(); i++){
       observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
     }
-  	this->package = packages.at(0);
-	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
-	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
 }
 
 }
