@@ -154,7 +154,7 @@ bool Drone::IsPickupMode(){
 	}
 	return false;
 }
-
+//remove
 bool Drone::DropOff(){
 	if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius+(package->GetCustRadius())){
 		if(abs( (int) (position[1] - package->GetDestination()[1])) <= radius+(package->GetCustRadius())){
@@ -175,7 +175,7 @@ bool Drone::DropOff(){
 	}
 	return false;
 }
-
+//remove
 bool Drone::IsDropOffMode(){
 	if(abs( (int) (position[0] - package->GetDestination()[0])) <= radius+(package->GetCustRadius())){
 		if(abs( (int) (position[2] - package->GetDestination()[2])) <= radius+(package->GetCustRadius())){
@@ -185,6 +185,7 @@ bool Drone::IsDropOffMode(){
 	return false;
 }
 
+//remove
 int Drone::Ascend(float dt){
 	if(this->position.at(1)>=287.0){
 		return 1;
@@ -192,7 +193,7 @@ int Drone::Ascend(float dt){
 	this->position.at(1) = this->position.at(1)+(1*speed*dt);
 	return 2;
 }
-
+//remove
 int Drone::Descend(float dt){
 	if(Pickup()){
 		GoDropOff();
