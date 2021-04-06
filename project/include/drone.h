@@ -66,8 +66,6 @@ namespace csci3081 {
 
 		void AddPackage(Package* newPackage);
 
-		void RemovePackages();
-
 		private:
 			bool pickedUpPackage;
 			std::vector<float> destination;

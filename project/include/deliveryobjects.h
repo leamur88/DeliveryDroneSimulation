@@ -105,12 +105,14 @@ namespace csci3081 {
 		}
 
 		bool IsDead() {
-			if (battery->IsDead()) {
-				return true;
-			} else {
-				return false;
-			}
+			return battery->IsDead();
 		}
+
+		void RemovePackages() {
+			for (int i = 0; i < packages.size(); i++) {
+				packages.erase(packages.begin());
+		}
+	}
 
 
 

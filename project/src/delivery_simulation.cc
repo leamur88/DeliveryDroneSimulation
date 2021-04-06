@@ -137,6 +137,12 @@ void DeliverySimulation::Update(float dt) {
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
 			Robot* robot = dynamic_cast<Robot*>(entities_[i]);
+			if (robot->IsDead()) {
+				std::vector<Package*> packages = robot->GetPackages();
+				for (int i = 0; i < packages.size(); i++) {
+					ScheduleDelivery(packages.at(i), packages.at(i)->GetCustomer());
+				}
+			}
 			robot->UpdatePosition(dt);
 		}
 

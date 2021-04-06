@@ -41,11 +41,6 @@ void Drone::UpdatePosition(float dt){
 		// std::cout << JsonHelper::GetString(details_, "name") << std::endl;
 		// printf("%f\n", battery->ChargeRemaining());
 		if (battery->IsDead()){
-			// picojson::object obj1 = JsonHelper::CreateJsonNotification();
-			// JsonHelper::AddStringToJsonObject(obj1, "value", "idle");
-			// for (int i = 0; i < observers.size(); i++){
-			//   observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
-			// }
 			RemovePackages();
 			return;
 		}
@@ -203,10 +198,5 @@ void Drone::AddPackage(Package* newPackage){
 	}
 }
 
-void Drone::RemovePackages() {
-	for (int i = 0; i < packages.size(); i++) {
-		packages.erase(packages.begin());
-}
 
-}
 }
