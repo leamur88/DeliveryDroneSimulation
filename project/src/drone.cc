@@ -23,21 +23,24 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 	this->Dynamic = true;
 	this->battery = new Battery();
 	if (path == "beeline"){
-		//this->StrategyPath = new BeelinePath();
+		this->StrategyPath = new BeelinePath();
 	}
 	else if (path == "smart"){
 
 	}
 	else{
 		//default route
-		this->StrategyPath = new BeelinePath(this);
+		this->StrategyPath = new BeelinePath();
 	}
 	StrategyPath->SetDrone(this);
 	
 	details_ = details;
 }
 
-Drone::~Drone(){delete battery;}
+Drone::~Drone(){
+	delete battery;
+	delete StrategyPath;
+}
 
 void Drone::UpdatePosition(float dt){
   	Vector3D vec;

@@ -23,7 +23,7 @@ namespace csci3081 {
 	 */
 	class BeelinePath : public csci3081::iDeliveryPaths{
 		public:
-			BeelinePath(Drone* d);
+			BeelinePath();
 
 			void UpdatePath();
 	};
