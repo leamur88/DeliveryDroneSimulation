@@ -7,7 +7,8 @@
  * Includes
  ******************************************************************************/
 #include "deliveryobjects.h"
-
+#include "beelinepath.h"
+#include "delivery_paths.h"
 
 
 namespace csci3081 {
@@ -70,6 +71,7 @@ namespace csci3081 {
 			bool pickedUpPackage;
 			std::vector<float> destination;
 			std::string path = "default";
+			iDeliveryPaths* StrategyPath;
 		};
 
 }

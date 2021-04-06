@@ -13,6 +13,7 @@
 #include "package.h"
 
 
+
 namespace csci3081 {
 /*******************************************************************************
  * Class Definitions
@@ -116,6 +117,7 @@ namespace csci3081 {
 			Package* package;
 			std::vector<Package*> packages;
 			std::vector<IEntityObserver*> observers;
+			//
 		};
 
 }

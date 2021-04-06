@@ -22,6 +22,18 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 	this->pickedUpPackage = false;
 	this->Dynamic = true;
 	this->battery = new Battery();
+	if (path == "beeline"){
+		//this->StrategyPath = new BeelinePath();
+	}
+	else if (path == "smart"){
+
+	}
+	else{
+		//default route
+		this->StrategyPath = new BeelinePath(this);
+	}
+	StrategyPath->SetDrone(this);
+	
 	details_ = details;
 }
 
@@ -127,29 +139,7 @@ void Drone::SetPackage(){
 			}
 		}
 		else{
-			std::vector<std::vector<float>> packageRoutetemp;
-			std::vector<float> current_pos = this->GetPosition();
-			packageRoutetemp.push_back(current_pos);
-			std::vector<float> current_pos_high = this->GetPosition();
-			current_pos_high[1] = 315.0;
-			packageRoutetemp.push_back(current_pos_high);
-			std::vector<float> destination_pos = package->GetPosition();
-			destination_pos[1] = 315.0;
-			packageRoutetemp.push_back(destination_pos);
-			std::vector<float> destination_pos_low = package->GetPosition();
-			packageRoutetemp.push_back(destination_pos_low);
-			this->SetPackageRoute(packageRoutetemp);
-
-			std::vector<std::vector<float>> customerRoutetemp;
-			customerRoutetemp.push_back(destination_pos_low);
-			customerRoutetemp.push_back(destination_pos);
-			std::vector<float> destination_pos1 = package->GetDestination();
-			destination_pos1[1] = 315.0;
-			customerRoutetemp.push_back(destination_pos1);
-			std::vector<float> destination_pos_low1 = package->GetDestination();
-			customerRoutetemp.push_back(destination_pos_low1);
-			this->SetCustomerRoute(customerRoutetemp);
-
+			StrategyPath->UpdatePath();
 			picojson::object obj1 = JsonHelper::CreateJsonNotification();
 			JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
 			JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", packageRoute); 
