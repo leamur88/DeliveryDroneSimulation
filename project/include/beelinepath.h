@@ -10,6 +10,7 @@
 #include "entity_base.h"
 #include "drone.h"
 #include "robot.h"
+#include "delivery_paths.h"
 namespace csci3081 {
 /*******************************************************************************
  * Class Definitions
@@ -18,16 +19,14 @@ namespace csci3081 {
 	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
 	 *
 	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
+	 * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
 	 */
 	class BeelinePath : public csci3081::iDeliveryPaths{
 		public:
-            virtual void UpdatePath() = 0;
+			BeelinePath(Drone* d);
 
-		protected:
-			Drone* d;
-            Robot* r;
-		};
+			void UpdatePath();
+	};
 
 }
 #endif

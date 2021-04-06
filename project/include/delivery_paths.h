@@ -9,8 +9,10 @@
  ******************************************************************************/
 #include "entity_base.h"
 #include "drone.h"
-#include "robot.h"
+//#include "robot.h"
 namespace csci3081 {
+	class Drone;
+	class Robot;
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
@@ -24,6 +26,10 @@ namespace csci3081 {
 		public:
             virtual void UpdatePath() = 0;
 
+			void SetDrone(Drone* d){
+				this->d = d;
+			}
+			
 		protected:
 			Drone* d;
             Robot* r;
