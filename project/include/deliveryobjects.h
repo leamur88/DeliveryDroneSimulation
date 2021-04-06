@@ -20,15 +20,15 @@ namespace csci3081 {
 	/**
 	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
 	 *
-	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
+	 * This class should never actually be instantiated as a real object. It can be used to help dynamic
+     * casting. On top of that, it helps keep the DRY priniciple in place for our code.
 	 */
 	class DeliveryObject : public csci3081::EntityBase {
 		public:
 
 		/**
 		 * @brief This is function simply returns the position vector for a given object.
-		 * 
+		 *
 		 * This function will return the float vector.
 		 *
 		 * @return object Position Vector
@@ -37,10 +37,10 @@ namespace csci3081 {
 
 		/**
 		 * @brief This is function simply returns the direction vector for a given object.
-		 * 
+		 *
 		 * This function will return the float vector.
 		 *
-		 * 
+		 *
 		 * @return object Direction Vector
 		 */
 		const std::vector<float>& GetDirection() const{return direction;}
@@ -48,9 +48,9 @@ namespace csci3081 {
 
 		/**
 		 *  @brief This will update the position of the object.
-		 * 
+		 *
 		 *  The object will update it's position vector using 3D vector arithemetic.
-		 * 
+		 *
 		 * @param[in] float the amount of time that will have passed between calls.
 		 */
 		virtual void UpdatePosition(float dt) = 0;
@@ -58,7 +58,7 @@ namespace csci3081 {
 
 		/**
 		 * @brief returns the speed of a given object
-		 * 
+		 *
 		 * @return The speed of the object
 		 */
 		const double GetSpeed() const{return speed;}
@@ -66,9 +66,9 @@ namespace csci3081 {
 
 		/**
 		 * @brief Returns the package the object is currently going to or carrying
-		 * 
+		 *
 		 * This is used within Delivery Simulation mainly
-		 * 
+		 *
 		 * @return current package
 		 */
 		Package* getPackage(){return package;}
@@ -103,6 +103,16 @@ namespace csci3081 {
 		void RemovePackage(){
 			packages.erase(this->packages.begin());
 		}
+
+		bool IsDead() {
+			if (battery->IsDead()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
 
 		protected:
 			const IGraph* g;

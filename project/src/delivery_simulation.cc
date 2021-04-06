@@ -50,16 +50,20 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 	for (int i = 0; i < entities_.size(); i++){
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			temp_D = dynamic_cast<Drone*>(entities_[i]);
-			if (temp_D->GetPackages().size() <= smallestSize) {
-				index = i;
-				smallestSize = temp_D->GetPackages().size();
+			if (temp_D->IsDead() == false) {
+				if (temp_D->GetPackages().size() <= smallestSize) {
+					index = i;
+					smallestSize = temp_D->GetPackages().size();
+				}
 			}
 		}
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
 			temp_R = dynamic_cast<Robot*>(entities_[i]);
-			if (temp_R->GetPackages().size() <= smallestSize) {
-				index = i;
-				smallestSize = temp_R->GetPackages().size();
+			if (temp_R->IsDead() == false) {
+				if (temp_R->GetPackages().size() <= smallestSize) {
+					index = i;
+					smallestSize = temp_R->GetPackages().size();
+				}
 			}
 		}
 	}
@@ -96,7 +100,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		//temp_R->SetPackage();
 	}
 	picojson::object obj = JsonHelper::CreateJsonNotification();
-	JsonHelper::AddStringToJsonObject(obj, "value", "scheduled"); 
+	JsonHelper::AddStringToJsonObject(obj, "value", "scheduled");
 	for (int i = 0; i < observers.size(); i++){
 		observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 	}
@@ -118,11 +122,16 @@ void DeliverySimulation::RemoveObserver(IEntityObserver* observer) {
 const std::vector<IEntity*>& DeliverySimulation::GetEntities() const { return entities_; }
 
 void DeliverySimulation::Update(float dt) {
-
 	for (int i = 0; i < entities_.size(); i++){
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
+			if (drone->IsDead()) {
+				std::vector<Package*> packages = drone->GetPackages();
+				for (int i = 0; i < packages.size(); i++) {
+					ScheduleDelivery(packages.at(i), packages.at(i)->GetCustomer());
+				}
+			}
 			drone->UpdatePosition(dt);
 		}
 
