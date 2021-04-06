@@ -1,9 +1,7 @@
 #include "beelinepath.h"	
 
 namespace csci3081{
-	BeelinePath::BeelinePath(Drone* d){
-		this->d = d;
-	}
+	BeelinePath::BeelinePath(){}
 
 	void BeelinePath::UpdatePath(){
 		std::vector<std::vector<float>> packageRoutetemp;

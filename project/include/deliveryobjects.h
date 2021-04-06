@@ -129,7 +129,6 @@ namespace csci3081 {
 			Package* package;
 			std::vector<Package*> packages;
 			std::vector<IEntityObserver*> observers;
-			//
 		};
 
 }
