@@ -33,7 +33,6 @@ Drone::~Drone(){
 }
 
 void Drone::UpdatePosition(float dt){
-	std::cout<<path << std::endl;
 		if (packages.size() <= 0 ){
 			return;
 		}
@@ -156,18 +155,13 @@ void Drone::SetPath(std::string path){
 		this->StrategyPath = new BeelinePath();
 	}
 	else if (path.compare("smart")==0){
-		std::cout<<std::endl;
-		std::cout<<"here in smart path" << std::endl;
-		std::cout<<std::endl;
-		std::cout<<std::endl;
-		std::cout<<std::endl;
 		this->StrategyPath = new SmartPath();
 	}
 	else{
 		//default route
 		this->StrategyPath = new BeelinePath();
 	}
-	StrategyPath->SetDrone(this);
+	StrategyPath->SetObject(this);
 }
 
 void Drone::AddPackage(Package* newPackage){

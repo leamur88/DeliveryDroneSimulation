@@ -7,9 +7,11 @@
  * Includes
  ******************************************************************************/
 #include "deliveryobjects.h"
+#include "delivery_paths.h"
 
 
 namespace csci3081 {
+	class iDeliveryPaths;
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
@@ -92,6 +94,7 @@ namespace csci3081 {
 
 		private:
 			bool pickedUpPackage;
+			iDeliveryPaths* StrategyPath;
 		};
 
 }
