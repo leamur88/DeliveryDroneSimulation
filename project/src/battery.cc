@@ -10,7 +10,7 @@ Battery::Battery(float max){
 
 Battery::Battery(){
     MaxCharge = 10000;
-    BatteryLife = 10000;
+    BatteryLife = MaxCharge;
     Dead = false;
 }
 
@@ -37,6 +37,7 @@ void Battery::DepleteBattery(float amount){
 
 void Battery::SetMaxCharge(float capacity){
     MaxCharge = capacity;
+    BatteryLife = capacity;
 }
 
 }

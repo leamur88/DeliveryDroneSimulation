@@ -4,7 +4,7 @@
 namespace csci3081{
 
 Package::Package(std::vector<float> pos, std::vector<float> destination, float weight, const picojson::object& details){
-    
+
     for (int i=0; i < pos.size();i++){
         this->position.push_back(pos[i]);
     }
@@ -57,7 +57,7 @@ void Package::SetWeight(float w){
 float Package::GetWeight(){
     return weight;
 }
-  
+
 void Package::Deliver(){
     delivered = true;
 }
@@ -77,5 +77,10 @@ float Package::GetRadius(){
 float Package::GetCustRadius(){
     return customer->GetRadius();
 }
-    
+
+Customer* Package::GetCustomer() {
+  return customer;
+}
+
+
 }
