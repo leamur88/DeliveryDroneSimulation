@@ -2,6 +2,8 @@
 #include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
+#include "beelinepath.h"
+#include "smartpath.h"
 
 namespace csci3081 {
 
@@ -22,17 +24,6 @@ Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed,
 	this->pickedUpPackage = false;
 	this->Dynamic = true;
 	this->battery = new Battery();
-	if (path == "beeline"){
-		this->StrategyPath = new BeelinePath();
-	}
-	else if (path == "smart"){
-
-	}
-	else{
-		//default route
-		this->StrategyPath = new BeelinePath();
-	}
-	StrategyPath->SetDrone(this);
 	details_ = details;
 }
 
@@ -42,6 +33,7 @@ Drone::~Drone(){
 }
 
 void Drone::UpdatePosition(float dt){
+	std::cout<<path << std::endl;
 		if (packages.size() <= 0 ){
 			return;
 		}
@@ -141,27 +133,12 @@ void Drone::UpdatePosition(float dt){
 void Drone::SetPackage(){
 	if(this->packages.size() >= 1) {
 		this->package = packages.at(0);
-
-		if (path == "smart"){
-			this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
-			this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination()));
-			printf("Calling SetPackage\n");
-			picojson::object obj = JsonHelper::CreateJsonNotification();
-			JsonHelper::AddStringToJsonObject(obj, "value", "moving");
-			JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
-			for (int i = 0; i < observers.size(); i++){
-				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
-			}
-		}
-		else{
-			StrategyPath->UpdatePath();
-			picojson::object obj1 = JsonHelper::CreateJsonNotification();
-			JsonHelper::AddStringToJsonObject(obj1, "value", "moving");
-			JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", packageRoute);
-			for (int i = 0; i < observers.size(); i++){
-				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
-			}
-			printf("after json notification\n");
+		StrategyPath->UpdatePath();
+		picojson::object obj = JsonHelper::CreateJsonNotification();
+		JsonHelper::AddStringToJsonObject(obj, "value", "moving");
+		JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
+		for (int i = 0; i < observers.size(); i++){
+			observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
 		}
 	}
 	else{
@@ -175,6 +152,22 @@ void Drone::SetPackage(){
 
 void Drone::SetPath(std::string path){
 	this->path = path;
+	if (path.compare("beeline")==0){
+		this->StrategyPath = new BeelinePath();
+	}
+	else if (path.compare("smart")==0){
+		std::cout<<std::endl;
+		std::cout<<"here in smart path" << std::endl;
+		std::cout<<std::endl;
+		std::cout<<std::endl;
+		std::cout<<std::endl;
+		this->StrategyPath = new SmartPath();
+	}
+	else{
+		//default route
+		this->StrategyPath = new BeelinePath();
+	}
+	StrategyPath->SetDrone(this);
 }
 
 void Drone::AddPackage(Package* newPackage){
