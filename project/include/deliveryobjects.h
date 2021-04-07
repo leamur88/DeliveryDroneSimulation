@@ -112,8 +112,13 @@ namespace csci3081 {
 		void RemovePackages() {
 			for (int i = 0; i < packages.size(); i++) {
 				packages.erase(packages.begin());
+			}
 		}
-	}
+
+		const IGraph* GetGraph() {
+			return this->g;
+		}
+
 
 
 

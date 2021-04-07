@@ -7,9 +7,8 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "entity_base.h"
-#include "drone.h"
-#include "robot.h"
+
+#include "delivery_paths.h"
 namespace csci3081 {
 /*******************************************************************************
  * Class Definitions
@@ -20,14 +19,13 @@ namespace csci3081 {
 	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
      * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
 	 */
-	class BeelinePath : public csci3081::iDeliveryPaths{
+	class SmartPath : public csci3081::iDeliveryPaths{
 		public:
-            virtual void UpdatePath() = 0;
+		   SmartPath();
+		   
+           void UpdatePath();
 
-		protected:
-			Drone* d;
-            Robot* r;
-		};
+	};
 
 }
 #endif
