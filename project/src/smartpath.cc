@@ -4,7 +4,7 @@ namespace csci3081{
 	SmartPath::SmartPath(){}
 
 	void SmartPath::UpdatePath(){
-		d->SetPackageRoute(d->GetGraph()->GetPath(d->GetPosition(), d->getPackage()->GetPosition() ) );
-		d->SetCustomerRoute(d->GetGraph()->GetPath(d->getPackage()->GetPosition(), d->getPackage()->GetDestination()));
+		o->SetPackageRoute(o->GetGraph()->GetPath(o->GetPosition(), o->getPackage()->GetPosition() ) );
+		o->SetCustomerRoute(o->GetGraph()->GetPath(o->getPackage()->GetPosition(), o->getPackage()->GetDestination()));
 	}
 }
