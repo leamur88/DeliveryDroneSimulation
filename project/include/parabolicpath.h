@@ -10,6 +10,7 @@
 #include "delivery_paths.h"
 #include "entity_base.h"
 #include "vector3D.h"
+#include "vector2D.h"
 #include "drone.h"
 #include "robot.h"
 namespace csci3081 {

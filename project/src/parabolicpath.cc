@@ -8,31 +8,33 @@ namespace csci3081{
 		//initialize package route vector
 		std::vector<std::vector<float>> packageRoutetemp;
 		//initialize the increment
-		Vector3D dlocation(d->GetPosition());
-		Vector3D plocation(d->getPackage()->GetPosition());
-		Vector3D distance = plocation - dlocation;
+		Vector2D dlocation(o->GetPosition());
+		Vector2D plocation(o->getPackage()->GetPosition());
+		Vector2D distance = plocation - dlocation;
 		float increment =  distance.Magnitude()/100;
 
 		//find the unit vector
 		distance.Normalize();
 
 		//loop through the x axis in incriments of distance/100, assigning the height based on a parabolic formula
-		for (int i = 1; i < 100; i++){
+		packageRoutetemp.push_back(o->GetPosition());
+		for (int i = 1; i < 101; i++){
 			//next position on x axis
-			std::vector<float> next_pos = {increment * distance.GetVector()[0], distance.GetVector()[1], increment * distance.GetVector()[2]};
-			Vector3D next(next_pos);
+			std::vector<float> next_pos = {i*increment * distance.GetVector()[0], distance.GetVector()[1], i*increment * distance.GetVector()[2]};
+			Vector2D next(next_pos);
 			next = next + dlocation;
 			next_pos = next.GetVector();
 
 			//convert height based on formula
-			float y = -((i)*(i-(100*increment)))/100;
-			next_pos[1] += y;
+			//float y = -((i)*(i-(100*increment)))/100;
+			
+			next_pos[1] = 257;
 			//push position into path
 			packageRoutetemp.push_back(next_pos);
 		}
 
 		//set as path to package
-		d->SetPackageRoute(packageRoutetemp);
+		o->SetPackageRoute(packageRoutetemp);
 
 
 
@@ -50,7 +52,7 @@ namespace csci3081{
 		std::vector<std::vector<float>> customerRoutetemp;
 		//initialize the increment
 		//plocation = Vector3D(d->getPackage()->GetPosition());
-		Vector3D clocation(d->getPackage()->GetDestination());
+		Vector2D clocation(o->getPackage()->GetDestination());
 		distance = clocation - plocation;
 		increment =  distance.Magnitude()/100;
 
@@ -58,21 +60,22 @@ namespace csci3081{
 		distance.Normalize();
 
 		//loop through the x axis in incriments of distance/100, assigning the height based on a parabolic formula
-		for (int i = 1; i < 100; i++){
+		customerRoutetemp.push_back(o->getPackage()->GetPosition());
+		for (int i = 1; i < 101; i++){
 			//next position on x axis
-			std::vector<float> next_pos = {increment * distance.GetVector()[0], distance.GetVector()[1], increment * distance.GetVector()[2]};
-			Vector3D next(next_pos);
+			std::vector<float> next_pos = {i*increment * distance.GetVector()[0], distance.GetVector()[1], i*increment * distance.GetVector()[2]};
+			Vector2D next(next_pos);
 			next = next + plocation;
 			next_pos = next.GetVector();
 
 			//convert height based on formula
-			float y = -((i)*(i-(100*increment)))/100;
-			next_pos[1] += y;
+			//float y = -((i)*(i-(100*increment)))/100;
+			next_pos[1] = 254;
 			//push position into path
 			customerRoutetemp.push_back(next_pos);
 		}
 
 		//set as path to package
-		d->SetCustomerRoute(customerRoutetemp);
+		o->SetCustomerRoute(customerRoutetemp);
 	}
 }
