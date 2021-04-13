@@ -7,7 +7,9 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#include "delivery_paths.h"
 #include "entity_base.h"
+#include "vector3D.h"
 #include "drone.h"
 #include "robot.h"
 namespace csci3081 {
@@ -22,11 +24,10 @@ namespace csci3081 {
 	 */
 	class ParabolicPath : public csci3081::iDeliveryPaths{
 		public:
-            virtual void UpdatePath() = 0;
+			ParabolicPath();
 
-		protected:
-			Drone* d;
-            Robot* r;
+            void UpdatePath();
+
 		};
 
 }

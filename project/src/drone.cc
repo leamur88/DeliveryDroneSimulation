@@ -2,6 +2,7 @@
 #include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
+#include "parabolicpath.h"
 #include "beelinepath.h"
 #include "smartpath.h"
 
@@ -156,6 +157,10 @@ void Drone::SetPath(std::string path){
 	}
 	else if (path.compare("smart")==0){
 		this->StrategyPath = new SmartPath();
+	} else if (path.compare("parabolic")==0){
+		printf("setting parabolic\n");
+		this->StrategyPath = new ParabolicPath();
+		printf("set parabolic\n");
 	}
 	else{
 		//default route
