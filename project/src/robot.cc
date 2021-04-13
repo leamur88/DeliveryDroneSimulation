@@ -2,6 +2,7 @@
 #include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
+#include "smartpath.h"
 
 namespace csci3081 {
 
@@ -27,6 +28,8 @@ Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed,
 	this->pickedUpPackage = false;
 	this->Dynamic = true;
 	this->battery = new Battery();
+	this->StrategyPath = new SmartPath();
+	StrategyPath->SetObject(this);
 	details_ = details;
 }
 
@@ -135,8 +138,7 @@ void Robot::SetPackage(){
       return;
     }
   	this->package = packages.at(0);
-	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
-	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
+	StrategyPath->UpdatePath();
 	picojson::object obj = JsonHelper::CreateJsonNotification();
     JsonHelper::AddStringToJsonObject(obj, "value", "moving");
     JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
