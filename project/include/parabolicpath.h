@@ -28,9 +28,6 @@ namespace csci3081 {
 
             void UpdatePath();
 
-		protected:
-			Drone* d;
-            Robot* r;
 		};
 
 }

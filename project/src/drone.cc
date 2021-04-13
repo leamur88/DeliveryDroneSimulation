@@ -2,6 +2,7 @@
 #include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
+#include "parabolicpath.h"
 #include "beelinepath.h"
 #include "smartpath.h"
 
@@ -33,7 +34,7 @@ Drone::~Drone(){
 }
 
 void Drone::UpdatePosition(float dt){
-	std::cout<<path << std::endl;
+	//std::cout<<path << std::endl;
 		if (packages.size() <= 0 ){
 			return;
 		}
@@ -162,6 +163,10 @@ void Drone::SetPath(std::string path){
 		std::cout<<std::endl;
 		std::cout<<std::endl;
 		this->StrategyPath = new SmartPath();
+	} else if (path.compare("parabolic")==0){
+		printf("setting parabolic\n");
+		this->StrategyPath = new ParabolicPath();
+		printf("set parabolic\n");
 	}
 	else{
 		//default route

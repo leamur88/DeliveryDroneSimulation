@@ -4,12 +4,12 @@ namespace csci3081{
 	ParabolicPath::ParabolicPath(){}
 
 	void ParabolicPath::UpdatePath(){
-		printf("SUCCESSFULLY UPDATED PARABOLIC PATH" );
+		printf("SUCCESSFULLY UPDATING PARABOLIC PATH" );
 		//initialize package route vector
 		std::vector<std::vector<float>> packageRoutetemp;
 		//initialize the increment
-		Vector3D dlocation = Vector3D(d->GetPosition());
-		Vector3D plocation = Vector3D(d->getPackage()->GetPosition());
+		Vector3D dlocation(d->GetPosition());
+		Vector3D plocation(d->getPackage()->GetPosition());
 		Vector3D distance = plocation - dlocation;
 		float increment =  distance.Magnitude()/100;
 
@@ -20,7 +20,7 @@ namespace csci3081{
 		for (int i = 1; i < 100; i++){
 			//next position on x axis
 			std::vector<float> next_pos = {increment * distance.GetVector()[0], distance.GetVector()[1], increment * distance.GetVector()[2]};
-			Vector3D next = Vector3D(next_pos);
+			Vector3D next(next_pos);
 			next = next + dlocation;
 			next_pos = next.GetVector();
 
@@ -50,7 +50,7 @@ namespace csci3081{
 		std::vector<std::vector<float>> customerRoutetemp;
 		//initialize the increment
 		//plocation = Vector3D(d->getPackage()->GetPosition());
-		Vector3D clocation = Vector3D(d->getPackage()->GetDestination());
+		Vector3D clocation(d->getPackage()->GetDestination());
 		distance = clocation - plocation;
 		increment =  distance.Magnitude()/100;
 
@@ -61,7 +61,7 @@ namespace csci3081{
 		for (int i = 1; i < 100; i++){
 			//next position on x axis
 			std::vector<float> next_pos = {increment * distance.GetVector()[0], distance.GetVector()[1], increment * distance.GetVector()[2]};
-			Vector3D next = Vector3D(next_pos);
+			Vector3D next(next_pos);
 			next = next + plocation;
 			next_pos = next.GetVector();
 

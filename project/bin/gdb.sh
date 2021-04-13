@@ -10,7 +10,7 @@ fi
 SCENE=$1
 if [ -z "$1" ]
 then
-    SCENE=scenes/drone_and_robot_many_deliveries.json
+    SCENE=scenes/parabolic_drone.json
 fi
 
 ROOTDIR=`git rev-parse --show-toplevel`
