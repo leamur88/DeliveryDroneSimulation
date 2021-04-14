@@ -42,6 +42,14 @@ void Robot::UpdatePosition(float dt){
 	Vector2D vec;
   	if(this->package->IsDelivered() == false){
 		if (battery->IsDead()){
+			if(pickedUpPackage){
+				std::vector <float> tempPackLoc;
+				tempPackLoc.push_back(this->package->GetPosition().at(0));
+				tempPackLoc.push_back(this->package->GetStartPosition().at(1));
+				tempPackLoc.push_back(this->package->GetPosition().at(2));
+				this->package->UpdatePosition(tempPackLoc);
+			}
+			bool pickedUpPackage = false;
 			RemovePackages();
 			return;
 		}
