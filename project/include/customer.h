@@ -76,8 +76,8 @@ namespace csci3081 {
 		float GetRadius();
 
         private:
-        std::vector<float> position;
-		float radius;
+        	std::vector<float> position;
+			float radius;
     };
 
 }

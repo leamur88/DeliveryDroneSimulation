@@ -26,8 +26,20 @@ namespace csci3081 {
 	 */
 	class iDeliveryPaths {
 		public:
+			/**
+			 * @brief This virtual function needs to be overriden by all path algorithms
+			 * 
+			 * It should be implemented so that both the customerpath and the packagepath are updated in the deliveryobjects object
+			 */
             virtual void UpdatePath() = 0;
 
+			/**
+			 * @brief This updates a path objects delivery object pointer
+			 * 
+			 * @param[in] o The Delivery Object that needs an updated path
+			 * 
+			 * The deliveryobject that is specified will have it's paths updated
+			 */
 			void SetObject(DeliveryObject* o){
 				this->o = o;
 			}

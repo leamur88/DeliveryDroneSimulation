@@ -15,14 +15,11 @@ namespace csci3081{
 		Vector3D distance = finish - begin;
 
 		float increment =  distance.Magnitude()/100;
-		float magnitude = (distance.Magnitude())/2; 
-
-		
+		float Start_Mid_Magnitude = (distance.Magnitude())/2; 
 
 		//find the unit vector
-		distance.Normalize();
-		Vector3D unit();
-
+		Vector3D unit = distance;
+		unit.Normalize();
 
 		std::vector<float> mid = {(end[0] - start[0])/2, (end[1] - start[1])/2, (end[2] - start[2])/2};
 		Vector3D midpoint(mid);
@@ -32,14 +29,14 @@ namespace csci3081{
 		tempRoute.push_back(start);
 		for (int i = 1; i < 101; i++){
 			//next position on x axis
-			std::vector<float> next_pos = {i*increment * distance.GetVector()[0], i*increment * distance.GetVector()[1], i*increment * distance.GetVector()[2]};
+			std::vector<float> next_pos = {i*increment * unit.GetVector()[0], i*increment * unit.GetVector()[1], i*increment * unit.GetVector()[2]};
 			Vector3D next(next_pos);
 			next = next + begin;
 			next_pos = next.GetVector();
 
 			Vector3D step = next - midpoint;
-			float mag1 = step.Magnitude();
-			float y = (1 - ((mag1*mag1)/(magnitude*magnitude))) * 300;
+			float Next_Mid_Magnitude = step.Magnitude();
+			float y = (1 - (pow(Next_Mid_Magnitude,2)/pow(Start_Mid_Magnitude,2))) * 300;
 			next_pos[1] += y;
 
 			tempRoute.push_back(next_pos);

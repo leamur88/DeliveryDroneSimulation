@@ -27,8 +27,7 @@ namespace csci3081 {
 			* @brief This is the constructor for the Vector3D class. It takes in a float vector to serve as it's vector.
 			*
 			* This is the general constructor for the Vector3D. This will allow significantly smoother vector opeations
-			* for the relationships between the drone, customer, and package classes.
-			*
+			* for the relationships within the DeliveryObject classes and their Path Classes as well.
 			*
 			* @param[in] vec Float Vector
 			*/
@@ -38,7 +37,7 @@ namespace csci3081 {
 			* @brief This is the constructor for the Vector3D class.
 			*
 			* This is the general constructor for the Vector3D. This will allow significantly smoother vector opeations
-			* for the relationships between the drone, customer, and package classes.
+			* for the relationships within the DeliveryObject classes and their Path Classes as well.
 			*
 			*/
 			Vector3D();
@@ -114,15 +113,16 @@ namespace csci3081 {
 			 *
 			 */
 			void Scale(float s);
+			
 			/**
-		   * @brief Function to calculate the magnitde of two vectors.
-		   *
-		   * @param[in] vector1 The first vector that will be used.
-		   * @param[in] vector2 The second vector that will be used.
-		   *
-		   * @return The magnitude of the difference of the two vectors.
-		   */
-		  float Distance(std::vector<float> vector1, std::vector<float> vector2);
+		   	 * @brief Function to calculate the magnitde of two vectors.
+			 *
+			 * @param[in] vector1 The first vector that will be used.
+			 * @param[in] vector2 The second vector that will be used.
+			 *
+			 * @return The magnitude of the difference of the two vectors.
+			 */
+		  	float Distance(std::vector<float> vector1, std::vector<float> vector2);
 
 		private:
 			std::vector<float> vec;
