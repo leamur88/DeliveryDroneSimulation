@@ -70,7 +70,7 @@ void Drone::UpdatePosition(float dt){
 		}
 		else{
 			float distance = vec.Distance(this->position, this->package->GetDestination());
-			if(distance < this->package->GetRadius()){
+			if(distance < this->package->GetCustRadius()){
 				this->package->Deliver();
 				picojson::object obj = JsonHelper::CreateJsonNotification();
 				JsonHelper::AddStringToJsonObject(obj, "value", "delivered");

@@ -29,6 +29,7 @@ namespace csci3081 {
 
             void UpdatePath();
 
+			std::vector<std::vector<float>> GetPath(std::vector<float> start, std::vector<float> end);
 		};
 
 }
