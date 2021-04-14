@@ -166,7 +166,6 @@ namespace csci3081 {
 			float weight;
 			Customer* customer;
 			bool delivered = false;
-			float radius;
 	};
 }
 #endif
