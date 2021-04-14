@@ -14,6 +14,7 @@ namespace csci3081{
 		destination_pos[1] = 315.0;
 		packageRoutetemp.push_back(destination_pos);
 		std::vector<float> destination_pos_low = o->getPackage()->GetPosition();
+		destination_pos_low.at(1) = o->getPackage()->GetStartPosition().at(1);
 		packageRoutetemp.push_back(destination_pos_low);
 		o->SetPackageRoute(packageRoutetemp);
 

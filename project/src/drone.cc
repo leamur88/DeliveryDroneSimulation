@@ -42,6 +42,14 @@ void Drone::UpdatePosition(float dt){
 		// std::cout << JsonHelper::GetString(details_, "name") << std::endl;
 		// printf("%f\n", battery->ChargeRemaining());
 		if (battery->IsDead()){
+			if(pickedUpPackage){
+				std::vector <float> tempPackLoc;
+				tempPackLoc.push_back(this->package->GetPosition().at(0));
+				tempPackLoc.push_back(this->package->GetStartPosition().at(1));
+				tempPackLoc.push_back(this->package->GetPosition().at(2));
+				this->package->UpdatePosition(tempPackLoc);
+			}
+			bool pickedUpPackage = false;
 			RemovePackages();
 			return;
 		}

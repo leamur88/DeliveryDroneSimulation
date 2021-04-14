@@ -4,8 +4,10 @@ namespace csci3081{
 	ParabolicPath::ParabolicPath(){}
 
 	void ParabolicPath::UpdatePath(){
-		o->SetPackageRoute(GetPath(o->GetPosition(),o->getPackage()->GetPosition()));
-		o->SetCustomerRoute(GetPath(o->getPackage()->GetPosition(),o->getPackage()->GetDestination()));
+		std::vector <float> tempackroute = o->getPackage()->GetPosition();
+		tempackroute.at(1) = o->getPackage()->GetStartPosition().at(1);
+		o->SetPackageRoute(GetPath(o->GetPosition(),tempackroute));
+		o->SetCustomerRoute(GetPath(tempackroute,o->getPackage()->GetDestination()));
 	}
 
 	std::vector<std::vector<float>> ParabolicPath::GetPath(std::vector<float> start, std::vector<float> end){

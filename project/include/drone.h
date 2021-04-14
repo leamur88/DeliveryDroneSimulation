@@ -81,7 +81,6 @@ namespace csci3081 {
 		void AddPackage(Package* newPackage);
 
 		private:
-			bool pickedUpPackage;
 			std::vector<float> destination;
 			std::string path = "default";
 			iDeliveryPaths* StrategyPath;
