@@ -74,53 +74,118 @@ namespace csci3081 {
 		 */
 		Package* getPackage(){return package;}
 
+		/**
+		 * @brief Set the Object's Package Route
+		 * 
+		 * @param[in] packageRoute The new packageRoute
+		 * 
+		 * This updates the packageRoute to be used in the Update function.
+		 */
 		void SetPackageRoute(std::vector< std::vector<float>> packageRoute){
 			this->packageRoute = packageRoute;
 		}
 
+		/**
+		 * @brief Set the Object's Customer Route
+		 * 
+		 * @param[in] customerRoute The new customerRoute
+		 * 
+		 * This updates the customerRoute to be used in the Update function.
+		 */
 		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute){
 			this->customerRoute = customerRoute;
 		}
 
+		/** 
+		 * @brief This updates the Object's Battery's Max Charge
+		 * 
+		 * @param[in] capacity The new Max Battery Capacity
+		 * 
+		 * This function is used if the capacity of a battery is supposed to be something other than the default value
+		 */
 		void SetBatteryCapacity(float capacity){
     		battery->SetMaxCharge(capacity);
 		}
 
+		/**
+		 * @brief Returns the package vector that the will go to
+		 *
+		 * This is used within Delivery Simulation mainly
+		 *
+		 * @return Packages vector
+		 */
 		std::vector<Package*> GetPackages() {
 			return this->packages;
 		}
 
-
+		/**
+		 * @brief This sets the graph that the object's paths are using
+		 * 
+		 * @param[in] graph The graph that the object will use
+		 * 
+		 * This is mainly used in the SmartPath Algorithm
+		 */
 		void SetGraph(const IGraph* graph) {g = graph;}
 
+		/**
+		 * @brief Adds observer to the observers list 
+		 * 
+		 * @param[in] observer The observer to be added to the observers list
+		 * 
+		 * This is used so that the observers in deliverySim can be notified of changes for each object
+		 */
 		void SetObserver(IEntityObserver* observer){
 			this->observers.push_back(observer);
 		}
 
+		/**
+		 * @brief This removes the all observers in the observers list
+		 * 
+		 * This is used when an object runs out of battery and no longer needs its observers
+		 */
 		void ClearObservers(){
 			observers.clear();
 		}
 
+		/**
+		 * @brief This removes the first package in the packages list
+		 * 
+		 * This is used when an object delivers a package and needs to move onto the next one.
+		 */
 		void RemovePackage(){
 			packages.erase(this->packages.begin());
 		}
 
+		/**
+		 * @brief This returns whether or not the battery used still has charge remaining
+		 * 
+		 * @return True if out of battery, False otherwise
+		 */
 		bool IsDead() {
 			return battery->IsDead();
 		}
 
+		/**
+		 * @brief This removes the all packages in the packages list
+		 * 
+		 * This is used when an object runs out of battery and no longer needs its packages
+		 */
 		void RemovePackages() {
 			for (int i = 0; i < packages.size(); i++) {
 				packages.erase(packages.begin());
 			}
 		}
 
+		/**
+		 * @brief This returns the graph that the object's paths will use
+		 * 
+		 * This is mainly used in the SmartPath Algorithm
+		 * 
+		 * @return The graph that the object is using in the simulation
+		 */
 		const IGraph* GetGraph() {
 			return this->g;
 		}
-
-
-
 
 		protected:
 			const IGraph* g;

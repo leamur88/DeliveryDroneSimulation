@@ -27,13 +27,22 @@ namespace csci3081 {
 			* @brief This is the constructor for the Vector2D class. It takes in a float vector to serve as it's vector.
 			* 
 			* This is the general constructor for the Vector2D. This will allow significantly smoother vector opeations 
-			* for the relationships between different class objects.
+			* for the relationships between within the DeliveryObject classes and their Path Classes as well..
 			*
 			* @param[in] vec Float Vector
 			* 
 			*/
 			Vector2D(std::vector<float> vec);
+			
+			/**
+			* @brief This is the constructor for the Vector2D class.
+			*
+			* This is the general constructor for the Vector2D. This will allow significantly smoother vector opeations
+			* for the relationships within the DeliveryObject classes and their Path Classes as well.
+			*
+			*/
 			Vector2D();
+
 			/**
 			 * @brief This is overloading the + operation between two Vector2D objects
 			 * 

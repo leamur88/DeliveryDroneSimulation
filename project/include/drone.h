@@ -64,8 +64,20 @@ namespace csci3081 {
 		 */
 		void SetPackage();
 
+		/**
+		 * @brief This determines, using the strategy pattern, what path algorithm to use
+		 * 
+		 * @param[in] path Determines what path to use 
+		 * 
+		 * Based on what gets passed in the drone object will use that specific path algorithm
+		 */
 		void SetPath(std::string path);
 
+		/**
+		 * @brief Add a Package to the packages vector
+		 * 
+		 * @param[in] newPackage The new package to be added to the package vector
+		 */
 		void AddPackage(Package* newPackage);
 
 		private:

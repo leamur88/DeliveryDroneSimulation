@@ -141,6 +141,7 @@ namespace csci3081 {
 			 * @return a float value representing the pickup radius of the package
 			 */
 			float GetRadius();
+
 			/**
 			 * @brief This function is called to see if the drone is in the correct position for package dropoff
 			 *
@@ -150,6 +151,11 @@ namespace csci3081 {
 			 */
 			float GetCustRadius();
 
+			/**
+			 * @brief This returns a Package's Customer
+			 * 
+			 * @return The Package's Customer
+			 */
 			Customer* GetCustomer();
 
 
@@ -161,7 +167,6 @@ namespace csci3081 {
 			Customer* customer;
 			bool delivered = false;
 			float radius;
-
 	};
 }
 #endif

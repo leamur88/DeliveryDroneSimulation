@@ -21,9 +21,21 @@ namespace csci3081 {
 	 */
 	class SmartPath : public csci3081::iDeliveryPaths{
 		public:
-		   SmartPath();
-		   
-           void UpdatePath();
+			/**
+			 * @brief This is the Constructor for a SmartPath
+			 * 
+			 * This will be used to instantiate the smart path object used in delivery objects. Once
+			 * instantiated the smartpath object can update a delivery objects paths to using the smartpath 
+			 * algorithm.
+			 */
+		   	SmartPath();
+
+		   	/**
+			 * @brief This is how the SmartPath Object updates the Delivery Objects paths
+			 * 
+			 * This is called upon when a delivery object needs its paths to be updated, likely due to a change in packages.
+			 */
+           	void UpdatePath();
 
 	};
 

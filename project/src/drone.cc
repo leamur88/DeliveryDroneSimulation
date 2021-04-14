@@ -70,7 +70,7 @@ void Drone::UpdatePosition(float dt){
 		}
 		else{
 			float distance = vec.Distance(this->position, this->package->GetDestination());
-			if(distance < this->package->GetRadius()){
+			if(distance < this->package->GetCustRadius()){
 				this->package->Deliver();
 				picojson::object obj = JsonHelper::CreateJsonNotification();
 				JsonHelper::AddStringToJsonObject(obj, "value", "delivered");
@@ -158,9 +158,7 @@ void Drone::SetPath(std::string path){
 	else if (path.compare("smart")==0){
 		this->StrategyPath = new SmartPath();
 	} else if (path.compare("parabolic")==0){
-		printf("setting parabolic\n");
 		this->StrategyPath = new ParabolicPath();
-		printf("set parabolic\n");
 	}
 	else{
 		//default route

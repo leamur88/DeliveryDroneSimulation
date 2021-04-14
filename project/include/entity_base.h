@@ -27,8 +27,8 @@ namespace csci3081 {
 	 */
 	class EntityBase : public IEntity {
 		public:
-	
 			virtual ~EntityBase() {}
+			
 			/**
 			 * @brief This is function simply returns the ID for a given Entity.
 			 * 
@@ -125,7 +125,6 @@ namespace csci3081 {
 			 * @return The Object's picojson object
 			 * 
 			 */
-		
 			const picojson::object& GetDetails() { return details_; }
 			
 	protected:
