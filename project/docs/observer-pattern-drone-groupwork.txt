@@ -1,0 +1,7 @@
+April 1st 2021
+
+Jules Mockovak was assigned with issue.
+Jon Leibovich, Varun Reddy, and David Atherton all switched out to help with this issue.
+
+Jules Mockovak was lead on implementing observer pattern. Jon, Varun, and David all assisted
+Jules periodically due to vast amount of work for this issue.

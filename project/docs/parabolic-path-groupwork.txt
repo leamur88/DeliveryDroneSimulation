@@ -1,0 +1,8 @@
+April 13th 2021,
+
+Jules lead the issue
+Jon assisted with the implementation.
+
+Jules implemented the parabolic class in order to create a strategy pattern for 
+the path classes. Jon assisted Jules by watching him code and error detection.
+
