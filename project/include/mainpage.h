@@ -73,16 +73,41 @@ Nevertheless, our composite factory pattern is perfect for what we want it to do
 *   Project Manager - Varun
 *
 *
-*   Team Meeting on 3/28: We started the meeting by discussing whose code should be used to move forward with iteration 2.  After careful consideration, we decided Jon's code should be used.This is because although he was missing some aspects that needed to be added for iteration 2, he had a solid codebase that would allow for seamless improvements.  Each group member had parts of their code which they could add to Jon's soon after.  For David it was the smartpath he had already implemented in iteration 1.  For Varun and Jules it was changing the update functions in drone and delivery simulation so the specific updating happened in drone and the delivery simulation update function simply handled all of the drones.  We also went through the steps of a github pull request together to make sure we understood the process.  Finally, we assigned all of the issues for the first deliverable according to interest and our implementation for iteration 1.  David was assigned the implementation of the smartpath.  Jules was assigned the observer pattern.  Jon was assigned the delivery objects implementation and created the robot class.  Varun was assigned to update function in drone.
+*   Team Meeting on 3/28: We started the meeting by discussing whose code should be used to move forward with iteration 2.  
+After careful consideration, we decided Jon's code should be used.This is because although he was missing some aspects that needed to be added for iteration 2, 
+he had a solid codebase that would allow for seamless improvements.  Each group member had parts of their code which they could add to Jon's soon after. 
+For David it was the smartpath he had already implemented in iteration 1.  For Varun and Jules it was changing the update functions in drone and delivery simulation 
+so the specific updating happened in drone and the delivery simulation update function simply handled all of the drones.  We also went through the steps of a github 
+pull request together to make sure we understood the process.  Finally, we assigned all of the issues for the first deliverable according to interest and our 
+implementation for iteration 1.  David was assigned the implementation of the smartpath.  Jules was assigned the observer pattern.  Jon was assigned
+the delivery objects implementation and created the robot class.  Varun was assigned to update function in drone.
 
-*    Team Meeting on 3/29: This meeting was fairly brief. We spent the beginning part of the meeting fixing merge conflicts caused by changes in Varun and David’s new code addition to the Drone. Once that was complete, we created the pull request and ensured that the code within devel was still functioning properly. We determined that our next steps should include finishing the first deliverable of this iteration. This included assigning Varun to implement the drone actually ascending and descending when picking up the package. Jules was assigned to update the robot factory based on the changes made with the robot class. David was assigned to create a pseudo implementation of the strategy pattern within the Drone class. We refer to this as a “pseudo” implementation because at this point we still had not learned about the strategy pattern but the switch statements David implemented to choose which update function to use ended up being similar to a strategy pattern. Jon was assigned to update the Delivery Objects header file to limit repeated code in both Robot and Drone. 
+*    Team Meeting on 3/29: This meeting was fairly brief. We spent the beginning part of the meeting fixing merge conflicts caused by changes in Varun and David’s 
+new code addition to the Drone. Once that was complete, we created the pull request and ensured that the code within devel was still functioning properly. We 
+determined that our next steps should include finishing the first deliverable of this iteration. This included assigning Varun to implement the drone actually
+ascending and descending when picking up the package. Jules was assigned to update the robot factory based on the changes made with the robot class. David was 
+assigned to create a pseudo implementation of the strategy pattern within the Drone class. We refer to this as a “pseudo” implementation because at this point 
+we still had not learned about the strategy pattern but the switch statements David implemented to choose which update function to use ended up being similar to 
+a strategy pattern. Jon was assigned to update the Delivery Objects header file to limit repeated code in both Robot and Drone. 
 
-*    Team Meeting on 3/30: This meeting was when final jobs for deliverable 1 were assigned.  Jules was assigned to the observer pattern.  Jon was assigned drone google tests and Varun was assigned the others.  Varun and Jon were also assigned to help out where needed.  We also approved pull requests for Jon’s delivery objects implementation.  Jules also confirmed the design of the observer pattern with the group prior to implimentation. Future work times were planned, with 3/31 blocked for working on multiple packages and 4/1 for the observer pattern.  Jon and Varun would help with both.  
+*    Team Meeting on 3/30: This meeting was when final jobs for deliverable 1 were assigned.  Jules was assigned to the observer pattern.  Jon was assigned 
+drone google tests and Varun was assigned the others.  Varun and Jon were also assigned to help out where needed.  We also approved pull requests for Jon’s
+delivery objects implementation.  Jules also confirmed the design of the observer pattern with the group prior to implimentation. Future work times were 
+planned, with 3/31 blocked for working on multiple packages and 4/1 for the observer pattern.  Jon and Varun would help with both.  
 
 
-*    Team Meeting on 4/5: This meeting we began discussing and creating a plan to complete deliverable 2. We read through the documentation to decide which stuff we needed to implement. We created new issues for deliverable 2 based on the documentation for the deliverable. Based on this we decided that the battery objective was the main priority. This was assigned to David and Varun to work through. On top of that, the second priority was deciding how to implement a strategy pattern for the update function. We decided to switch our update function to solely work with two path variables and to create those variables within the different patterns. The setting up of this structure and implementing the beeline path was assigned to Jon. Last, Jules began creating teamwork documentation. This would give us a head start on the large amount of documentation work still to come.
+*    Team Meeting on 4/5: This meeting we began discussing and creating a plan to complete deliverable 2. We read through the documentation to decide which stuff
+we needed to implement. We created new issues for deliverable 2 based on the documentation for the deliverable. Based on this we decided that the battery objective
+was the main priority. This was assigned to David and Varun to work through. On top of that, the second priority was deciding how to implement a strategy pattern 
+for the update function. We decided to switch our update function to solely work with two path variables and to create those variables within the different patterns.
+The setting up of this structure and implementing the beeline path was assigned to Jon. Last, Jules began creating teamwork documentation. This would give us 
+a head start on the large amount of documentation work still to come.
 
-*    Team Meeting on 4/7: This meeting we discussed our plan to finish the implementation of all deliverable 2 functionalities. At this point the strategy pattern structure was implemented and the Drone was correctly being assigned packages if another one died. We realized our final functionalities yet to be implemented were the smart path class, the parabolic class path, and having the package drop to its original y value if the drone/robot ran out of battery. Jules was assigned the parabolic path and Varun was assigned the smart path. Jonathan was assigned to assist them as he had background knowledge on how to implement the different paths within the strategy pattern. Last, David was in charge of getting the package to drop down to its original height in the simulation once the drone/robot had “dropped” it.
+*    Team Meeting on 4/7: This meeting we discussed our plan to finish the implementation of all deliverable 2 functionalities. At this point the strategy pattern 
+structure was implemented and the Drone was correctly being assigned packages if another one died. We realized our final functionalities yet to be implemented were
+the smart path class, the parabolic class path, and having the package drop to its original y value if the drone/robot ran out of battery. Jules was assigned the
+parabolic path and Varun was assigned the smart path. Jonathan was assigned to assist them as he had background knowledge on how to implement the different paths
+within the strategy pattern. Last, David was in charge of getting the package to drop down to its original height in the simulation once the drone/robot had “dropped” it.
 
 *
 *
