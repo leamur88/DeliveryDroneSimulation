@@ -145,10 +145,13 @@ void Robot::SetPackage(){
         }
       return;
     }
+	
   	this->package = packages.at(0);
 	StrategyPath->UpdatePath();
+	
 	picojson::object obj = JsonHelper::CreateJsonNotification();
     JsonHelper::AddStringToJsonObject(obj, "value", "moving");
+	
     JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
     for (int i = 0; i < observers.size(); i++){
       observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
