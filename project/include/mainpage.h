@@ -131,7 +131,7 @@ the number, and types of items you plan on generating rarely changes.
 *
 * Before we get too ahead of ourselves, let’s quickly review what the strategy pattern is. Using material from lab 14, like the UML diagram pictured below, our team got a good grasp of how to implement it.
 *
-* <Insert UML from Lab 14>
+* ![Basic Strategy Pattern](../StrategyPattern.png)
 * The first thing we noticed about the strategy pattern is that it took a lot of the code complexity away from the drone class itself. For our purpose, the “context” would be either the 
 * drone or robot class and the “strategy” would be the interface that created our path. At this point we came to the realization that we could have the beeline path strategy update the path to the package 
 * and the path to the customer the same way the smart path did. By accessing the customerRoute and packageRoute variables through a drone/robot pointer in the strategies, we could update the path using the 
@@ -140,9 +140,9 @@ the number, and types of items you plan on generating rarely changes.
 *
 * We created a new interface called deliverypaths.h along with three concrete strategy classes: beelinepath.cc, smartpath.cc, and parabolicpath.cc. As aforementioned, these classes simply had one update function which updated the delivery objects 
 * customerRoute and packageRoute. The smartpath routes were determined by the iGraph object in the delivery object so those routes were freebies when implementing the smartpath object. Similarly, the beeline path’s route was simple to implement since 
-* each route only had 4 basic points, all of which were always accessible through the drone class.
+* each route only had 4 basic points, all of which were always accessible through the drone class. (Note: to make our code more legible, we created a helper function in parabolic path that would create the path based on two endpoints)
 *
-* <Insert UML showing drone/robot interaction with the path classes>
+* ![Our Strategy Pattern](../Path_interaction.png)
 * The strategy class chosen would be determined by the Json object. In our Drone constructor we would check what the “path” variable was set to and instantiate that concrete strategy as our path. Once a package was added to the Drone, the concrete strategies 
 * update function was called and then the Drone’s position was updated normally. The robot was even easier to implement since it just had to have the smartpath strategy. Therefore the smartpath object was always instantiated in the constructor and was called upon 
 * when a package was set for the Robot. 
@@ -157,7 +157,7 @@ the number, and types of items you plan on generating rarely changes.
 * Vi = initial vector of the path\n
 * j = Maximum height of the desired parabola\n
 *
-* As you can see, the formula is quite simple. Some important tips to keep in mind, make sure that you are referencing the initial and end points as 3d points. It is important to keep the difference in those two y values 
+* As you can see, the formula is quite simple. Some important tips to keep in mind, make sure that you are referencing the initial and end points as 3D points. It is important to keep the difference in those two y values 
 * so they can be used in the calculation for the new Y value. Without it, the drone will always try to pick up the package a couple of units too high.
 *
 *
