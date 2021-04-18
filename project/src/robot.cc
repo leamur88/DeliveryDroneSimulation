@@ -137,6 +137,7 @@ void Robot::UpdatePosition(float dt){
 
 
 void Robot::SetPackage(){
+	printf("in setPackage\n");
 	if (this->packages.size() <= 0){
 		picojson::object obj1 = JsonHelper::CreateJsonNotification();
         JsonHelper::AddStringToJsonObject(obj1, "value", "idle");
@@ -145,20 +146,29 @@ void Robot::SetPackage(){
         }
       return;
     }
+	
   	this->package = packages.at(0);
+	  printf("in setPackage\n");
 	StrategyPath->UpdatePath();
+	
+	printf("in setPackage\n");
 	picojson::object obj = JsonHelper::CreateJsonNotification();
     JsonHelper::AddStringToJsonObject(obj, "value", "moving");
+	
     JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
+	printf("in setPackage\n");
     for (int i = 0; i < observers.size(); i++){
       observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
     }
 }
 
 void Robot::AddPackage(Package* newPackage){
+	printf("in robot\n");
 	this->packages.push_back(newPackage);
     if (packages.size() ==1){
+		printf("in robot\n");
         SetPackage();
+		printf("in robot\n");
     }
 }
 
