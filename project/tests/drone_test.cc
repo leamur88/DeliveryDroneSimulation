@@ -149,9 +149,9 @@ TEST_F(DroneTest, DronePackageCustomerRelationship) {
   float position = d.GetPosition()[1];
   d.Ascend(.5);
   ASSERT_FLOAT_EQ(d.GetPosition()[1], position + .5*30);
-  d.Descend(.5); 
+  d.Descend(.5);
   ASSERT_FLOAT_EQ(d.GetPosition()[1], position);
-  d.Descend(.5); 
+  d.Descend(.5);
   ASSERT_FLOAT_EQ(d.GetPosition()[1], position - .5*30);
 }
 }  // namespace csci3081

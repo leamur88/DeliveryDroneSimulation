@@ -97,5 +97,9 @@ TEST_F(Vector3DTest, VectorOperations) {
   ASSERT_FLOAT_EQ(v5.GetVector()[2], vec3[2]/mag);
   ASSERT_FLOAT_EQ(v5.Magnitude(), 1);
 
+
+  Vector3D v6;
+  float distance = v6.Distance(vec2, vec3);
+  ASSERT_FLOAT_EQ(distance, 2.0);
 }
 }  // namespace csci3081
