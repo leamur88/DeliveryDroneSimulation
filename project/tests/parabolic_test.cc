@@ -71,7 +71,7 @@ class ParabolicTest : public ::testing::Test {
 
 		std::vector<std::vector<float>> custroute = d.GetCustomerRoute();
 
-		ParabolicPath path();
+		ParabolicPath path;
 
 		std::vector<std::vector<float>> testpackroute = path.GetPath(position_to_add, position_to_add1);
 
