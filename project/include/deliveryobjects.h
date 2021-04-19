@@ -187,6 +187,31 @@ namespace csci3081 {
 			return this->g;
 		}
 
+		/**
+		 * @brief This function returns the route the object will take to get to the package
+		 * 
+		 * This is only used for testing
+		 * 
+		 * @return A std::vector< std::vector<float>> that signifies the route the 
+		 * the object will take to get to the package
+		 */
+		const std::vector< std::vector<float>> GetPackageRoute(){
+			return this->packageRoute;
+		}
+
+		/**
+		 * @brief This function returns the route the object will take to get to the customer
+		 * 
+		 * This is only used for testing
+		 * 
+		  * @return A std::vector< std::vector<float>> that signifies the route the 
+		 * the object will take to get to the package
+		 */
+
+		const std::vector< std::vector<float>> GetCustomerRoute(){
+			return this->customerRoute;
+		}
+
 		protected:
 			const IGraph* g;
 			std::vector< std::vector<float>> packageRoute;

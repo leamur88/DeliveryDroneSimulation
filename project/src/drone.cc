@@ -10,7 +10,6 @@ namespace csci3081 {
 
 
 Drone::Drone(std::vector<float> pos, std::vector<float> direction, double speed, double radius, const picojson::object& details){
-
 	for (int i=0; i < pos.size();i++){
 		this->position.push_back(pos[i]);
 
@@ -39,8 +38,6 @@ void Drone::UpdatePosition(float dt){
 		}
   	Vector3D vec;
   	if(this->package->IsDelivered() == false){
-		// std::cout << JsonHelper::GetString(details_, "name") << std::endl;
-		// printf("%f\n", battery->ChargeRemaining());
 		if (battery->IsDead()){
 			if(pickedUpPackage){
 				std::vector <float> tempPackLoc;
@@ -177,7 +174,7 @@ void Drone::SetPath(std::string path){
 
 void Drone::AddPackage(Package* newPackage){
 	this->packages.push_back(newPackage);
-	if (packages.size() ==1){
+	if (packages.size() == 1){
 		printf("Should set package\n");
 		SetPackage();
 	}
