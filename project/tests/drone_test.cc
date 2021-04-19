@@ -130,4 +130,5 @@ class DroneTest : public ::testing::Test {
 		ASSERT_FLOAT_EQ(d.getPackage()->GetDestination()[1], c2.GetPosition()[1]);
 		ASSERT_FLOAT_EQ(d.getPackage()->GetDestination()[2], c2.GetPosition()[2]);
 	}
+
 }  // namespace csci3081

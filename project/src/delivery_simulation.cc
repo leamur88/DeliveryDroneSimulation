@@ -121,6 +121,8 @@ void DeliverySimulation::RemoveObserver(IEntityObserver* observer) {
 
 const std::vector<IEntity*>& DeliverySimulation::GetEntities() const { return entities_; }
 
+std::vector<IEntityObserver*> DeliverySimulation::GetObservers() { return observers; }
+
 void DeliverySimulation::Update(float dt) {
 	for (int i = 0; i < entities_.size(); i++){
 
