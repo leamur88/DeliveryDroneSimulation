@@ -7,10 +7,12 @@
  * Includes
  ******************************************************************************/
 #include "deliveryobjects.h"
+#include "delivery_paths.h"
 
 
 
 namespace csci3081 {
+	class iDeliveryPaths;
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
@@ -56,113 +58,32 @@ namespace csci3081 {
 		void UpdatePosition(float dt);
 
 		/**
-		 *  @brief This will update the position of the drone using the beeline path.
-		 *
-		 *  The drone will update it's position vector using beeline path.
-		 *
-		 * @param[in] float the amount of time that will have passed between calls.
-		 */
-		void UpdateBeeline(float dt);
-
-		/**
-		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
-		 *
-		 *  The object will call to see if it is within range of the package.
-		 *
-		 * @return Whether or not the package can be picked up.
-		 */
-		bool Pickup();
-
-		/**
-		 * @brief This function will check if the drone is range to start going ascending or descending over the package.
-		 *
-		 *  The drone's update beeline function calls this function to make sure it is in range to descned towards the package.
-		 *
-		 * @return if the drone is in range to descending towards the package.
-		 */
-		bool IsPickupMode();
-
-		/**
-		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
-		 *
-		 *  The drone will call this function to see if it is within range of the customer.
-		 *
-		 * @return Whether or not the package can be dropped off.
-		 */
-		bool DropOff();
-
-		/**
-		 * @brief This function will check if the drone is range to start going ascending or descending over the customer.
-		 *
-		 *  The drone's update beeline function calls this function to make sure it is in range to ascend or descend towards the customer.
-		 *
-		 * @return if the drone is in range to descending towards the customer.
-		 */
-		bool IsDropOffMode();
-
-		/**
-		 * @brief This function sets the drone's new destination as the customers position
-		 *
-		 * This is only called the first time when the drone is within radius of the package
-		 */
-		void GoDropOff();
-
-		/**
-		 * @brief updates the drones position whenever it is ascending with the package
-		 *
-		 * This not only updates the drones position but stops it if it exceeds the height limit
-		 *
-		 * @return an int representing if the ascension was successful or the hieght limit was hit
-		 */
-		int Ascend(float dt);
-
-		/**
-		 * @brief updates the drones position whenever it needs to descend
-		 *
-		 * This not only updates the drones position but stops to descension if the drone has hit its destination
-		 *
-		 * @return an int representting if the ascension was successful or the destination was hit.
-		 */
-		int Descend(float dt);
-
-		/**
-		 *  @brief This will update the position of the drone using smart path.
-		 *
-		 *  The drone will update it's position vector using smart path.
-		 *
-		 * @param[in] float the amount of time that will have passed between calls.
-		 */
-		void UpdateSmartPath(float dt);
-
-		/**
-		 *  @brief This will set the destination vector within the Drone class.
-		 *
-		 *  The drone will access the current destination vector and update it.
-		 *
-		 * @param[in] dir This is the new destination the drone will fly to.
-		 *
-		 */
-		void SetDestination(const std::vector<float>& dir);
-
-		/**
 		 * @brief This function will set a package for the object object
 		 *
 		 * @param[in] package The package that the object will carry.
 		 */
-
 		void SetPackage();
 
+		/**
+		 * @brief This determines, using the strategy pattern, what path algorithm to use
+		 * 
+		 * @param[in] path Determines what path to use 
+		 * 
+		 * Based on what gets passed in the drone object will use that specific path algorithm
+		 */
 		void SetPath(std::string path);
 
+		/**
+		 * @brief Add a Package to the packages vector
+		 * 
+		 * @param[in] newPackage The new package to be added to the package vector
+		 */
 		void AddPackage(Package* newPackage);
 
-		
-
-
 		private:
-			bool pickedUpPackage;
 			std::vector<float> destination;
 			std::string path = "default";
+			iDeliveryPaths* StrategyPath;
 		};
 
 }

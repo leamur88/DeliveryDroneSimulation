@@ -75,6 +75,14 @@ namespace csci3081 {
 		 */
 		void DepleteBattery(float amount);
 
+
+		/**
+		 * @brief Set's the Max Charge of a battery
+		 * 
+		 * @param[in] capacity The new max capacity of the battery
+		 * 
+		 * This function is mainly used in the Drone and Robot Factories if a max charge is specified within the Json Object
+		 */
 		void SetMaxCharge(float capacity);
 
 		private:

@@ -17,6 +17,8 @@ namespace csci3081 {
             Drone* d = new Drone(position, direction, speed, radius, entity);
             if (JsonHelper::ContainsKey(entity, "path")){
                 d->SetPath(JsonHelper::GetString(entity, "path"));
+            }else {
+                d->SetPath("default");
             }
 
             if (JsonHelper::ContainsKey(entity, "battery_capacity")){

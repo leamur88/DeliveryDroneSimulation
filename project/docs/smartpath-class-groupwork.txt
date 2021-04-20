@@ -1,0 +1,8 @@
+April 15th, 2021
+
+Varun Reddy was assigned with the issue,
+Jonathan Leibovich assisted with debugging.
+
+Varun implemented and created the smathpath class in order to 
+implment a strategy pattern. There were some error that arose due to organizational
+mistakes, and Jon helped Varun out with debugging.

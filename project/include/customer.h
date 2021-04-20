@@ -74,10 +74,6 @@ namespace csci3081 {
 		* @return a float value representing the dropooff radius of the customer
 		*/
 		float GetRadius();
-
-        private:
-        std::vector<float> position;
-		float radius;
     };
 
 }

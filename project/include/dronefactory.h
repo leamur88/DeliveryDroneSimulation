@@ -41,7 +41,6 @@ namespace csci3081 {
              * 
              * @return null or a drone object
              */
-
             IEntity* CreateEntity(const picojson::object& entity);
 
 

@@ -2,6 +2,7 @@
 #include "json_helper.h"
 #include <cstdlib>
 #include <iostream>
+#include "smartpath.h"
 
 namespace csci3081 {
 
@@ -27,6 +28,8 @@ Robot::Robot(std::vector<float> pos, std::vector<float> direction, double speed,
 	this->pickedUpPackage = false;
 	this->Dynamic = true;
 	this->battery = new Battery();
+	this->StrategyPath = new SmartPath();
+	StrategyPath->SetObject(this);
 	details_ = details;
 }
 
@@ -39,6 +42,15 @@ void Robot::UpdatePosition(float dt){
 	Vector2D vec;
   	if(this->package->IsDelivered() == false){
 		if (battery->IsDead()){
+			if(pickedUpPackage){
+				std::vector <float> tempPackLoc;
+				tempPackLoc.push_back(this->package->GetPosition().at(0));
+				tempPackLoc.push_back(this->package->GetStartPosition().at(1));
+				tempPackLoc.push_back(this->package->GetPosition().at(2));
+				this->package->UpdatePosition(tempPackLoc);
+			}
+			bool pickedUpPackage = false;
+			RemovePackages();
 			return;
 		}
 		battery->DepleteBattery(dt);
@@ -47,13 +59,13 @@ void Robot::UpdatePosition(float dt){
 			if (distance < this->package->GetRadius()){
 				pickedUpPackage = true;
 				picojson::object obj = JsonHelper::CreateJsonNotification();
-		        JsonHelper::AddStringToJsonObject(obj, "value", "en route"); 
+		        JsonHelper::AddStringToJsonObject(obj, "value", "en route");
 		        for (int i = 0; i < observers.size(); i++){
 		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		        }
 				picojson::object obj1 = JsonHelper::CreateJsonNotification();
-				JsonHelper::AddStringToJsonObject(obj1, "value", "moving"); 
-				JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute); 
+				JsonHelper::AddStringToJsonObject(obj1, "value", "moving");
+				JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute);
 				for (int i = 0; i < observers.size(); i++){
 					observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
 				}
@@ -64,7 +76,7 @@ void Robot::UpdatePosition(float dt){
 			if(distance < this->package->GetRadius()){
 				this->package->Deliver();
 				picojson::object obj = JsonHelper::CreateJsonNotification();
-		        JsonHelper::AddStringToJsonObject(obj, "value", "delivered"); 
+		        JsonHelper::AddStringToJsonObject(obj, "value", "delivered");
 		        for (int i = 0; i < observers.size(); i++){
 		          observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 		        }
@@ -72,7 +84,7 @@ void Robot::UpdatePosition(float dt){
 				pickedUpPackage = false;
 				customerRouteStep = 1;
 				packageRouteStep = 1;
-				
+
 				SetPackage();
 			}
 		}
@@ -114,24 +126,33 @@ void Robot::UpdatePosition(float dt){
 			}
 		}
   	}
+		if (battery->IsDead()){
+			picojson::object obj1 = JsonHelper::CreateJsonNotification();
+			JsonHelper::AddStringToJsonObject(obj1, "value", "idle");
+			for (int i = 0; i < observers.size(); i++){
+				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+			}
+		}
 }
 
 
 void Robot::SetPackage(){
 	if (this->packages.size() <= 0){
 		picojson::object obj1 = JsonHelper::CreateJsonNotification();
-        JsonHelper::AddStringToJsonObject(obj1, "value", "idle"); 
+        JsonHelper::AddStringToJsonObject(obj1, "value", "idle");
         for (int i = 0; i < observers.size(); i++){
           observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
         }
       return;
     }
+	
   	this->package = packages.at(0);
-	this->SetPackageRoute(g->GetPath(GetPosition(), package->GetPosition() ) );
-	this->SetCustomerRoute(g->GetPath(package->GetPosition(), package->GetDestination() ) );
+	StrategyPath->UpdatePath();
+	
 	picojson::object obj = JsonHelper::CreateJsonNotification();
-    JsonHelper::AddStringToJsonObject(obj, "value", "moving"); 
-    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute); 
+    JsonHelper::AddStringToJsonObject(obj, "value", "moving");
+	
+    JsonHelper::AddStdVectorVectorFloatToJsonObject(obj, "path", packageRoute);
     for (int i = 0; i < observers.size(); i++){
       observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *this);
     }

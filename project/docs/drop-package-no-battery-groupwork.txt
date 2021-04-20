@@ -1,0 +1,9 @@
+April 6th 2021
+
+David Atherton was assigned the issue.
+Varun Reddy helped with pair programming.
+
+David implemented the aspect where drones and robots drop their packages
+when they run out of battery. Varun was watching over David coding and helped
+by bringing up ideas for implementation and catching errors. Varun Reddy 
+on April 14th later caught an error and fixed it.

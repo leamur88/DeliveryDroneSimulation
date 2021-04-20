@@ -7,9 +7,11 @@
  * Includes
  ******************************************************************************/
 #include "deliveryobjects.h"
+#include "delivery_paths.h"
 
 
 namespace csci3081 {
+	class iDeliveryPaths;
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
@@ -55,7 +57,7 @@ namespace csci3081 {
 		/**
 		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
 		 * 
-		 *  The robot will call to see if it is within range of the package.
+		 * The robot will call to see if it is within range of the package.
 		 * 
 		 * @return Whether or not the package can be picked up.
 		 */
@@ -75,9 +77,7 @@ namespace csci3081 {
 		 * 
 		 * @param[in] package The package that the robot will carry.
 		 */
-
 		void SetPackage();
-
 
 		/**
 		 * @brief returns whether or not the package has been picked up yet
@@ -88,10 +88,15 @@ namespace csci3081 {
 		 */
 		bool IsPackagePickedUp(){return pickedUpPackage;}
 
+		/**
+		 * @brief Add a Package to the packages vector
+		 * 
+		 * @param[in] newPackage The new package to be added to the package vector
+		 */
 		void AddPackage(Package* newPackage);
 
 		private:
-			bool pickedUpPackage;
+			iDeliveryPaths* StrategyPath;
 		};
 
 }
