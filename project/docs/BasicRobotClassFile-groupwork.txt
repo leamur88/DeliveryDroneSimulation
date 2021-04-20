@@ -1,0 +1,7 @@
+March 30, 2021
+Jonathan Leibovich was assigned with the issue,
+Varun Reddy assisted with the implemenatation.
+
+Varun helped Jon out by bouncing ideas of implemenatation of each other
+and help make sure the Robot's implemenatation flowed correctly with the
+other parts of the project.

@@ -1,0 +1,9 @@
+March 31, 2021
+
+David Atherton was assigned with the issue,
+Varun Reddy assisted with the implemenatation.
+Jonathan Leibovich assisted with debugging
+
+Varun helped David out by bouncing ideas of implemenatation of each other
+and help make sure the solution to issue #35 flowed correctly with the
+other parts of the project. Jonathan Leibovich helped out with debugging.
