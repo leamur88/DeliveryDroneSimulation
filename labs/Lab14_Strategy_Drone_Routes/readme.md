@@ -56,21 +56,30 @@ Calculations for the parabola may be represented as such:
 Considering that we are actually trying to represent a 2d parabola in 3d space, some projection algebra will be needed leaving 
 us with the equation:
 
-</pre><code style="width:100%;color:#00ff00;">Y = -a * distance(i, V)<sup>2</sup> + j (2)</code></pre>
+</pre><code style="width:100%;color:#00ff00;">y = (1 - distance(V, V<sub>m</sub>)<sup>2</sup> / distance(V<sub>o</sub>, V<sub>m</sub>)<sup>2</sup>) * j (2)</code></pre>
+
+Let's take a moment to define our notation. 
+<ul>
+    <li>V<sub>o</sub> is our source point</li>
+    <li>V is the point we are moving to</li>
+    <li>V<sub>m</sub> is our midpoint equal to distance(source, destination) / 2</li>
+    <li>T is the number of steps we are estimating</li>
+    <li>V<sub>t</sub> is our step interval equal to distance(source, destination) / T</li>
+</ul>
 
 The vertex in this context is the point at which the sign of the parabola's slope flips.
-In our case, the vertex (i.x, i.y + j, i.z) is represented by the midpoint between source and destination (i) and the desired maximum height of 
-the parabola (j). (a) is a tuning parameter that we can use to avoid building collision and scale the parabola's slope.
+In our case, the vertex (V<sub>m</sub>.x, V<sub>m</sub>.y + j, V<sub>m</sub>.z) is represented by the midpoint between source and destination (V<sub>m</sub>) and the desired maximum height of 
+the parabola (j). (j) is a tuning parameter that we can use to avoid building collision and scale the parabola's slope.
 
 The y value is our dependent variable that is determined by our unknown independent variable v. Circling back to before,
 this value v is related to our sample points or domain. If we want a parabolic path that samples 5 points (T), we need to take the distance between source and destination 
 and divide it by 5. 
 
-To find the correct v vector we need to take the source and add the normalized direction times the amount of steps desired (t).
+To find the correct v vector we need to take the source and add the step interval vector and multiply it by the number of steps desired (t).
 We do not want this to be greater than our total number of steps (T). 0 steps would leave us at the source point whereas 5 steps will leave us at the destination. 
-The following equation represents our v from before (2) and is an adaptation to the formula of a ray:
+The following equation represents our V from before (2) and is an adaptation to the formula for a ray:
 
-</pre><code style="width:100%;color:#00ff00;">V = V<sub>o</sub> + V<sub>N</sub>*(t/T) (3)</code></pre>
+</pre><code style="width:100%;color:#00ff00;">V = V<sub>o</sub> + V<sub>t</sub>*t (3)</code></pre>
 
 Something to consider in our implementation is the case where we have an even versus odd number of steps as the max height in 5 steps is reached at 2.5 steps. 
 To address this condition we can always ensure that T is even and if it is not add 1 which is ideal since the case where we have one step will never be desired for
