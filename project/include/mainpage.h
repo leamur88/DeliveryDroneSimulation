@@ -160,6 +160,7 @@ the number, and types of items you plan on generating rarely changes.
 * As you can see, the formula is quite simple. Some important tips to keep in mind, make sure that you are referencing the initial and end points as 3D points. It is important to keep the difference in those two y values 
 * so they can be used in the calculation for the new Y value. Without it, the drone will always try to pick up the package a couple of units too high.
 *
+* ###Observer Pattern Implementation\n
 * The observers are first created within delivery_simulation.cc by calling AddObserver.  The observers are then put into an observer vector which each drone and robot has.
 * This is done after these vectors are cleared to make sure no leftover observers remain in them.  This way we can loop through all of an object’s observers whenever OnEvent 
 * needs to be called.  The statuses that the observer needs are stored in booleans in drone and robot so OnEvent can be easily called.  The path is stored as a member
