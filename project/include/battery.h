@@ -14,7 +14,7 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Batteries.
+	 * @brief The main class for the generation of Battery.
 	 *
 	 * Calls to \ref Battery constructor to get a new battery.
 	 *  This class will also contain all of the necessary getters for the batteries.
