@@ -241,7 +241,10 @@ namespace csci3081 {
 			std::vector<Package*> packages;
 			std::vector<IEntityObserver*> observers;
 			bool pickedUpPackage;
+			bool GoToCustomer;
+			std::vector<Package*> currPackages;
 			double carryingCapacity;
+			double currentCarrying=0;
 		};
 
 }
