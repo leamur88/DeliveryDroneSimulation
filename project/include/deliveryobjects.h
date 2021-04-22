@@ -199,6 +199,20 @@ namespace csci3081 {
 			return this->packageRoute;
 		}
 
+		void SetCarryingCap(double carryingCap){
+			this->carryingCapacity = carryingCap;
+		}
+
+		const double GetCarryingCap(){
+			return this->carryingCapacity;
+		}
+
+		void SetMaxSpeed(double maxSpeed){
+			if(maxSpeed < this->speed){
+				speed = maxSpeed;
+			}
+		}
+
 		/**
 		 * @brief This function returns the route the object will take to get to the customer
 		 * 
@@ -211,6 +225,8 @@ namespace csci3081 {
 		const std::vector< std::vector<float>> GetCustomerRoute(){
 			return this->customerRoute;
 		}
+
+		
 
 		protected:
 			const IGraph* g;
@@ -225,7 +241,7 @@ namespace csci3081 {
 			std::vector<Package*> packages;
 			std::vector<IEntityObserver*> observers;
 			bool pickedUpPackage;
-			
+			double carryingCapacity;
 		};
 
 }
