@@ -1,5 +1,6 @@
 #include "dronefactory.h"
 
+
 namespace csci3081 {
 
     DroneFactory::DroneFactory(){
@@ -13,8 +14,12 @@ namespace csci3081 {
             std::vector<float> direction = JsonHelper::GetStdFloatVector(entity, "direction");
             double radius = JsonHelper::GetDouble(entity, "radius");
             double speed = JsonHelper::GetDouble(entity, "speed");
+            std::string model = JsonHelper::GetString(entity, "model");
 
             Drone* d = new Drone(position, direction, speed, radius, entity);
+            if(model.compare("Q-36-02"){
+                
+            }
             if (JsonHelper::ContainsKey(entity, "path")){
                 d->SetPath(JsonHelper::GetString(entity, "path"));
             }else {

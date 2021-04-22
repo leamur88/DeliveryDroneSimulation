@@ -225,7 +225,8 @@ namespace csci3081 {
 			std::vector<Package*> packages;
 			std::vector<IEntityObserver*> observers;
 			bool pickedUpPackage;
-			
+			int carryingCapacity;
+			int maxSpeed;
 		};
 
 }
