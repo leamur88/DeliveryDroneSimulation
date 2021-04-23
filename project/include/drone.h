@@ -80,6 +80,8 @@ namespace csci3081 {
 		 */
 		void AddPackage(Package* newPackage);
 
+		void GoToCustomerPath();
+
 		private:
 			std::vector<float> destination;
 			std::string path = "default";

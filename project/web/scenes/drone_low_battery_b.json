@@ -26,7 +26,7 @@
       "name": "drone 1",
       "mesh": "models/s9drone.glb",
       "path": "beeline",
-      "battery_capacity": 10.0,
+      "battery_capacity": 50.0,
       "position": [498.292, 253.883, -200],
       "scale": [0.1, 0.1, 0.1],
       "rotation": [0, 0, 0, 0],
@@ -85,7 +85,7 @@
           "mesh": "models/routes.obj",
           "position": [-0.0,-12.5,-0.0],
           "scale": [0.0705,0.05,0.0705],
-          "color": "0xff00e1"
+          "color": "0x3aa832"
       }
   },
   { "command": "addEntity", "params": {"index" : 0} },
