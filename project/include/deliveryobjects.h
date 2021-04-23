@@ -211,6 +211,7 @@ namespace csci3081 {
 			if(maxSpeed < this->speed){
 				speed = maxSpeed;
 			}
+			this->maxSpeed = maxSpeed;
 		}
 
 		/**
@@ -245,6 +246,7 @@ namespace csci3081 {
 			std::vector<Package*> currPackages;
 			double carryingCapacity;
 			double currentCarrying=0;
+			double maxSpeed;
 		};
 
 }
