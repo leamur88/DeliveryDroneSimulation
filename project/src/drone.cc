@@ -178,7 +178,13 @@ void Drone::UpdatePosition(float dt){
 			Vector3D change = update - init;
 			change.Normalize();
 			change.Scale(dt);
-			change.Scale(speed);
+			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
+			std::cout << "newspeed: " << newspeed << std::endl;
+			std::cout << "Speed: " << speed << std::endl;
+			if(newspeed >= speed){
+				newspeed = speed;
+			}
+			change.Scale(newspeed);
 			Vector3D newLoc = init + change;
 			position.clear();
 			for (int i=0; i < newLoc.GetVector().size();i++){
@@ -213,7 +219,13 @@ void Drone::UpdatePosition(float dt){
 			Vector3D change = update - init;
 			change.Normalize();
 			change.Scale(dt);
-			change.Scale(speed);
+			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
+			std::cout << "newspeed: " << newspeed << std::endl;
+			std::cout << "Speed: " << speed << std::endl;
+			if(newspeed >= speed){
+				newspeed = speed;
+			}
+			change.Scale(newspeed);
 			Vector3D newLoc = init + change;
 			position.clear();
 			for (int i=0; i < newLoc.GetVector().size();i++){
