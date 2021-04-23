@@ -153,12 +153,18 @@ void Drone::UpdatePosition(float dt){
 		RemovePackages();
 		return;
 	}
+	battery->DepleteBattery(dt);
 	Vector3D vec;
 	if (!GoToCustomer){
 		float distance = vec.Distance(this->position, this->package->GetPosition());
 		if (distance < this->package->GetRadius()){
 			printf("Going to set package!\n");
 			this->currPackages.push_back(this->package);
+			picojson::object obj = JsonHelper::CreateJsonNotification();
+			JsonHelper::AddStringToJsonObject(obj, "value", "en route");
+			for (int j = 0; j < observers.size(); j++){
+				observers[j]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
+			}
 			SetPackage();
 			return;
 		}
@@ -193,6 +199,7 @@ void Drone::UpdatePosition(float dt){
 			for (int i = 0; i < observers.size(); i++){
 				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *package);
 			}
+			this->currentCarrying -= this->package->GetWeight();
 			this->packages.erase(this->packages.begin());
 			this->currPackages.erase(this->currPackages.begin());
 			GoToCustomerPath();
@@ -221,8 +228,7 @@ void Drone::UpdatePosition(float dt){
 
 void Drone::SetPackage(){
 	if(this->packages.size() >= 1) {
-		printf("Current Package size: %d\n", currPackages.size());
-		if (currentCarrying + this->packages[currPackages.size()]->GetWeight() > carryingCapacity || (currPackages.size() == packages.size())){
+		if ((currPackages.size() == packages.size()) || currentCarrying + this->packages[currPackages.size()]->GetWeight() > carryingCapacity){
 			GoToCustomer = true;
 			GoToCustomerPath();
 			return;
@@ -252,13 +258,6 @@ void Drone::GoToCustomerPath(){
 		this->package = currPackages[0];
 		StrategyPath->UpdatePath();
 		customerRouteStep = 1;
-		for (int i =0; i < currPackages.size(); i++){
-			picojson::object obj = JsonHelper::CreateJsonNotification();
-			JsonHelper::AddStringToJsonObject(obj, "value", "en route");
-			for (int j = 0; j < observers.size(); j++){
-				observers[j]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj), *currPackages[i]);
-			}
-		}
 		picojson::object obj1 = JsonHelper::CreateJsonNotification();
 		JsonHelper::AddStringToJsonObject(obj1, "value", "moving");
 		JsonHelper::AddStdVectorVectorFloatToJsonObject(obj1, "path", customerRoute);
@@ -267,6 +266,7 @@ void Drone::GoToCustomerPath(){
 		}
 	}
 	else{
+		GoToCustomer = false;
 		SetPackage();
 	}
 
