@@ -160,6 +160,7 @@ void Drone::UpdatePosition(float dt){
 		if (distance < this->package->GetRadius()){
 			printf("Going to set package!\n");
 			this->currPackages.push_back(this->package);
+			currentCarrying+=this->packages[currPackages.size()]->GetWeight();
 			picojson::object obj = JsonHelper::CreateJsonNotification();
 			JsonHelper::AddStringToJsonObject(obj, "value", "en route");
 			for (int j = 0; j < observers.size(); j++){
@@ -179,8 +180,8 @@ void Drone::UpdatePosition(float dt){
 			change.Normalize();
 			change.Scale(dt);
 			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
-			std::cout << "newspeed: " << newspeed << std::endl;
-			std::cout << "Speed: " << speed << std::endl;
+			//std::cout << "newspeed: " << newspeed << std::endl;
+			//std::cout << "Speed: " << speed << std::endl;
 			if(newspeed >= speed){
 				newspeed = speed;
 			}
@@ -220,8 +221,8 @@ void Drone::UpdatePosition(float dt){
 			change.Normalize();
 			change.Scale(dt);
 			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
-			std::cout << "newspeed: " << newspeed << std::endl;
-			std::cout << "Speed: " << speed << std::endl;
+			//std::cout << "newspeed: " << newspeed << std::endl;
+			//std::cout << "Speed: " << speed << std::endl;
 			if(newspeed >= speed){
 				newspeed = speed;
 			}
@@ -247,7 +248,6 @@ void Drone::SetPackage(){
 		}
 		this->package = packages.at(currPackages.size());
 		StrategyPath->UpdatePath();
-		currentCarrying+=this->packages[currPackages.size()]->GetWeight();
 		packageRouteStep = 1;
 		picojson::object obj = JsonHelper::CreateJsonNotification();
 		JsonHelper::AddStringToJsonObject(obj, "value", "moving");
