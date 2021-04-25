@@ -14,9 +14,9 @@ then
     #SCENE=iter1_scenes/umn.json
     #SCENE=scenes/parabolic_drone.json
     #SCENE=scenes/drone_and_robot.json
-	#SCENE=scenes/drone_and_robot_many_deliveries.json
+	SCENE=scenes/drone_and_robot_many_deliveries.json
     #SCENE=scenes/drone_low_battery_b.json
-	SCENE=scenes/drone_delivers_two_packages_at_once.json
+	#SCENE=scenes/drone_delivers_two_packages_at_once.json
 	#SCENE=scenes/drone_cant_carry_two_packages.json
 fi
 
