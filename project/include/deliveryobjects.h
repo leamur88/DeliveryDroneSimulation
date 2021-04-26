@@ -171,7 +171,8 @@ namespace csci3081 {
 		 * This is used when an object runs out of battery and no longer needs its packages
 		 */
 		void RemovePackages() {
-			for (int i = 0; i < packages.size(); i++) {
+			int temp = packages.size();
+			for (int i = 0; i < temp; i++) {
 				packages.erase(packages.begin());
 			}
 		}

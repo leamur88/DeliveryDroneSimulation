@@ -41,6 +41,11 @@ void Robot::UpdatePosition(float dt){
 	}
 	if (battery->IsDead()){
 		if(currPackages.size() >= 1){//Change with new vector of current packages
+			picojson::object obj1 = JsonHelper::CreateJsonNotification();
+			JsonHelper::AddStringToJsonObject(obj1, "value", "idle");
+			for (int i = 0; i < observers.size(); i++){
+				observers[i]->OnEvent(JsonHelper::ConvertPicojsonObjectToValue(obj1), *this);
+			}
 			for (int i=0; i < currPackages.size(); i++){
 				std::vector <float> tempPackLoc;
 				tempPackLoc.push_back(this->currPackages[i]->GetPosition().at(0));
@@ -49,6 +54,7 @@ void Robot::UpdatePosition(float dt){
 				this->currPackages[i]->UpdatePosition(tempPackLoc);
 			}
 		}
+	
 		currPackages.clear(); //Change with new vector of current packages
 		RemovePackages();
 		return;
@@ -60,7 +66,7 @@ void Robot::UpdatePosition(float dt){
 		if (distance < this->package->GetRadius()){
 			printf("Going to set package!\n");
 			this->currPackages.push_back(this->package);
-			currentCarrying+=this->packages[currPackages.size()]->GetWeight();
+			currentCarrying+=this->package->GetWeight();
 			picojson::object obj = JsonHelper::CreateJsonNotification();
 			JsonHelper::AddStringToJsonObject(obj, "value", "en route");
 			for (int j = 0; j < observers.size(); j++){
