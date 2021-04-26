@@ -37,7 +37,9 @@ void Battery::DepleteBattery(float amount){
 
 void Battery::SetMaxCharge(float capacity){
     MaxCharge = capacity;
-    BatteryLife = capacity;
+	if (BatteryLife > capacity){
+		BatteryLife = capacity;
+	}
 }
 
 }
