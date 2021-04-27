@@ -64,7 +64,6 @@ void Robot::UpdatePosition(float dt){
 	if (!GoToCustomer){
 		float distance = vec.Distance(this->position, this->package->GetPosition());
 		if (distance < this->package->GetRadius()){
-			printf("Going to set package!\n");
 			this->currPackages.push_back(this->package);
 			currentCarrying+=this->package->GetWeight();
 			picojson::object obj = JsonHelper::CreateJsonNotification();
@@ -86,11 +85,9 @@ void Robot::UpdatePosition(float dt){
 			change.Normalize();
 			change.Scale(dt);
 			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
-			//std::cout << "Speed package: " << speed << std::endl;
 			if(newspeed >= speed){
 				newspeed = speed;
 			}
-			//std::cout << "newspeed package: " << newspeed << std::endl;
 			change.Scale(newspeed);
 			Vector3D newLoc = init + change;
 			position.clear();
@@ -127,11 +124,9 @@ void Robot::UpdatePosition(float dt){
 			change.Normalize();
 			change.Scale(dt);
 			float newspeed = this->maxSpeed - (this->maxSpeed/2)*(currentCarrying/carryingCapacity);
-			//std::cout << "Speed customer: " << speed << std::endl;
 			if(newspeed >= speed){
 				newspeed = speed;
 			}
-			//std::cout << "newspeed customer: " << newspeed << std::endl;
 			change.Scale(newspeed);
 			Vector3D newLoc = init + change;
 			position.clear();
