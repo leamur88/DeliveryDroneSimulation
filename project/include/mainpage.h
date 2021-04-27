@@ -191,6 +191,19 @@ the number, and types of items you plan on generating rarely changes.
 * This cycle is repeated until all of the packages that were initially assigned have been accounted for.  Many of the attributes of the drone are also determined by the
 * model. Although this may not be necessary, we did this because we had to set the capacity, maxspeed, and base battery.
 *
+* ###Iteration 3 Team Documentation
+*
+* Team Meeting on 4/21:
+* In the first meeting for Iteration 3, we went through all the features and crossed off the ones we did not want to do.  It took a while, but after some discussion with
+* a TA, we decided on Drone / Robot functionality.  This was because we already had a packages vector contained within drone/robot, so part of the infrastructure was already
+* implemented.
+*
+* Team Meeting on 4/26:
+* In this meeting, we checked the progress on various issues that were assigned to each group member.  Jules was still working on the documentation, Jon finished working on
+* the actual code implementation, David finished the UML, and Varun was still working on the google tests.  The group decided to add battery capacity based on the drone model 
+* so a new issue was created and Jon took it.  
+
+*
 *
 *
 *
