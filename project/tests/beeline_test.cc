@@ -75,13 +75,20 @@ TEST_F(BeelineTest, UpdatePathTests) {
     Customer* c = new Customer(position_to_add3, obj3);
 
     p->SetCustomer(c);
-
+    p->SetWeight(0.0);
+    std::cout<<"here1\n";
+    d->SetCarryingCap(100.0);
+    d->SetMaxSpeed(55.0);
+		d->SetBatteryCapacity(10);
     d->SetPath("beeline");
+     std::cout<<"here2\n";
 
     d->AddPackage(p);
+    std::cout<<"here4\n";
 
     std::vector <std::vector<float>> packroute = d->GetPackageRoute();
     std::vector <std::vector<float>> custroute = d->GetCustomerRoute();
+    std::cout<<"here3\n";
 
     ASSERT_FLOAT_EQ(packroute.at(0).at(0), 600);
     ASSERT_FLOAT_EQ(packroute.at(0).at(1), 300);

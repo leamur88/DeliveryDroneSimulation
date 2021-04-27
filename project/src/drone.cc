@@ -248,6 +248,7 @@ void Drone::UpdatePosition(float dt){
 
 void Drone::SetPackage(){
 	if(this->packages.size() >= 1) {
+		
 		if ((currPackages.size() == packages.size()) || currentCarrying + this->packages[currPackages.size()]->GetWeight() > carryingCapacity){
 			GoToCustomer = true;
 			GoToCustomerPath();
