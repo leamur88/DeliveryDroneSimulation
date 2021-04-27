@@ -67,7 +67,12 @@ class DroneTest : public ::testing::Test {
 		double radius = 1.0;
 		double speed = 30;
 		Drone d(position_to_add, direction_to_add, speed, radius, drone);
+		std::cout <<"here2\n";
+		d.SetCarryingCap(100.0);
+    	d.SetMaxSpeed(55.0);
+		d.SetBatteryCapacity(10);
 		d.SetPath("default");
+		std::cout <<"here1\n";
 		d.SetId(55);
 
 		std::vector<float> position_to_add1;

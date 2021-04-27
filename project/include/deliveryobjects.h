@@ -171,7 +171,8 @@ namespace csci3081 {
 		 * This is used when an object runs out of battery and no longer needs its packages
 		 */
 		void RemovePackages() {
-			for (int i = 0; i < packages.size(); i++) {
+			int temp = packages.size();
+			for (int i = 0; i < temp; i++) {
 				packages.erase(packages.begin());
 			}
 		}
@@ -199,14 +200,37 @@ namespace csci3081 {
 			return this->packageRoute;
 		}
 
+		/**
+		 * @brief This function sets the carrying capacity for the delivery object
+		 * 
+		 * This funciton is used during the production of delivery objects
+		 * 
+		 * @param[in] carryingCap The new carrying capacity
+		 */
 		void SetCarryingCap(double carryingCap){
 			this->carryingCapacity = carryingCap;
 		}
 
+		/**
+		 * @brief This function returns the carrying capacity for the delivery object
+		 * 
+		 * This is only used for testing
+		 * 
+		 * @return Carrying Capacity
+		 */
 		const double GetCarryingCap(){
 			return this->carryingCapacity;
 		}
-
+		
+		/**
+		 * @brief This function sets the maximum speed for the delivery object
+		 * 
+		 * This funciton is used during the production of delivery objects.
+		 * Also, this function will lower the delivery objects initial speed to it's maxSpeed if it is 
+		 * greater than the max speed.
+		 * 
+		 * @param[in] carryingCap The new maximum speed
+		 */
 		void SetMaxSpeed(double maxSpeed){
 			if(maxSpeed < this->speed){
 				speed = maxSpeed;

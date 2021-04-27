@@ -172,6 +172,42 @@ the number, and types of items you plan on generating rarely changes.
 *
 *
 *
+* ###Feature Implementation\n
+*
+*![Changes to Delivery Object](../DeliveryObject.png)
+* The feature we chose to implement was the drone/robot functionality.  We added a carrying capacity, which was simply implemented by using a check in the drone/robot update 
+* function before it would pick up another package.  Based on the model, it would check if picking up another package would put it over its carrying capacity.  This uses a 
+* packages vector and a currentPackages vector.  The packages vector is assigned in the schedule delivery function in delivery simulation and contains all of the packages that 
+* the drone will deliver.  The currentPackages vector is added to every time the drone picks up a package and removes a package every time it drops one off.  This vector is
+* used to check the current weight it is carrying to determine if it can pick up another package. 
+*
+* The maximum speed was implemented based on the current weight carried by the drone.  We used the following equation to calculate this:
+* Max Speed = (Max Speed) - (currentWeight/carryingCapacity) * (Max Speed/2)
+*
+* This is important because as the weight increases, it makes sense that the max speed would decrease proportionally.  The actual speed is only changed if it becomes greater
+* than the max speed.
+*
+* We decided to have the drone pick up all of the packages first until it hit capacity, and then deliver all of them to the customers in the order they were picked up.  
+* This cycle is repeated until all of the packages that were initially assigned have been accounted for.  Many of the attributes of the drone are also determined by the
+* model. Although this may not be necessary, we did this because we had to set the capacity, maxspeed, and base battery.
+*
+* ###Iteration 3 Team Documentation
+*
+* Team Meeting on 4/21:
+* In the first meeting for Iteration 3, we went through all the features and crossed off the ones we did not want to do.  It took a while, but after some discussion with
+* a TA, we decided on Drone / Robot functionality.  This was because we already had a packages vector contained within drone/robot, so part of the infrastructure was already
+* implemented.
+*
+* Team Meeting on 4/26:
+* In this meeting, we checked the progress on various issues that were assigned to each group member.  Jules was still working on the documentation, Jon finished working on
+* the actual code implementation, David finished the UML, and Varun was still working on the google tests.  The group decided to add battery capacity based on the drone model 
+* so a new issue was created and Jon took it.  
+
+*
+*
+*
+*
+*
 *
 *
  */

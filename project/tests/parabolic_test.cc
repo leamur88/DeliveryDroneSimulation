@@ -40,6 +40,9 @@ class ParabolicTest : public ::testing::Test {
 		double radius = 1.0;
 		double speed = 30;
 		Drone d(position_to_add, direction_to_add, speed, radius, drone);
+		d.SetCarryingCap(100.0);
+   		d.SetMaxSpeed(55.0);
+		d.SetBatteryCapacity(10);
 		d.SetPath("parabolic");
 		d.SetId(55);
 
