@@ -76,9 +76,9 @@ namespace csci3081 {
 
 		/**
 		 * @brief Set the Object's Package Route
-		 * 
+		 *
 		 * @param[in] packageRoute The new packageRoute
-		 * 
+		 *
 		 * This updates the packageRoute to be used in the Update function.
 		 */
 		void SetPackageRoute(std::vector< std::vector<float>> packageRoute){
@@ -87,20 +87,20 @@ namespace csci3081 {
 
 		/**
 		 * @brief Set the Object's Customer Route
-		 * 
+		 *
 		 * @param[in] customerRoute The new customerRoute
-		 * 
+		 *
 		 * This updates the customerRoute to be used in the Update function.
 		 */
 		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute){
 			this->customerRoute = customerRoute;
 		}
 
-		/** 
+		/**
 		 * @brief This updates the Object's Battery's Max Charge
-		 * 
+		 *
 		 * @param[in] capacity The new Max Battery Capacity
-		 * 
+		 *
 		 * This function is used if the capacity of a battery is supposed to be something other than the default value
 		 */
 		void SetBatteryCapacity(float capacity){
@@ -120,18 +120,18 @@ namespace csci3081 {
 
 		/**
 		 * @brief This sets the graph that the object's paths are using
-		 * 
+		 *
 		 * @param[in] graph The graph that the object will use
-		 * 
+		 *
 		 * This is mainly used in the SmartPath Algorithm
 		 */
 		void SetGraph(const IGraph* graph) {g = graph;}
 
 		/**
-		 * @brief Adds observer to the observers list 
-		 * 
+		 * @brief Adds observer to the observers list
+		 *
 		 * @param[in] observer The observer to be added to the observers list
-		 * 
+		 *
 		 * This is used so that the observers in deliverySim can be notified of changes for each object
 		 */
 		void SetObserver(IEntityObserver* observer){
@@ -140,7 +140,7 @@ namespace csci3081 {
 
 		/**
 		 * @brief This removes the all observers in the observers list
-		 * 
+		 *
 		 * This is used when an object runs out of battery and no longer needs its observers
 		 */
 		void ClearObservers(){
@@ -149,7 +149,7 @@ namespace csci3081 {
 
 		/**
 		 * @brief This removes the first package in the packages list
-		 * 
+		 *
 		 * This is used when an object delivers a package and needs to move onto the next one.
 		 */
 		void RemovePackage(){
@@ -158,7 +158,7 @@ namespace csci3081 {
 
 		/**
 		 * @brief This returns whether or not the battery used still has charge remaining
-		 * 
+		 *
 		 * @return True if out of battery, False otherwise
 		 */
 		bool IsDead() {
@@ -167,7 +167,7 @@ namespace csci3081 {
 
 		/**
 		 * @brief This removes the all packages in the packages list
-		 * 
+		 *
 		 * This is used when an object runs out of battery and no longer needs its packages
 		 */
 		void RemovePackages() {
@@ -178,9 +178,9 @@ namespace csci3081 {
 
 		/**
 		 * @brief This returns the graph that the object's paths will use
-		 * 
+		 *
 		 * This is mainly used in the SmartPath Algorithm
-		 * 
+		 *
 		 * @return The graph that the object is using in the simulation
 		 */
 		const IGraph* GetGraph() {
@@ -189,10 +189,10 @@ namespace csci3081 {
 
 		/**
 		 * @brief This function returns the route the object will take to get to the package
-		 * 
+		 *
 		 * This is only used for testing
-		 * 
-		 * @return A std::vector< std::vector<float>> that signifies the route the 
+		 *
+		 * @return A std::vector< std::vector<float>> that signifies the route the
 		 * the object will take to get to the package
 		 */
 		const std::vector< std::vector<float>> GetPackageRoute(){
@@ -216,10 +216,10 @@ namespace csci3081 {
 
 		/**
 		 * @brief This function returns the route the object will take to get to the customer
-		 * 
+		 *
 		 * This is only used for testing
-		 * 
-		  * @return A std::vector< std::vector<float>> that signifies the route the 
+		 *
+		  * @return A std::vector< std::vector<float>> that signifies the route the
 		 * the object will take to get to the package
 		 */
 
@@ -227,7 +227,9 @@ namespace csci3081 {
 			return this->customerRoute;
 		}
 
-		
+		std::vector<Package*> GetcurrPackages() { return this->currPackages; }
+
+
 
 		protected:
 			const IGraph* g;
