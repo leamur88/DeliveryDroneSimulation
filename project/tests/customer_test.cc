@@ -42,6 +42,7 @@ TEST_F(CustomerTest, CustomerConstructor) {
   ASSERT_FLOAT_EQ(c.GetPosition()[2], position_to_add[2]);
   ASSERT_FLOAT_EQ(c.GetVersion(), 1);
   ASSERT_FLOAT_EQ(c.GetId(), 101982);
+  ASSERT_FLOAT_EQ(c.GetRadius(), 1.0);
   EXPECT_TRUE(c.GetType().compare("customer") == 0);
 }
 }  // namespace csci3081
