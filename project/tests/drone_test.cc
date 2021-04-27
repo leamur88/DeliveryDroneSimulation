@@ -54,7 +54,7 @@ class DroneTest : public ::testing::Test {
 		EXPECT_TRUE(d.GetType().compare("drone") == 0);
 	}
 
-	TEST_F(DroneTest, DronePackageCustomerRelationship) {	
+	TEST_F(DroneTest, DronePackageCustomerRelationship) {
 		picojson::object drone = JsonHelper::CreateJsonObject();
 		std::vector<float> position_to_add;
 		position_to_add.push_back(498.292);
@@ -80,16 +80,17 @@ class DroneTest : public ::testing::Test {
 		position_to_add1.push_back(-100.3);
 		position_to_add1.push_back(43.1);
 
-		float weight = 10.2;
+		float weight = 3.0;
 		picojson::object package1 = JsonHelper::CreateJsonObject();
 		Package p1(position_to_add1,direction_to_add,weight,package1);
 		p1.SetId(52);
 
-		std::vector<float> position_to_add2;
+
+    std::vector<float> position_to_add2;
 		position_to_add2.push_back(200);
 		position_to_add2.push_back(12.4);
 		position_to_add2.push_back(367);
-		weight = 12.9;
+		weight = 4.0;
 		picojson::object package2 = JsonHelper::CreateJsonObject();
 		Package p2(position_to_add2,direction_to_add,weight,package2);
 		p2.SetId(54);
@@ -112,11 +113,16 @@ class DroneTest : public ::testing::Test {
 
 		p1.SetCustomer(&c1);
 		p2.SetCustomer(&c2);
+    d.SetCarryingCap(10.0);
 
 		d.AddPackage(&p1);
 		d.AddPackage(&p2);
 
-		
+
+    ASSERT_FLOAT_EQ(d.GetPackages().size(), 2);
+
+    ASSERT_FLOAT_EQ(d.GetCarryingCap(), 10);
+
 		ASSERT_FLOAT_EQ(p1.GetId(), d.getPackage()->GetId());
 		ASSERT_FLOAT_EQ(d.getPackage()->GetPosition()[0], p1.GetPosition()[0]);
 		ASSERT_FLOAT_EQ(d.getPackage()->GetPosition()[1], p1.GetPosition()[1]);
