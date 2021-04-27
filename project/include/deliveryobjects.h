@@ -231,7 +231,7 @@ namespace csci3081 {
 		 * Also, this function will lower the delivery objects initial speed to it's maxSpeed if it is 
 		 * greater than the max speed.
 		 * 
-		 * @param[in] carryingCap The new maximum speed
+		 * @param[in] maxSpeed The new maximum speed
 		 */
 		void SetMaxSpeed(double maxSpeed){
 			if(maxSpeed < this->speed){
