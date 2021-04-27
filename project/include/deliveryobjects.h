@@ -80,6 +80,7 @@ namespace csci3081 {
 		 * @param[in] packageRoute The new packageRoute
 		 *
 		 * This updates the packageRoute to be used in the Update function.
+		 * This function is tested in beelinetest
 		 */
 		void SetPackageRoute(std::vector< std::vector<float>> packageRoute){
 			this->packageRoute = packageRoute;
@@ -91,6 +92,7 @@ namespace csci3081 {
 		 * @param[in] customerRoute The new customerRoute
 		 *
 		 * This updates the customerRoute to be used in the Update function.
+		 * This function is tested in beelinetest
 		 */
 		void SetCustomerRoute(std::vector< std::vector<float>> customerRoute){
 			this->customerRoute = customerRoute;
@@ -239,6 +241,17 @@ namespace csci3081 {
 		}
 
 		/**
+         * @brief This function returns max speed of a delivery object
+         *
+         * This is only used for testing
+         *
+         * @return max speed
+         */
+		double GetMaxSpeed(){
+			return this->maxSpeed;
+		}	
+
+		/**
 		 * @brief This function returns the route the object will take to get to the customer
 		 *
 		 * This is only used for testing
@@ -250,7 +263,14 @@ namespace csci3081 {
 		const std::vector< std::vector<float>> GetCustomerRoute(){
 			return this->customerRoute;
 		}
-
+		
+		/**
+         * @brief This function returns the vector of current packages
+         *
+         * This is only used for testing
+         *
+         * @return the currentpackages list associated with the drone
+         */
 		std::vector<Package*> GetcurrPackages() { return this->currPackages; }
 
 

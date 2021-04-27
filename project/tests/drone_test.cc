@@ -69,7 +69,7 @@ class DroneTest : public ::testing::Test {
 		Drone d(position_to_add, direction_to_add, speed, radius, drone);
 		std::cout <<"here2\n";
 		d.SetCarryingCap(100.0);
-    	d.SetMaxSpeed(55.0);
+    	d.SetMaxSpeed(100.0);
 		d.SetBatteryCapacity(10);
 		d.SetPath("default");
 		std::cout <<"here1\n";
@@ -113,16 +113,18 @@ class DroneTest : public ::testing::Test {
 
 		p1.SetCustomer(&c1);
 		p2.SetCustomer(&c2);
-    d.SetCarryingCap(10.0);
+    	d.SetCarryingCap(10.0);
 
 		d.AddPackage(&p1);
 		d.AddPackage(&p2);
 
-
-    ASSERT_FLOAT_EQ(d.GetPackages().size(), 2);
-
-    ASSERT_FLOAT_EQ(d.GetCarryingCap(), 10);
-
+		ASSERT_FLOAT_EQ(d.GetMaxSpeed(), 100.0);
+		ASSERT_FLOAT_EQ(d.GetSpeed(), 30.0);
+		d.SetMaxSpeed(20.0);
+		ASSERT_FLOAT_EQ(d.GetMaxSpeed(), 20.0);
+		ASSERT_FLOAT_EQ(d.GetSpeed(), 20.0);
+    	ASSERT_FLOAT_EQ(d.GetPackages().size(), 2);
+   		ASSERT_FLOAT_EQ(d.GetCarryingCap(), 10);
 		ASSERT_FLOAT_EQ(p1.GetId(), d.getPackage()->GetId());
 		ASSERT_FLOAT_EQ(d.getPackage()->GetPosition()[0], p1.GetPosition()[0]);
 		ASSERT_FLOAT_EQ(d.getPackage()->GetPosition()[1], p1.GetPosition()[1]);
