@@ -85,6 +85,15 @@ namespace csci3081 {
 		 */
 		void SetMaxCharge(float capacity);
 
+		/**
+		 * @brief Gets the Max Charge of a battery
+		 * 
+		 * This function is used for testing purposes
+		 * 
+		 * @return MaxCharge
+		 */
+		float GetMaxCharge(){ return MaxCharge;}
+
 		private:
 		float MaxCharge;
 		float BatteryLife;
