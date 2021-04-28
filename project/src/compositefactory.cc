@@ -16,7 +16,6 @@ namespace csci3081 {
                 return temp;
             }
         }
-        printf("unable to create entity\n");
         return NULL;
     }
 

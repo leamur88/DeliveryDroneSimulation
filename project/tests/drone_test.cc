@@ -67,12 +67,10 @@ class DroneTest : public ::testing::Test {
 		double radius = 1.0;
 		double speed = 30;
 		Drone d(position_to_add, direction_to_add, speed, radius, drone);
-		std::cout <<"here2\n";
 		d.SetCarryingCap(100.0);
     	d.SetMaxSpeed(100.0);
 		d.SetBatteryCapacity(10);
 		d.SetPath("default");
-		std::cout <<"here1\n";
 		d.SetId(55);
 
 		std::vector<float> position_to_add1;
@@ -86,7 +84,7 @@ class DroneTest : public ::testing::Test {
 		p1.SetId(52);
 
 
-    std::vector<float> position_to_add2;
+    	std::vector<float> position_to_add2;
 		position_to_add2.push_back(200);
 		position_to_add2.push_back(12.4);
 		position_to_add2.push_back(367);
@@ -142,6 +140,75 @@ class DroneTest : public ::testing::Test {
 		ASSERT_FLOAT_EQ(d.getPackage()->GetDestination()[0], c2.GetPosition()[0]);
 		ASSERT_FLOAT_EQ(d.getPackage()->GetDestination()[1], c2.GetPosition()[1]);
 		ASSERT_FLOAT_EQ(d.getPackage()->GetDestination()[2], c2.GetPosition()[2]);
+	}
+
+	TEST_F(DroneTest, DroneGoToCustomerPath) {
+		picojson::object drone = JsonHelper::CreateJsonObject();
+		std::vector<float> position_to_add;
+		position_to_add.push_back(498.292);
+		position_to_add.push_back(253.883);
+		position_to_add.push_back(-228.623);
+		std::vector<float> direction_to_add;
+		direction_to_add.push_back(1);
+		direction_to_add.push_back(0);
+		direction_to_add.push_back(0);
+		double radius = 1.0;
+		double speed = 30;
+		Drone d(position_to_add, direction_to_add, speed, radius, drone);
+		d.SetCarryingCap(100.0);
+    	d.SetMaxSpeed(100.0);
+		d.SetBatteryCapacity(10);
+		d.SetPath("default");
+		d.SetId(55);
+
+		float weight = 3.0;
+		picojson::object package = JsonHelper::CreateJsonObject();
+		Package p(position_to_add,direction_to_add,weight,package);
+		p.SetId(52);
+
+		picojson::object package1 = JsonHelper::CreateJsonObject();
+		Package p1(position_to_add,direction_to_add,weight,package);
+		p1.SetId(53);
+
+		
+
+		picojson::object obj3 = JsonHelper::CreateJsonObject();
+		JsonHelper::AddStringToJsonObject(obj3, "type", "customer");
+		std::vector<float> position_to_add3;
+		position_to_add3.push_back(-100);
+		position_to_add3.push_back(286);
+		position_to_add3.push_back(-150);
+		JsonHelper::AddStdFloatVectorToJsonObject(obj3, "position", position_to_add3);
+
+		Customer* c = new Customer(position_to_add3, obj3);
+
+		picojson::object obj4 = JsonHelper::CreateJsonObject();
+		JsonHelper::AddStringToJsonObject(obj3, "type", "customer");
+		std::vector<float> position_to_add4;
+		position_to_add4.push_back(-200);
+		position_to_add4.push_back(300);
+		position_to_add4.push_back(-450);
+		JsonHelper::AddStdFloatVectorToJsonObject(obj4, "position", position_to_add4);
+
+		Customer* c1 = new Customer(position_to_add4, obj4);
+
+		p.SetCustomer(c);
+		p1.SetCustomer(c1);
+		d.AddPackage(&p);
+		d.AddPackage(&p1);
+
+		d.UpdatePosition(0);
+		ASSERT_FLOAT_EQ(d.GetcurrPackages().size(), 1);
+		d.UpdatePosition(0);
+		ASSERT_FLOAT_EQ(d.GetcurrPackages().size(), 2);
+
+		//This proves GoToCustomerPath() works because after adding both packages to currPackages
+		//GoToCustomerPath() is called which sets the customer route back to the first package's customers position
+		ASSERT_FLOAT_EQ(d.GetCustomerRoute()[3][0], p.GetDestination()[0]);
+		ASSERT_FLOAT_EQ(d.GetCustomerRoute()[3][0], p.GetDestination()[0]);
+		ASSERT_FLOAT_EQ(d.GetCustomerRoute()[3][0], p.GetDestination()[0]);
+
+
 	}
 
 }  // namespace csci3081
