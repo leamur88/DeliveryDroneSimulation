@@ -16,13 +16,10 @@ namespace csci3081 {
             double speed = JsonHelper::GetDouble(entity, "speed");
             
 			Drone* d = new Drone(position, direction, speed, radius, entity);
-			if (JsonHelper::ContainsKey(entity, "battery_capacity")){
-                d->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
-            }
-
+			d->SetBatteryCapacity(300);
 			d->SetCarryingCap(10.0);
             d->SetMaxSpeed(60.0);
-			d->SetBatteryCapacity(300);
+			
 			if (JsonHelper::ContainsKey(entity, "model")){
 				std::string model = JsonHelper::GetString(entity, "model");
 				if(model.compare("Q-36-02")==0){
@@ -49,12 +46,14 @@ namespace csci3081 {
             
             if (JsonHelper::ContainsKey(entity, "path")){
                 d->SetPath(JsonHelper::GetString(entity, "path"));
-            }else {
+            }
+			else {
                 d->SetPath("default");
             }
 
-            
-
+			if (JsonHelper::ContainsKey(entity, "battery_capacity")){
+                d->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
+            }
 
             return d;
         }

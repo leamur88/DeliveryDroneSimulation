@@ -14,14 +14,11 @@ namespace csci3081 {
             double speed = JsonHelper::GetDouble(entity, "speed");
 
             Robot* r = new Robot(position, direction, speed, radius, entity);
-
-            if (JsonHelper::ContainsKey(entity, "battery_capacity")){
-                r->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
-            }
 			
+			r->SetBatteryCapacity(300);
 			r->SetCarryingCap(10.0);
             r->SetMaxSpeed(60.0);
-			r->SetBatteryCapacity(300);
+			
 			if (JsonHelper::ContainsKey(entity, "model")){
 				std::string model = JsonHelper::GetString(entity, "model");
 				if(model.compare("R-2D-02")==0){
@@ -45,6 +42,11 @@ namespace csci3081 {
 					r->SetBatteryCapacity(120);
 				}
 			}
+			
+			if (JsonHelper::ContainsKey(entity, "battery_capacity")){
+                r->SetBatteryCapacity(JsonHelper::GetDouble(entity, "battery_capacity"));
+            }
+
             return r;
         }
         return NULL;

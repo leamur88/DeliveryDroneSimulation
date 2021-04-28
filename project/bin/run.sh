@@ -12,8 +12,8 @@ if [ -z "$1" ]
 then
     #SCENE=scenes/parabolic_drone.json
 	#SCENE=scenes/drone_and_robot_many_deliveries.json
-	#SCENE=presentation/robot_multiple_pickup.json
-	SCENE=presentation/robot_mult_package.json
+	SCENE=presentation/all_features.json.json
+	#SCENE=presentation/robot_mult_package.json
 	#SCENE=presentation/drone_multiple_pickup.json
 	#SCENE=presentation/drone_low_battery.json
     #SCENE=scenes/drone_low_battery_b.json
