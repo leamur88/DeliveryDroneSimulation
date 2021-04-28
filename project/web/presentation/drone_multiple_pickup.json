@@ -10,7 +10,7 @@
       	    "scale": [0.1, 0.1, 0.1],
       	    "rotation": [0, 0, 0, 0],
             "direction": [1,0,0],
-            "path": "beeline",
+            "path": "parabolic",
 			"model": "Q-36-04",
             "speed": 30.0,
             "radius": 1.0,
