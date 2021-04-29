@@ -50,6 +50,7 @@ TEST_F(PackageTest, PackageConstructor) {
   ASSERT_FLOAT_EQ(p.GetWeight(), 10.0);
   ASSERT_FLOAT_EQ(p.GetVersion(), 1);
   ASSERT_FLOAT_EQ(p.GetId(), 103);
+  ASSERT_FLOAT_EQ(p.GetRadius(), 1.0);
   EXPECT_TRUE(p.GetType().compare("package") == 0);
   p.SetWeight(55.7);
   ASSERT_FLOAT_EQ(p.GetWeight(), 55.7);
@@ -83,15 +84,47 @@ TEST_F(PackageTest, PackageCustomerRelationship) {
   Customer c2(position_to_add4, obj4);
 
   p2.SetCustomer(&c1);
-  
+  ASSERT_FLOAT_EQ(p2.GetCustRadius(), 1.0);
   ASSERT_FLOAT_EQ(p2.GetDestination()[0], position_to_add3[0]);
   ASSERT_FLOAT_EQ(p2.GetDestination()[1], position_to_add3[1]);
   ASSERT_FLOAT_EQ(p2.GetDestination()[2], position_to_add3[2]);
   
   p2.SetCustomer(&c2);
-  ASSERT_FLOAT_EQ(p2.GetDestination()[0], position_to_add4[0]);
-  ASSERT_FLOAT_EQ(p2.GetDestination()[1], position_to_add4[1]);
-  ASSERT_FLOAT_EQ(p2.GetDestination()[2], position_to_add4[2]);
+  ASSERT_FLOAT_EQ(p2.GetCustomer()->GetPosition()[0], position_to_add4[0]);
+  ASSERT_FLOAT_EQ(p2.GetCustomer()->GetPosition()[1], position_to_add4[1]);
+  ASSERT_FLOAT_EQ(p2.GetCustomer()->GetPosition()[2], position_to_add4[2]);
+}
+
+TEST_F(PackageTest, PackageMovement) {
+  picojson::object obj = JsonHelper::CreateJsonObject();
+  std::vector<float> position_to_add;
+  position_to_add.push_back(505);
+  position_to_add.push_back(200);
+  position_to_add.push_back(-20);
+  std::vector<float> direction_to_add;
+  float w = 10.0;
+  direction_to_add.push_back(1);
+  direction_to_add.push_back(0);
+  direction_to_add.push_back(0);
+  Package p(position_to_add, direction_to_add, w, obj);
+  
+  std::vector<float> new_position_to_add;
+  new_position_to_add.push_back(100);
+  new_position_to_add.push_back(150);
+  new_position_to_add.push_back(-200);
+
+  p.UpdatePosition(new_position_to_add);
+  ASSERT_FLOAT_EQ(p.GetPosition()[0], new_position_to_add[0]);
+  ASSERT_FLOAT_EQ(p.GetPosition()[1], new_position_to_add[1]-.25);
+  ASSERT_FLOAT_EQ(p.GetPosition()[2], new_position_to_add[2]);
+  ASSERT_FLOAT_EQ(p.GetStartPosition()[0], position_to_add[0]);
+  ASSERT_FLOAT_EQ(p.GetStartPosition()[1], position_to_add[1]);
+  ASSERT_FLOAT_EQ(p.GetStartPosition()[2], position_to_add[2]);
+
+  EXPECT_FALSE(p.IsDelivered());
+  p.Deliver();
+  EXPECT_TRUE(p.IsDelivered());
+
 }
 
 }  // namespace csci3081

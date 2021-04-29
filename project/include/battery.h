@@ -14,7 +14,7 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Batteries.
+	 * @brief The main class for the generation of Battery.
 	 *
 	 * Calls to \ref Battery constructor to get a new battery.
 	 *  This class will also contain all of the necessary getters for the batteries.
@@ -84,6 +84,15 @@ namespace csci3081 {
 		 * This function is mainly used in the Drone and Robot Factories if a max charge is specified within the Json Object
 		 */
 		void SetMaxCharge(float capacity);
+
+		/**
+		 * @brief Gets the Max Charge of a battery
+		 * 
+		 * This function is used for testing purposes
+		 * 
+		 * @return MaxCharge
+		 */
+		float GetMaxCharge(){ return MaxCharge;}
 
 		private:
 		float MaxCharge;

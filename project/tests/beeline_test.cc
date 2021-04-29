@@ -75,10 +75,17 @@ TEST_F(BeelineTest, UpdatePathTests) {
     Customer* c = new Customer(position_to_add3, obj3);
 
     p->SetCustomer(c);
-
+    p->SetWeight(0.0);
+    d->SetCarryingCap(100.0);
+    d->SetMaxSpeed(55.0);
+	d->SetBatteryCapacity(10);
     d->SetPath("beeline");
 
     d->AddPackage(p);
+	//In this function, AddPackage calls SetPackage which calls the updatePath function in beeline
+	//This leads to both SetCustomerRoute and SetPackageRoute (lines 19 and 29 in beeline.cc)
+	//being utilized and since the tests below check the accuracy of the overall function call, it also
+	//proves the accuracy of those two functions
 
     std::vector <std::vector<float>> packroute = d->GetPackageRoute();
     std::vector <std::vector<float>> custroute = d->GetCustomerRoute();

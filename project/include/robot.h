@@ -55,24 +55,6 @@ namespace csci3081 {
 		void UpdatePosition(float dt);
 
 		/**
-		 * @brief This function will pickup the package and return whether or not it is in range to be picked up.
-		 * 
-		 * The robot will call to see if it is within range of the package.
-		 * 
-		 * @return Whether or not the package can be picked up.
-		 */
-		bool Pickup();
-
-		/**
-		 * @brief This function will dropoff the package and return whether or not it is in range to be dropped off successfully.
-		 * 
-		 *  The robot will call this function to see if it is within range of the customer.
-		 * 
-		 * @return Whether or not the package can be dropped off.
-		 */
-		bool DropOff();
-
-		/**
 		 * @brief This function will set a package for the robot object
 		 * 
 		 * @param[in] package The package that the robot will carry.
@@ -80,20 +62,21 @@ namespace csci3081 {
 		void SetPackage();
 
 		/**
-		 * @brief returns whether or not the package has been picked up yet
-		 * 
-		 * This is used to determine whether or not the packages position needs to be updated alongside the robots
-		 * 
-		 * @return Whether or not the package has been picked up
-		 */
-		bool IsPackagePickedUp(){return pickedUpPackage;}
-
-		/**
 		 * @brief Add a Package to the packages vector
 		 * 
 		 * @param[in] newPackage The new package to be added to the package vector
 		 */
 		void AddPackage(Package* newPackage);
+
+		/**
+		 * @brief This function will set the robot's next path vector to follow to be the one to the customer
+		 * 
+		 * This function is used to switch from picking up packages to now dropping them off. This will be called
+		 * when a robot has picked up it's max weight capacity or all possible packages available. It will also be called 
+		 * after a package has been dropped off to see if it needs to drop off more packages or go back to picking them up.
+		 *
+		 */
+		void GoToCustomerPath();
 
 		private:
 			iDeliveryPaths* StrategyPath;

@@ -52,9 +52,10 @@ TEST_F(RobotTest, RobotConstructor) {
   ASSERT_FLOAT_EQ(d.GetVersion(), 1);
   ASSERT_FLOAT_EQ(d.GetId(), 55);
   EXPECT_TRUE(d.GetType().compare("Robot") == 0);
-  //Note: we cannot test the robot & package relationship because that requires the use of smart path.
-  //Smartpath uses the graph variable which we do not have access to. This will always cause a segmentation fault.
 }
-
+//Note: we cannot test the robot & package relationship because that requires the use of smart path.
+//Smartpath uses the graph variable which we do not have access to. This will always cause a segmentation fault.
+//Any function that references the UpdatePath function in SmartPath class 
+//this includes GoToCustomerPath(), AddPackage(), SetPackage()
 }  // namespace csci3081
 

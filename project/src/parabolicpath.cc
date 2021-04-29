@@ -16,7 +16,7 @@ namespace csci3081{
 		Vector3D finish(end);
 		Vector3D distance = finish - begin;
 
-		float increment =  distance.Magnitude()/100;
+		float increment =  distance.Magnitude()/50;
 		float Start_Mid_Magnitude = (distance.Magnitude())/2; 
 
 		//find the unit vector
@@ -29,7 +29,7 @@ namespace csci3081{
 
 		//loop through the x axis in incriments of distance/100, assigning the height based on a parabolic formula
 		tempRoute.push_back(start);
-		for (int i = 1; i < 101; i++){
+		for (int i = 1; i < 51; i++){
 			//next position on x axis
 			std::vector<float> next_pos = {i*increment * unit.GetVector()[0], i*increment * unit.GetVector()[1], i*increment * unit.GetVector()[2]};
 			Vector3D next(next_pos);

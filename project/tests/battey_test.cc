@@ -31,18 +31,27 @@ class BatteryTest : public ::testing::Test {
 TEST_F(BatteryTest, BatteryConstructor) {
     Battery battery(100);
 
+
     EXPECT_FALSE(battery.IsDead());
     ASSERT_FLOAT_EQ(100, battery.ChargeRemaining());
+	ASSERT_FLOAT_EQ(100, battery.GetMaxCharge());
+
 
     battery.DepleteBattery(60);
     ASSERT_FLOAT_EQ(40, battery.ChargeRemaining());
+	ASSERT_FLOAT_EQ(100, battery.GetMaxCharge());
+
+	battery.SetMaxCharge(20);
+
+	ASSERT_FLOAT_EQ(20, battery.ChargeRemaining());
+	ASSERT_FLOAT_EQ(20, battery.GetMaxCharge());
 
     Battery battery2 = battery;
 
     battery.DepleteBattery(60);
     EXPECT_TRUE(battery.IsDead());
 
-    ASSERT_FLOAT_EQ(40, battery2.ChargeRemaining());
+    ASSERT_FLOAT_EQ(20, battery2.ChargeRemaining());
     EXPECT_FALSE(battery2.IsDead());
 }
 }  // namespace csci3081

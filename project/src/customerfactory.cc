@@ -12,7 +12,6 @@ namespace csci3081 {
             
             return new Customer(position, entity);
         }
-        printf("unable to create entity\n");
         return NULL;
     }
 

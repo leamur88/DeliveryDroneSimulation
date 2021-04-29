@@ -80,6 +80,16 @@ namespace csci3081 {
 		 */
 		void AddPackage(Package* newPackage);
 
+		/**
+		 * @brief This function will set the drone's next path vector to follow to be the one to the customer
+		 * 
+		 * This function is used to switch from picking up packages to now dropping them off. This will be called
+		 * when a drone has picked up it's max weight capacity or all possible packages available. It will also be called 
+		 * after a package has been dropped off to see if it needs to drop off more packages or go back to picking them up.
+		 *
+		 */
+		void GoToCustomerPath();
+
 		private:
 			std::vector<float> destination;
 			std::string path = "default";

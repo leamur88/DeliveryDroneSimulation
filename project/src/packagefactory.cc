@@ -11,13 +11,16 @@ namespace csci3081 {
 
             std::vector<float> position = JsonHelper::GetStdFloatVector(entity, "position");
             std::vector<float> direction = JsonHelper::GetStdFloatVector(entity, "direction");
-            float weight = 10.0;
+			float weight = 10.0;
+			if (JsonHelper::ContainsKey(entity, "weight")){
+				weight = JsonHelper::GetDouble(entity, "weight");
+			}
+            
 
             Package* p = new Package(position, direction, weight, entity);
 
             return p;
         }
-        printf("unable to create entity\n");
         return NULL;
     }
 

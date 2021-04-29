@@ -1,0 +1,8 @@
+April 23
+
+Jon was assigned the issue
+David, Jules, and Varun assisted.
+
+We all helped come up with a formula for max speed based on 
+the current weight of packages.  All of the group members also
+helped catch and fix various bugs.
