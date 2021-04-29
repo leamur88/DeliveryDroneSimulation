@@ -1,27 +1,30 @@
 /** \mainpage CSCI 3081 Delivery Simulation project
- * 
- * ###Running the Program############
- * 
- * **Note: This program is meant to only be run on a UMN CSE Labs Machine**
- * 
- * *The following instructions are for those using VOLE3D or are physically at the lab. Not intended for all SSH use.*
- * 1. Navigate to the `project` directory
- * 2. In the terminal, run `make clean` followed by  `make` to ensure that the project builds correctly
- * 3. Open up a preferred browser, Chrome works best, and go to "127.0.0.1:8081" 
- * 4. In the terminal, still in the project directory, type `bash ./bin/run.sh` to run the simulation
- * 5. Rarely, the simulation is built incorrectly and only the drone and customer spawn in. If this occurs please go back to step 2. (You will know this occurs if the customer is in the packages position)
- * 6. Optionally, if you to run the test files type `make test` followed by `bash ./bin/test.sh`
- * 7. Last, if you want to regenerate this documentation, navigate to `project/docs` and run `doxygen Doxyfile`. The html will be updated and you can refresh your page
- *
-<<<<<<< HEAD
- * Within the program itself you can change the simulation speed with the provided slider and change the view of which entity you are following. In its current state,
-you should expect to see the drone fly over all of the buildings, following a beeline trajectory to the packages location. Once there, the drone will hover over the package for a second, pick
-up the package, and travel in unison to the customer. Once at the customer, the package will dissapear after a second (i.e. the customer will take the package), and the simulation is done. Remember to 
-kill the program to ensure that the IT folks won't send you an angry e-mail.
+* 
+* ###Running the Program############
+* 
+* **Note: This program is meant to only be run on a UMN CSE Labs Machine**
+* 
+* *The following instructions are for those using VOLE3D or are physically at the lab. Not intended for all SSH use.*
+* 1. Navigate to the `project` directory
+* 2. In the terminal, run `make clean` followed by  `make` to ensure that the project builds correctly
+* 3. Open up a preferred browser, Chrome works best, and go to "127.0.0.1:8081" 
+* 4. In the terminal, still in the project directory, type `bash ./bin/run.sh` to run the simulation
+* 5. Rarely, the simulation is built incorrectly and only the drone and customer spawn in. If this occurs please go back to step 2. (You will know this occurs if the customer is in the packages position)
+* 6. Optionally, if you to run the test files type `make test` followed by `bash ./bin/test.sh`
+* 7. Last, if you want to regenerate this documentation, navigate to `project/docs` and run `doxygen Doxyfile`. The html will be updated and you can refresh your page
+*
+* Within the program itself you can change the simulation speed with the provided slider and change the view of which entity you are following. Currently, we provide 4 different simulations to run in order
+* to show off the features that our simulation can do. All four of these simulations can be found under 'project/web/presentation' directory. The description of these 4 scenes is listed below:
+* 1. all_features.json: As the name suggests, this simulation will show off all of our implementations main features. It includes multiple package pickup, deliveries to multiple customers, and a delivery object running out of battery.
+* 2. drone_low_battery.json: This simulation features an old model drone dying after picking up it's package and a newer model drone that, after delivering its packages, wakes back up again to pickup the initial drones deliveries.
+* 3. drone_multiple_packages.json: The main thing to look out for in this simulation is the change in speed in between the drone during different parts of its delivery process. You should see a big change after it drops off its first couple of packages.
+* 4. robot_multiple_packages.json: This is the same simulation as before just with a robot.
+* 
+* Please remember, once the simulation is over, kill the program to ensure that the IT folks won't send you an angry e-mail.
 * 
 * ###Composite Factory vs. Abstract Factory vs. Concrete Factory
 * 
-* 
+*
 * ####Composite Factories
 * ![Basic Composite Factory Pattern](../CompositePattern.png)
 * 
