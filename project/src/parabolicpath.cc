@@ -27,7 +27,7 @@ namespace csci3081{
 		Vector3D midpoint(mid);
 		midpoint = midpoint + begin;
 
-		//loop through the x axis in incriments of distance/100, assigning the height based on a parabolic formula
+		//loop through the x axis in incriments of distance/50, assigning the height based on a parabolic formula
 		tempRoute.push_back(start);
 		for (int i = 1; i < 51; i++){
 			//next position on x axis

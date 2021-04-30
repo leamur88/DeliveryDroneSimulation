@@ -18,9 +18,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
     /**
-     * @brief The main class for the generation of robots for the delivery simulation class.
+     * @brief This factory creates robots and is a part of the overall factory pattern used to create entities for the simulation.
      *
-     * It creates robot objects through the create entity function
+     * robot objects are much more complex than customers and thus have a more complex createEntity function. On top of the normal Robot constructor, 
+	 * the create entity function also checks what model the robot is which can lead to changes in the CarryingCapacity and MaxSpeed.
      */
     class RobotFactory : public IEntityFactory{
         public:

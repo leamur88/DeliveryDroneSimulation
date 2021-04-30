@@ -18,10 +18,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
+	 * @brief This serves as part of a broader strategy pattern for setting the paths of deliveryobjects. This specific concrete strategy returns a parabolic path.
 	 *
-	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
+	 * This class requires the use of a helper function to create the two paths for any package. The \ref UpdatePath method utilizes the \ref GetPath method in order to create paths. 
+	 * The \ref GetPath method creates a parabolic path using the formula explained in lab 14 and the start and end points. Our specific parablolic path uses 50 steps in order to ensure a smooth porabola.
 	 */
 	class ParabolicPath : public csci3081::iDeliveryPaths{
 		public:

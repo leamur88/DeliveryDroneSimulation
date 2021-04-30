@@ -14,7 +14,7 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Vector3D objects.
+	 * @brief The main class for the generation of Vector3D objects used in the drone's UpdatePosition method.
 	 *
 	 *  Calls to \ref Vector3D constructor to get a new Vector3D.
 	 *  This class will also contain all of the necessary getters and arithmetic operations

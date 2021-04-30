@@ -45,6 +45,8 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 	Robot* temp_R;
 	int smallestSize = 900;
 	int index;
+	
+	//Decides which  object should deliver package based on which one has the least amount of packages already
 	for (int i = 0; i < entities_.size(); i++){
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			temp_D = dynamic_cast<Drone*>(entities_[i]);
@@ -65,6 +67,8 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 			}
 		}
 	}
+
+	//Schedule Delivery
 	if (JsonHelper::GetString(entities_[index]->GetDetails(), "type") == "drone") {
 		temp_D = dynamic_cast<Drone*>(entities_[index]);
 		temp_D->ClearObservers();
@@ -90,6 +94,7 @@ void DeliverySimulation::ScheduleDelivery(IEntity* package, IEntity* dest) {
 		temp_R->SetGraph(g);
 		temp_R->AddPackage(p);
 	}
+	
 	picojson::object obj = JsonHelper::CreateJsonNotification();
 	JsonHelper::AddStringToJsonObject(obj, "value", "scheduled");
 	for (int i = 0; i < observers.size(); i++){
@@ -119,23 +124,29 @@ void DeliverySimulation::Update(float dt) {
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "drone") {
 			Drone* drone = dynamic_cast<Drone*>(entities_[i]);
+			
+			//Reschedule packages of Drone's with dead batteries
 			if (drone->IsDead()) {
 				std::vector<Package*> packages = drone->GetPackages();
 				for (int i = 0; i < packages.size(); i++) {
 					ScheduleDelivery(packages.at(i), packages.at(i)->GetCustomer());
 				}
 			}
+			
 			drone->UpdatePosition(dt);
 		}
 
 		if (JsonHelper::GetString(entities_[i]->GetDetails(), "type") == "robot") {
 			Robot* robot = dynamic_cast<Robot*>(entities_[i]);
+			
+			//Reschedule packages of Drone's with dead batteries
 			if (robot->IsDead()) {
 				std::vector<Package*> packages = robot->GetPackages();
 				for (int i = 0; i < packages.size(); i++) {
 					ScheduleDelivery(packages.at(i), packages.at(i)->GetCustomer());
 				}
 			}
+			
 			robot->UpdatePosition(dt);
 		}
 

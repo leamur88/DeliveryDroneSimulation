@@ -14,10 +14,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Battery.
+	 * @brief This class is responsible for the battery object used in all deliveryobjects.
 	 *
-	 * Calls to \ref Battery constructor to get a new battery.
-	 *  This class will also contain all of the necessary getters for the batteries.
+	 * Calls to \ref Battery constructor to get a new battery. All batteries are defaultly initialized with 10000 battery life.
+	 * This is easily changed using the \ref SetMaxCharge call. The \ref deplete call is called every time Update is called within a deliveryobjects object.
 	 */
 	class Battery{
 		public: 

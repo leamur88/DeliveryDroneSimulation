@@ -14,7 +14,7 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Vector2D objects.
+	 * @brief The main class for the generation of Vector2D objects used in the robot's UpdatePosition method.
 	 *
 	 *  Calls to \ref Vector2D constructor to get a new Vector2D.
 	 *  This class will also contain all of the necessary getters and arithmetic operations

@@ -13,10 +13,11 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Packages.
+	 * @brief This class contains the Package constructor and all additional methods it needs.
 	 *
-	 *  Calls to \ref Package constructor to get a new package.
-	 *  This class will also contain all of the necessary getters for the packages.
+	 * Unlike the customer object, the package object actually has additional functionality. On top of returning its current position, the package must also be able
+	 * to update its own position if it has been picked up, contain and return it's customers position, and keep track of its weight so a drone and customer knows if it can pick it up.
+	 * This class also utilizes getters and setters from the entitybase class.
 	 */
 	class Package : public csci3081::EntityBase {
 		public:

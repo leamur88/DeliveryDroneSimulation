@@ -18,9 +18,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
     /**
-     * @brief The main class for the generation of packages for the delivery simulation class.
+     * @brief This factory creates packages and is a part of the overall factory pattern used to create entities for the simulation.
      *
-     * It creates package objects through the create entity function
+     * Package objects are not all that complex and that is reflected in the create entity function. The only additional check within the create entity object is the packages weight. Otherwise,
+	 * the weight of the package gets set to 10.
      */
     class PackageFactory : public IEntityFactory{
         public:
