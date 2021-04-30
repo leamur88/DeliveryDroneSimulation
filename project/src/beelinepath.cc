@@ -4,6 +4,7 @@ namespace csci3081{
 	BeelinePath::BeelinePath(){}
 
 	void BeelinePath::UpdatePath(){
+		//Package Route
 		std::vector<std::vector<float>> packageRoutetemp;
 		std::vector<float> current_pos = o->GetPosition();
 		packageRoutetemp.push_back(current_pos);
@@ -18,6 +19,7 @@ namespace csci3081{
 		packageRoutetemp.push_back(destination_pos_low);
 		o->SetPackageRoute(packageRoutetemp);
 
+		//Customer Route
 		std::vector<std::vector<float>> customerRoutetemp;
 		customerRoutetemp.push_back(destination_pos_low);
 		customerRoutetemp.push_back(destination_pos);
