@@ -16,10 +16,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of robots.
+	 * @brief This class implements the \ref UpdatePath function for robots using Vector2D objects.
 	 *
-	 * Calls to \ref robot constructor to get a new robot.
-	 *  This class will also contain all of the necessary getters for the robots.
+	 * On top of implementing the \ref UpdatePath method, this class also holds the basic constructor for robots. It uses the normal helper functions for the UpdatePath
+	 * method like \ref SetPackage, \ref SetPackage, and \ref GotToCustomerPath.
 	 */
 	class Robot : public csci3081::DeliveryObject {
 		public:

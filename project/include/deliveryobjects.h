@@ -21,8 +21,8 @@ namespace csci3081 {
 	/**
 	 * @brief This serves as an interface for the drone and robot objects. It contains the basic functions shared by both objects.
 	 *
-	 * This class should never actually be instantiated as a real object. It can be used to help dynamic
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code.
+	 * The main purpose of this interface is to keep the DRY priniciple in place for our code. This is because both the drone and robot objects need to use 
+	 * the same getters and setters throughout their code. This virtual class is also extremely useful in dynamic casting within Delivery_Simulation.h
 	 */
 	class DeliveryObject : public csci3081::EntityBase {
 		public:
