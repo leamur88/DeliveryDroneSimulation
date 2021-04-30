@@ -14,10 +14,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
+	 * @brief This serves as part of a broader strategy pattern for setting the paths of deliveryobjects. This specific concrete strategy returns a smart path.
 	 *
-	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
+	 * The smartpath algorithm actually does most of the work by itself. Using the graph variable in the deliveryobject, you simply need to make a function call with the start and end points and it will
+	 * return the route you needed.
 	 */
 	class SmartPath : public csci3081::iDeliveryPaths{
 		public:

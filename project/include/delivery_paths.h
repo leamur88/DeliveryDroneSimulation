@@ -19,10 +19,9 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
+	 * @brief This serves as an interface for the strategy pattern class for path generation.
 	 *
-	 * This class should never actually be instantiated as a real object. It can be used to help dynamic 
-     * casting. On top of that, it helps keep the DRY priniciple in place for our code. 
+	 * This is a very straightforward interface that includes a virtual \ref UpdatePath method and it contains the deliveryobject whose paths will be updated.
 	 */
 	class iDeliveryPaths {
 		public:

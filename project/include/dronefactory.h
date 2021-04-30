@@ -18,9 +18,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
     /**
-     * @brief The main class for the generation of drones for the delivery simulation class.
+     * @brief This factory creates drones and is a part of the overall factory pattern used to create entities for the simulation.
      *
-     * It creates drone objects through the create entity function
+     * Drone objects are much more complex than customers and thus have a more complex createEntity function. On top of the normal Drone constructor, 
+	 * the create entity function also checks for and sets what path to use, the battery capacity, and what model the drone is.
      */
     class DroneFactory : public IEntityFactory{
         public:

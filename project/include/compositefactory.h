@@ -17,10 +17,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
     /**
-     * @brief The main class for the generation of CompositeFactories.
+     * @brief Like the name suggests, this is the class that creates the composite factory for our factory pattern.
      *
-     * Calls to \ref CompositeFactory constructor to get a new CompositeFactory.
-     * This class will also the ability to create entities by calling other factories stored in the factories vector.
+	 * Like any composite factory, this class allows us to treat a group of objects as one. In this case, we are treating the factories vector as a single object where
+	 * we can simply call create entity and the correct one will be made by looping over every factory in factories.
      */
     class CompositeFactory : public IEntityFactory{
         public:
