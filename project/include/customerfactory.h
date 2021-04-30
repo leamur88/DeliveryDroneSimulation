@@ -18,9 +18,9 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
     /**
-     * @brief The main class for the generation of customers for the delivery simulation class.
+     * @brief This factory creates customers and is a part of the overall factory pattern used to create entities for the simulation.
      *
-     * It creates customer objects through the create entity function
+     * Like customer objects themselves, the constructor called within \ref CreateEntity is also extremely simple (All it passes in is a position vector and a json object). 
      */
     class CustomerFactory : public IEntityFactory{
         public:

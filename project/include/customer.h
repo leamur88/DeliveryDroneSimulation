@@ -16,10 +16,10 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief The main class for the generation of Customers.
+	 * @brief This class holds the basic constructor for a customer.
 	 *
-	 * Calls to \ref Customer constructor to get a new Customer.
-	 *  This class will also contain all of the necessary getters for the customers.
+	 * In the grand scheme of things, customers really don't do much. They hold a position for where packages need to be delivered to and they show up in that
+	 * position during the simulation.
 	 */
     class Customer : public csci3081::EntityBase {
         public:

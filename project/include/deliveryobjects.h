@@ -19,7 +19,7 @@ namespace csci3081 {
  * Class Definitions
  ******************************************************************************/
 	/**
-	 * @brief This serves as an intermediary class for all of the objects that pickup and deliver packages.
+	 * @brief This serves as an interface for the drone and robot objects. It contains the basic functions shared by both objects.
 	 *
 	 * This class should never actually be instantiated as a real object. It can be used to help dynamic
      * casting. On top of that, it helps keep the DRY priniciple in place for our code.
