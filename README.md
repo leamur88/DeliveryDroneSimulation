@@ -1,16 +1,15 @@
-Repo for repo-iter3-10-14
+# Drone Delivery Simulation
 
-## Pre-requisites
-  * [Git](https://git-scm.com/)
+## Background
+This was a project made by my partners and I in CSCI 3081W (Program Design and Development) at the University of Minnesota. During this class we were given a baseline and instructed to implement a drone simulation that would go around the virtual UMN campus and deliver packages to customers. Once a basic beeline delivery was implemented, we had to make the drone have the ability to deliver using a parabolic route and using a 'smart' route (using streets). Lastly, we added some physics components (Drone will move slower proportionally to how much weight it is carrying), and the ability to have multiple drones deliver to multiple customers. Because we added multiple drones, we also added the ability for a drone to pick up a different drones package in the event that it runs out of battery before making a delivery.
 
-## Docker Pre-requisites
-  * Windows 10 Home
-    * Install [wsl2 and Ubuntu](https://www.youtube.com/watch?v=ilKQHAFeQR0&list=RDCMUCzLbHrU7U3cUDNQWWAqjceA&start_radio=1&t=7)
-  * Install [Docker Desktop](https://hub.docker.com/?overlay=onboarding) from [Docker Hub](https://hub.docker.com/)
-  * Linux
-    * Use [docker group instead of sudo](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
+## Running Different Simulations
+In the run shell script (project/bin/run.sh) you will see that there is a 'SCENE' variable that is set. This variable determines what simulation will run. You can choose any of the 4 listed in the file, or you can choose from many more in the project/web/scenes folder. All scenes should be working and can show off the different abilities of our simulation!
 
-## Getting Started with Docker
+## Running the simulation
+To run the simulation, you must use docker and follow the instructions below:
+
+### Getting Started with Docker
 
 1. Build docker image
 
@@ -41,45 +40,6 @@ Repo for repo-iter3-10-14
     ./bin/run.sh
     ```
     
-5. Open up Firefox and browse to http://127.0.0.1:8081/
+5. Open up any brower and go to http://127.0.0.1:8081/
 
 
-## Getting Started using SSH on CSE Lab machines
-
-1. Run the ssh environment
-    ```bash
-    # Run the ssh environment
-    # Example: ./bin/ssh-env.sh <x500> <port> <computer num>
-    ./bin/ssh-env.sh myx500 8081 05
-    ```
-
-2. Build and run the simulation
-
-    ```bash
-    cd /path/to/project
-    make -j
-    ./bin/run.sh
-    ```
-  
-5. Open up Firefox and browse to http://127.0.0.1:8081/
-
-## Getting Started with VOLE-3D or VOLE
-
-1. Log on to [VOLE-3D or VOLE](https://vole.cse.umn.edu/) (VOLE is slower for graphics, but is great for tests, etc...)
-
-2. Build project
-
-    ```bash
-    cd /path/to/cloned/repository
-    cd project
-    make
-    ```
-    
- 2. Run project
-
-    ```bash
-    # MUST be within project/ directory
-    ./bin/run.sh
-    ```
-    
- 5. Open up Firefox and browse to http://127.0.0.1:8081/
